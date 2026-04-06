@@ -44,9 +44,9 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                         {/* Floating Labels */}
                         <div className="absolute -top-10 -right-10 bg-white p-6 rounded-3xl shadow-xl border border-surface-100 animate-bounce-slow">
                             <div className="flex flex-col gap-1">
-                                <span className="text-[10px] font-black text-text-muted uppercase tracking-widest leading-none mb-1">TOTAL IMPACT</span>
+                                <span className="text-[10px] font-black text-text-muted uppercase tracking-widest leading-none mb-1">IMPACTO TOTAL</span>
                                 <span className="text-3xl font-black text-text-primary tracking-tighter shrink-0">+4.2k <span className="text-sm font-bold text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full ml-1">↑12%</span></span>
-                                <span className="text-[10px] text-text-muted font-medium">Videos generated this month</span>
+                                <span className="text-[10px] text-text-muted font-medium">Vídeos gerados este mês</span>
                             </div>
                         </div>
 
@@ -56,8 +56,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                                     <Sparkles className="w-4 h-4" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] font-black text-accent uppercase tracking-widest leading-none mb-1">AI STRATEGY</p>
-                                    <p className="text-[10px] font-bold text-text-primary">Optimized for Instagram Reels</p>
+                                    <p className="text-[10px] font-black text-accent uppercase tracking-widest leading-none mb-1">ESTRATÉGIA IA</p>
+                                    <p className="text-[10px] font-bold text-text-primary">Otimizado para Instagram Reels</p>
                                 </div>
                             </div>
                         </div>
@@ -65,16 +65,16 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
                     <div className="mt-20 text-center max-w-md space-y-6">
                         <h1 className="text-5xl font-black text-text-primary tracking-tight leading-[1.1]">
-                            The future of content <span className="text-primary">creation</span> is blooming.
+                            O futuro da criação de conteúdo está <span className="text-primary">florescendo</span>.
                         </h1>
                         <div className="flex flex-col items-center gap-4 text-text-muted font-bold text-sm">
                             <div className="flex items-center gap-3">
                                 <CheckCircle2 className="w-5 h-5 text-primary" />
-                                <span>AI-Powered Content Automation</span>
+                                <span>Automação de Conteúdo com IA</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <CheckCircle2 className="w-5 h-5 text-primary" />
-                                <span>Multi-platform Strategic Insights</span>
+                                <span>Insights Estratégicos Multi-plataforma</span>
                             </div>
                         </div>
                     </div>
@@ -83,8 +83,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 <div className="relative z-10 flex items-center justify-between text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">
                     <span>© 2024 PÉTALAS AI</span>
                     <div className="flex gap-6">
-                        <span>PRIVACY</span>
-                        <span>TERMS</span>
+                        <span>PRIVACIDADE</span>
+                        <span>TERMOS</span>
                     </div>
                 </div>
             </div>

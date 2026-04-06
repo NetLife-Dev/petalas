@@ -18,48 +18,48 @@ import {
 import { cn } from '@/lib/utils'
 
 const columns = [
-    { title: 'New Lead', count: 3, color: 'bg-blue-500' },
-    { title: 'Qualified', count: 2, color: 'bg-primary' },
-    { title: 'Proposal', count: 1, color: 'bg-accent' },
-    { title: 'Converted', count: 4, color: 'bg-emerald-500' },
+    { title: 'Novo Lead', count: 3, color: 'bg-blue-500' },
+    { title: 'Qualificado', count: 2, color: 'bg-primary' },
+    { title: 'Proposta', count: 1, color: 'bg-rose-400' },
+    { title: 'Convertido', count: 4, color: 'bg-emerald-500' },
 ]
 
 const cards = [
     { 
         id: 1, 
-        column: 'New Lead', 
+        column: 'Novo Lead', 
         title: 'Renovação Cloud Corp', 
-        subtitle: 'Subscription renewal for Q3 2024', 
-        value: '$12,400',
-        badge: { label: 'AI ANALYSIS HIGH', type: 'accent' },
+        subtitle: 'Renovação de assinatura 3º Trimestre', 
+        value: 'R$ 12.400',
+        badge: { label: 'ANÁLISE DE IA: ALTA', type: 'accent' },
         avatar: 'https://i.pravatar.cc/150?u=1'
     },
     { 
         id: 2, 
-        column: 'Qualified', 
+        column: 'Qualificado', 
         title: 'Consultoria Premium', 
-        subtitle: 'Tailored AI implementation strategy', 
-        value: '$8,200',
-        insight: 'Decision maker visited pricing page 4 times today.',
+        subtitle: 'Estratégia de implementação de IA personalizada', 
+        value: 'R$ 8.200',
+        insight: 'Tomador de decisão visitou a página de preços 4 vezes hoje.',
         avatar: 'https://i.pravatar.cc/150?u=2',
         isStarred: true
     },
     { 
         id: 3, 
-        column: 'Proposal', 
+        column: 'Proposta', 
         title: 'Nexus Tech Global', 
-        subtitle: 'Enterprise video suite 50 seats', 
-        value: '$32,000',
-        badge: { label: 'DRAFT SENT', type: 'primary' },
+        subtitle: 'Suíte de vídeo corporativa 50 licenças', 
+        value: 'R$ 32.000',
+        badge: { label: 'RASCUNHO ENVIADO', type: 'primary' },
         avatar: 'https://i.pravatar.cc/150?u=3'
     },
     { 
         id: 4, 
-        column: 'Converted', 
+        column: 'Convertido', 
         title: 'Growth Partners', 
-        subtitle: 'Annual strategic contract', 
-        value: '$15,500',
-        badge: { label: 'SUCCESS', type: 'emerald' },
+        subtitle: 'Contrato estratégico anual', 
+        value: 'R$ 15.500',
+        badge: { label: 'SUCESSO', type: 'emerald' },
         avatar: 'https://i.pravatar.cc/150?u=4'
     }
 ]
@@ -71,15 +71,15 @@ export default function CRMPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
                     <div className="flex items-center gap-2 text-[10px] font-black text-text-muted tracking-widest uppercase mb-2">
-                        CRM <ChevronRight className="w-3 h-3" /> SALES PIPELINE
+                        CRM <ChevronRight className="w-3 h-3" /> FUNIL DE VENDAS
                     </div>
                     <h1 className="text-5xl font-extrabold text-text-primary tracking-tight">
-                        Revenue Funnel
+                        Funil de Receita
                     </h1>
                 </div>
                 <button className="btn-primary px-8 py-3.5 shadow-xl shadow-primary/25">
                     <Plus className="w-5 h-5" />
-                    New Deal
+                    Novo Negócio
                 </button>
             </div>
 
@@ -124,10 +124,10 @@ export default function CRMPage() {
                                         <p className="text-[10px] text-text-muted font-medium mb-6 line-clamp-2">{card.subtitle}</p>
                                         
                                         {card.insight && (
-                                            <div className="bg-accent/5 p-4 rounded-2xl border border-accent/10 mb-6 group-hover:bg-accent/10 transition-colors">
+                                            <div className="bg-rose-50/50 p-4 rounded-2xl border border-rose-100 mb-6 group-hover:bg-rose-100 transition-colors">
                                                 <div className="flex items-center gap-1.5 mb-1">
-                                                    <Sparkles className="w-3 h-3 text-accent" />
-                                                    <span className="text-[9px] font-black text-accent uppercase tracking-widest">AI INSIGHT</span>
+                                                    <Sparkles className="w-3 h-3 text-primary" />
+                                                    <span className="text-[9px] font-black text-primary uppercase tracking-widest">INSIGHT DE IA</span>
                                                 </div>
                                                 <p className="text-[9px] font-bold text-text-secondary leading-normal">{card.insight}</p>
                                             </div>
@@ -152,13 +152,13 @@ export default function CRMPage() {
                 <div className="lg:col-span-8 bg-surface-100/50 p-10 rounded-[40px] border border-surface-200 flex flex-col md:flex-row items-center gap-12 group hover:bg-white transition-all duration-700">
                     <div className="flex-1 space-y-6">
                         <h2 className="text-4xl font-extrabold text-text-primary tracking-tight leading-none">
-                            Identify High-Intent Leads with AI
+                            Identifique Leads de Alta Intenção com IA
                         </h2>
                         <p className="text-text-muted text-sm font-medium leading-relaxed max-w-md">
-                            Our neural engine analyzed your last 50 conversions and found 3 leads in your 'Qualified' column with a 92% close probability.
+                            Nosso motor neural analisou suas últimas 50 conversões e encontrou 3 leads na sua coluna 'Qualificado' com 92% de probabilidade de fechamento.
                         </p>
                         <button className="bg-text-primary text-white px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-text-primary/20 hover:scale-105 active:scale-95 transition-all">
-                            Run Deep Analysis
+                            Executar Análise Profunda
                         </button>
                     </div>
                     <div className="relative w-48 h-48 flex items-center justify-center">
@@ -172,15 +172,15 @@ export default function CRMPage() {
                 <div className="lg:col-span-4 bg-primary p-10 rounded-[40px] text-white flex flex-col justify-between shadow-2xl shadow-primary/30 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-20 -mt-20 blur-3xl group-hover:bg-white/10 transition-all duration-700" />
                     <div className="relative z-10">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 mb-2">TOTAL PIPELINE VALUE</p>
-                        <h2 className="text-6xl font-black tracking-tighter mb-8">$107,600</h2>
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80 mb-2">VALOR TOTAL DO FUNIL</p>
+                        <h2 className="text-6xl font-black tracking-tighter mb-8">R$ 107.600</h2>
                         
                         <div className="flex items-center gap-4 mt-auto opacity-90 group-hover:opacity-100 transition-opacity translate-y-4">
                             <div className="flex -space-x-4">
                                 <div className="w-10 h-10 rounded-full bg-white/20 border-2 border-primary flex items-center justify-center font-bold text-xs">12</div>
                                 <div className="w-10 h-10 rounded-full bg-white/40 border-2 border-primary" />
                             </div>
-                            <span className="text-[10px] font-bold tracking-tight max-w-[120px] leading-tight text-white/80">Opportunities active in this quarter</span>
+                            <span className="text-[10px] font-bold tracking-tight max-w-[120px] leading-tight text-white/80">Oportunidades ativas neste trimestre</span>
                         </div>
                     </div>
                 </div>

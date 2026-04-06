@@ -19,6 +19,7 @@ import {
     Sparkles,
     UserCircle2,
     History,
+    Calendar,
 } from 'lucide-react'
 import { useSession, signOut } from 'next-auth/react'
 import { cn, getInitials } from '@/lib/utils'
@@ -26,16 +27,16 @@ import toast from 'react-hot-toast'
 
 const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/criar', label: 'Video Creation', icon: Video, activeGlow: true },
-    { href: '/biblioteca', label: 'Library', icon: Library },
+    { href: '/criar', label: 'Criação de Vídeo', icon: Video, activeGlow: true },
+    { href: '/biblioteca', label: 'Biblioteca', icon: Library },
     { href: '/crm', label: 'CRM', icon: Users },
-    { href: '/contatos', label: 'Contacts', icon: UserCircle2 },
-    { href: '/suporte', label: 'AI Support', icon: MessageSquare },
+    { href: '/agenda', label: 'Agenda', icon: Calendar },
+    { href: '/suporte', label: 'Suporte IA', icon: MessageSquare },
 ]
 
 const bottomItems = [
-    { href: '/configuracoes', label: 'Settings', icon: Settings },
-    { href: '/ajuda', label: 'Help Center', icon: HelpCircle },
+    { href: '/configuracoes', label: 'Configurações', icon: Settings },
+    { href: '/ajuda', label: 'Central de Ajuda', icon: HelpCircle },
 ]
 
 export function CreatorSidebar() {
@@ -71,10 +72,10 @@ export function CreatorSidebar() {
                     </div>
                     <div className="flex flex-col">
                         <span className="text-text-primary font-bold text-2xl tracking-tighter leading-none">
-                            Luminous
+                            Pétalas
                         </span>
                         <span className="text-[10px] text-text-muted font-bold uppercase tracking-widest mt-1">
-                            Video AI & CRM
+                            Vídeo IA & CRM
                         </span>
                     </div>
                 </div>
@@ -156,7 +157,7 @@ export function CreatorSidebar() {
                         className="w-full flex items-center gap-3 px-4 py-2 rounded-xl text-text-muted hover:text-red-600 hover:bg-red-50 transition-all duration-200 text-sm font-medium"
                     >
                         <LogOut className="w-4 h-4" />
-                        <span>Logout</span>
+                        <span>Sair</span>
                     </button>
                 </div>
             </div>
@@ -177,7 +178,7 @@ export function CreatorSidebar() {
                         <Sparkles className="w-5 h-5 text-white" />
                     </div>
                     <span className="text-text-primary font-bold text-xl tracking-tighter">
-                        Luminous
+                        Pétalas
                     </span>
                 </div>
                 <div className="flex items-center gap-2">

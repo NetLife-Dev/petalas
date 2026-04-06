@@ -80,8 +80,8 @@ export default function LoginPage() {
             </div>
 
             <div className="text-center lg:text-left mb-10">
-                <h2 className="text-3xl font-black text-text-primary tracking-tight">Sign in to your account</h2>
-                <p className="text-text-muted mt-2 font-medium">Use your organization credentials to login.</p>
+                <h2 className="text-3xl font-black text-text-primary tracking-tight">Entre na sua conta</h2>
+                <p className="text-text-muted mt-2 font-medium">Use suas credenciais para acessar sua conta.</p>
             </div>
 
             <div className="space-y-4 mb-10">
@@ -104,7 +104,7 @@ export default function LoginPage() {
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="h-[1px] flex-1 bg-surface-100" />
-                    <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Or login with email</span>
+                    <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Ou entre com e-mail</span>
                     <div className="h-[1px] flex-1 bg-surface-100" />
                 </div>
             </div>
@@ -116,7 +116,7 @@ export default function LoginPage() {
                         <input
                             id="email"
                             type="email"
-                            placeholder="Email address"
+                            placeholder="Seu endereço de e-mail"
                             className={cn(
                                 "w-full bg-surface-50 border-2 border-transparent focus:bg-white focus:border-primary/20 rounded-2xl py-4 pl-14 pr-5 text-sm font-bold text-text-primary placeholder-surface-300 transition-all outline-none",
                                 errors.email && "border-red-100 bg-red-50"
@@ -135,7 +135,7 @@ export default function LoginPage() {
                         <input
                             id="senha"
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Password"
+                            placeholder="Sua senha"
                             className={cn(
                                 "w-full bg-surface-50 border-2 border-transparent focus:bg-white focus:border-primary/20 rounded-2xl py-4 pl-14 pr-14 text-sm font-bold text-text-primary placeholder-surface-300 transition-all outline-none",
                                 errors.senha && "border-red-100 bg-red-50"
@@ -158,13 +158,13 @@ export default function LoginPage() {
                 <div className="flex items-center justify-between px-2">
                     <label className="flex items-center gap-3 cursor-pointer group">
                         <input type="checkbox" className="w-5 h-5 rounded-lg border-surface-200 text-primary focus:ring-primary/20 transition-all cursor-pointer" />
-                        <span className="text-sm font-bold text-text-muted group-hover:text-text-primary transition-colors">Remember me</span>
+                        <span className="text-sm font-bold text-text-muted group-hover:text-text-primary transition-colors">Lembrar de mim</span>
                     </label>
                     <Link
                         href="/esqueci-senha"
                         className="text-sm font-black text-primary hover:text-primary-600 transition-colors uppercase tracking-widest"
                     >
-                        Forgot?
+                        Esqueceu?
                     </Link>
                 </div>
 
@@ -176,18 +176,18 @@ export default function LoginPage() {
                     {isLoading ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            AUTHENTICATING...
+                            AUTENTICANDO...
                         </>
                     ) : (
-                        'SIGN IN'
+                        'ENTRAR'
                     )}
                 </button>
             </form>
 
             <p className="mt-12 text-center text-sm font-bold text-text-muted">
-                Don't have an account?{' '}
+                Não tem uma conta?{' '}
                 <Link href="/cadastro" className="text-primary hover:text-primary-600 font-black transition-colors underline-offset-4 hover:underline">
-                    Create Account
+                    Criar Conta
                 </Link>
             </p>
         </div>

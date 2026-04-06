@@ -59,7 +59,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
             <div className="bg-white border border-surface-200 rounded-[20px] px-6 py-4 shadow-xl animate-fade-in">
                 <p className="text-[10px] font-black text-text-muted uppercase tracking-widest">{label}</p>
                 <p className="text-xl font-black text-primary mt-1">
-                    {payload[0].value} <span className="text-sm">Vids</span>
+                    {payload[0].value} <span className="text-sm">Vídeos</span>
                 </p>
             </div>
         )
@@ -99,15 +99,15 @@ export default function AdminDashboardPage() {
 
     const metricCards = [
         {
-            label: 'Active Creators',
+            label: 'Criadores Ativos',
             value: stats.totalUsers,
             icon: Users,
-            color: 'text-blue-500',
-            bg: 'bg-blue-50',
+            color: 'text-rose-500',
+            bg: 'bg-rose-50',
             change: '+12%',
         },
         {
-            label: 'Monthly Blooms',
+            label: 'Criações/Mês',
             value: stats.videosThisMonth,
             icon: Video,
             color: 'text-primary',
@@ -115,7 +115,7 @@ export default function AdminDashboardPage() {
             change: '+8%',
         },
         {
-            label: 'Today Blooms',
+            label: 'Vídeos Hoje',
             value: stats.videosToday,
             icon: TrendingUp,
             color: 'text-emerald-500',
@@ -123,11 +123,11 @@ export default function AdminDashboardPage() {
             change: '+3%',
         },
         {
-            label: 'Total Resource',
+            label: 'Consumo Total',
             value: stats.totalQuotaConsumed,
             icon: Activity,
-            color: 'text-purple-500',
-            bg: 'bg-purple-50',
+            color: 'text-amber-500',
+            bg: 'bg-amber-50',
             change: '+5%',
         },
     ]
@@ -138,10 +138,10 @@ export default function AdminDashboardPage() {
                 <header>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-widest mb-4 shadow-lg shadow-primary/20">
                         <ShieldCheck className="w-3 h-3" />
-                        Administrator
+                        Administrador
                     </div>
-                    <h1 className="text-4xl font-black text-text-primary tracking-tight">System Pulse</h1>
-                    <p className="text-text-muted mt-2 font-medium">Real-time overview of the Pétalas ecosystem.</p>
+                    <h1 className="text-4xl font-black text-text-primary tracking-tight">Pulso do Sistema</h1>
+                    <p className="text-text-muted mt-2 font-medium">Visão em tempo real do ecossistema Pétalas.</p>
                 </header>
 
                 {/* Metric Cards */}
@@ -172,7 +172,7 @@ export default function AdminDashboardPage() {
                                         <ArrowUpRight className="w-3 h-3" />
                                         <span className="text-[10px] font-black">{card.change}</span>
                                     </div>
-                                    <span className="text-[10px] text-text-muted font-bold uppercase tracking-wider">vs last month</span>
+                                    <span className="text-[10px] text-text-muted font-bold uppercase tracking-wider">vs mês anterior</span>
                                 </div>
                             </div>
                         )
@@ -184,10 +184,10 @@ export default function AdminDashboardPage() {
                     {/* Line Chart */}
                     <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm xl:col-span-2 flex flex-col gap-8">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-xl font-black text-text-primary">Bloom Velocity</h2>
+                            <h2 className="text-xl font-black text-text-primary">Velocidade de Criação</h2>
                             <div className="flex items-center gap-2 text-[10px] font-black text-text-muted uppercase tracking-widest">
                                 <Clock className="w-3 h-3" />
-                                LAST 30 DAYS
+                                ÚLTIMOS 30 DIAS
                             </div>
                         </div>
                         <div className="h-[300px] w-full">
@@ -208,14 +208,14 @@ export default function AdminDashboardPage() {
                                         tickLine={false}
                                         axisLine={false}
                                     />
-                                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#6B21A8', strokeWidth: 1 }} />
+                                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#E11D48', strokeWidth: 1 }} />
                                     <Line
                                         type="monotone"
                                         dataKey="videos"
-                                        stroke="#6B21A8"
+                                        stroke="#E11D48"
                                         strokeWidth={4}
                                         dot={false}
-                                        activeDot={{ r: 6, fill: '#6B21A8', strokeWidth: 4, stroke: '#fff' }}
+                                        activeDot={{ r: 6, fill: '#E11D48', strokeWidth: 4, stroke: '#fff' }}
                                     />
                                 </LineChart>
                             </ResponsiveContainer>
@@ -224,7 +224,7 @@ export default function AdminDashboardPage() {
 
                     {/* Bar chart - Top users */}
                     <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-8">
-                        <h2 className="text-xl font-black text-text-primary">Top Bloomers</h2>
+                        <h2 className="text-xl font-black text-text-primary">Principais Criadores</h2>
                         {topUsers.length > 0 ? (
                             <div className="h-[300px] w-full">
                                 <ResponsiveContainer width="100%" height="100%">
@@ -240,14 +240,14 @@ export default function AdminDashboardPage() {
                                             width={100}
                                         />
                                         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'transparent' }} />
-                                        <Bar dataKey="total" fill="#6B21A8" radius={[0, 12, 12, 0]} barSize={24} />
+                                        <Bar dataKey="total" fill="#E11D48" radius={[0, 12, 12, 0]} barSize={24} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
                         ) : (
                             <div className="flex-1 flex flex-col items-center justify-center text-text-muted gap-4">
                                 <Target className="w-10 h-10 opacity-10" />
-                                <p className="text-sm font-bold">No data yet</p>
+                                <p className="text-sm font-bold">Sem dados ainda</p>
                             </div>
                         )}
                     </div>
@@ -256,7 +256,7 @@ export default function AdminDashboardPage() {
                 {/* Recent Activity Table */}
                 <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-8">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-black text-text-primary">Live Activity</h2>
+                        <h2 className="text-xl font-black text-text-primary">Atividade em Tempo Real</h2>
                         <div className="w-10 h-10 rounded-2xl bg-surface-50 text-text-muted flex items-center justify-center">
                             <Clock className="w-5 h-5" />
                         </div>
@@ -265,16 +265,16 @@ export default function AdminDashboardPage() {
                     {recentVideos.length === 0 && !isLoading ? (
                         <div className="text-center py-20 flex flex-col items-center gap-4">
                             <Video className="w-16 h-16 text-surface-200" />
-                            <p className="text-text-muted font-bold">The garden is quiet. No blooms yet.</p>
+                            <p className="text-text-muted font-bold">O jardim está silencioso. Sem criações ainda.</p>
                         </div>
                     ) : (
                         <div className="overflow-hidden">
                             <table className="w-full">
                                 <thead>
                                     <tr className="border-b border-surface-100">
-                                        <th className="text-left py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Product / Piece</th>
-                                        <th className="text-left py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Creator</th>
-                                        <th className="text-left py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Timestamp</th>
+                                        <th className="text-left py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Produto / Peça</th>
+                                        <th className="text-left py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Criador</th>
+                                        <th className="text-left py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Data/Hora</th>
                                         <th className="text-right py-4 text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Status</th>
                                     </tr>
                                 </thead>

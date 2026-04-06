@@ -12,11 +12,11 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
     title: {
-        default: 'Pétalas | Luminous - Vídeo AI & CRM',
+        default: 'Pétalas | Vídeo IA & CRM',
         template: '%s | Pétalas',
     },
     description:
-        'Pétalas Luminous: A próxima geração de CRM com criação de vídeos por Inteligência Artificial. Potencialize seu pipeline de vendas e conteúdo.',
+        'Pétalas: A próxima geração de CRM com criação de vídeos por Inteligência Artificial. Potencialize seu pipeline de vendas e conteúdo.',
     keywords: [
         'SaaS',
         'CRM',
@@ -53,7 +53,7 @@ export default function RootLayout({
                             },
                             success: {
                                 iconTheme: {
-                                    primary: '#7C3AED',
+                                    primary: '#E11D48',
                                     secondary: '#ffffff',
                                 },
                             },

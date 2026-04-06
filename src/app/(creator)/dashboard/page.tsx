@@ -19,17 +19,17 @@ import {
 import { cn } from '@/lib/utils'
 
 const metrics = [
-    { label: 'CREATED VIDEOS', value: '1.284', trend: '+12.5%', icon: Video, color: 'bg-primary/10 text-primary' },
-    { label: 'HARD COPIES', value: '492', trend: 'Stable', icon: FileText, color: 'bg-blue-500/10 text-blue-500' },
-    { label: 'CAPTURED LEADS', value: '8.102', trend: '+24.1%', icon: UserPlus, color: 'bg-accent/10 text-accent' },
-    { label: 'ACTIVE DEALS', value: '156', trend: '+8.2%', icon: DollarSign, color: 'bg-blue-400/10 text-blue-400' },
+    { label: 'VÍDEOS CRIADOS', value: '1.284', trend: '+12.5%', icon: Video, color: 'bg-primary/10 text-primary' },
+    { label: 'RASCUNHOS', value: '492', trend: 'Estável', icon: FileText, color: 'bg-blue-500/10 text-blue-500' },
+    { label: 'LEADS CAPTURADOS', value: '8.102', trend: '+24.1%', icon: UserPlus, color: 'bg-accent/10 text-accent' },
+    { label: 'NEGÓCIOS ATIVOS', value: '156', trend: '+8.2%', icon: DollarSign, color: 'bg-blue-400/10 text-blue-400' },
 ]
 
 const recentActivity = [
-    { id: 1, type: 'video', title: "Video 'Summer Bloom' exported", time: "2 mins ago", detail: "High Quality", color: "bg-primary" },
-    { id: 2, type: 'lead', title: "New Lead: Sarah Jenkins", time: "45 mins ago", detail: "From Landing Page", color: "bg-accent" },
-    { id: 3, type: 'deal', title: "Deal closed: Green Valley Co.", time: "3 hours ago", detail: "$4,200.00", color: "bg-blue-500" },
-    { id: 4, type: 'system', title: "AI Support: Prompt Refined", time: "5 hours ago", detail: "System Update", color: "bg-primary" },
+    { id: 1, type: 'video', title: "Vídeo 'Coleção Outono' exportado", time: "2 min atrás", detail: "Alta Qualidade", color: "bg-primary" },
+    { id: 2, type: 'lead', title: "Novo Lead: Sarah Jenkins", time: "45 min atrás", detail: "Via Landing Page", color: "bg-rose-400" },
+    { id: 3, type: 'deal', title: "Negócio fechado: Vale das Pétalas Ltda.", time: "3 horas atrás", detail: "R$ 4.200,00", color: "bg-blue-500" },
+    { id: 4, type: 'system', title: "Suporte IA: Roteiro Otimizado", time: "5 horas atrás", detail: "Atualização", color: "bg-primary" },
 ]
 
 export default function DashboardPage() {
@@ -37,13 +37,13 @@ export default function DashboardPage() {
 
     const chartData = [
         { month: 'JAN', val: 30, max: 100 },
-        { month: 'FEB', val: 60, max: 100 },
+        { month: 'FEV', val: 60, max: 100 },
         { month: 'MAR', val: 85, max: 100 },
-        { month: 'APR', val: 40, max: 100 },
-        { month: 'MAY', val: 75, max: 100 },
+        { month: 'ABR', val: 40, max: 100 },
+        { month: 'MAI', val: 75, max: 100 },
         { month: 'JUN', val: 95, max: 100 },
         { month: 'JUL', val: 55, max: 100 },
-        { month: 'AUG', val: 70, max: 100 },
+        { month: 'AGO', val: 70, max: 100 },
     ]
 
     return (
@@ -52,16 +52,16 @@ export default function DashboardPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
                     <h1 className="text-5xl font-extrabold text-text-primary tracking-tight">
-                        Hello, Manager
+                        Olá, Criador
                     </h1>
                     <p className="text-text-muted mt-2 text-lg">
-                        Welcome back to <span className="text-primary font-bold">Pétalas</span> dashboard. Your content is blooming.
+                        Bem-vindo ao seu painel <span className="text-primary font-bold">Pétalas</span>. Seu conteúdo está em plena floração.
                     </p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="bg-accent/5 border border-accent/20 px-4 py-2 rounded-full flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                        <span className="text-accent text-[10px] font-black uppercase tracking-widest">AI Status: Optimal</span>
+                    <div className="bg-primary/5 border border-primary/20 px-4 py-2 rounded-full flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                        <span className="text-primary text-[10px] font-black uppercase tracking-widest">Status da IA: Perfeito</span>
                     </div>
                 </div>
             </div>
@@ -99,12 +99,12 @@ export default function DashboardPage() {
                     <div className="bg-white p-8 rounded-3xl border border-surface-200 shadow-sm relative overflow-hidden h-full flex flex-col">
                         <div className="flex items-center justify-between mb-12">
                             <div>
-                                <h2 className="text-2xl font-extrabold text-text-primary tracking-tight">Monthly Content Generation</h2>
-                                <p className="text-text-muted text-sm mt-1 font-medium">Total distribution across all platforms</p>
+                                <h2 className="text-2xl font-extrabold text-text-primary tracking-tight">Geração Mensal de Conteúdo</h2>
+                                <p className="text-text-muted text-sm mt-1 font-medium">Distribuição total em todas as plataformas</p>
                             </div>
                             <div className="flex bg-surface-100 p-1 rounded-xl gap-1">
-                                <button className="px-5 py-1.5 rounded-lg text-xs font-bold text-text-muted hover:bg-white hover:text-text-primary transition-all">Video</button>
-                                <button className="px-5 py-1.5 rounded-lg text-xs font-bold bg-primary text-white shadow-md">All Assets</button>
+                                <button className="px-5 py-1.5 rounded-lg text-xs font-bold text-text-muted hover:bg-white hover:text-text-primary transition-all">Vídeo</button>
+                                <button className="px-5 py-1.5 rounded-lg text-xs font-bold bg-primary text-white shadow-md">Todos</button>
                             </div>
                         </div>
 
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
                                 <Plus className="w-5 h-5" />
                             </div>
-                            <span className="font-bold text-primary">Create New Video</span>
+                            <span className="font-bold text-primary">Criar Novo Vídeo</span>
                         </div>
                     </Link>
                 </div>
@@ -143,13 +143,13 @@ export default function DashboardPage() {
                         <div className="relative z-10">
                             <div className="flex items-center gap-2 mb-8 opacity-80">
                                 <Sparkles className="w-5 h-5" />
-                                <span className="text-[10px] font-black uppercase tracking-widest">AI Suggestion</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest">Sugestão da IA</span>
                             </div>
                             <h3 className="text-3xl font-extrabold tracking-tight mb-8 leading-[1.1]">
-                                You have 4 leads likely to close this week.
+                                Você possui 4 leads com alta probabilidade de conversão hoje.
                             </h3>
                             <button className="w-full bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-2xl py-3 text-sm font-bold hover:bg-white hover:text-primary transition-all active:scale-95">
-                                Review Smart List
+                                Ver Lista Inteligente
                             </button>
                         </div>
                     </div>
@@ -157,7 +157,7 @@ export default function DashboardPage() {
                     {/* Recent Activity */}
                     <div className="bg-white p-8 rounded-3xl border border-surface-200 shadow-sm">
                         <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-xl font-extrabold text-text-primary tracking-tight">Recent Activity</h2>
+                            <h2 className="text-xl font-extrabold text-text-primary tracking-tight">Atividade Recente</h2>
                             <MoreHorizontal className="w-5 h-5 text-text-muted cursor-pointer" />
                         </div>
                         <div className="space-y-6">
@@ -179,7 +179,7 @@ export default function DashboardPage() {
                             ))}
                         </div>
                         <button className="w-full mt-6 py-3 border-2 border-surface-100 rounded-2xl text-xs font-bold text-text-muted hover:bg-surface-50 hover:text-text-primary transition-all">
-                            VIEW ALL ACTIVITY
+                            VER TODA ATIVIDADE
                         </button>
                     </div>
 
@@ -192,8 +192,8 @@ export default function DashboardPage() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                         <div className="absolute bottom-6 left-6 right-6 text-white">
-                            <p className="text-[10px] font-black uppercase tracking-widest opacity-70 mb-2">Featured Asset</p>
-                            <h4 className="text-xl font-extrabold tracking-tight leading-tight">Mastering AI Narrative Structures</h4>
+                            <p className="text-[10px] font-black uppercase tracking-widest opacity-70 mb-2">Artigo em Destaque</p>
+                            <h4 className="text-xl font-extrabold tracking-tight leading-tight">Dominando Estruturas Narrativas com IA</h4>
                         </div>
                     </div>
                 </div>

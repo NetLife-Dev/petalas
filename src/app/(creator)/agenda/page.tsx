@@ -23,11 +23,11 @@ import { cn } from '@/lib/utils'
 type NotionConnectState = 'disconnected' | 'connecting' | 'connected'
 
 const SAMPLE_IDEAS = [
-    'How Home Equity can blooom your home renovation',
-    'Financial differences: Real Estate vs Consortium',
-    '5 reasons to use asset-backed credit to grow',
-    'Smart Planning: When is it time to refinance?',
-    'Complete Guide: Real Estate Credit Blooming',
+    'Como o Home Equity pode impulsionar sua reforma residencial',
+    'Diferenças financeiras: Imobiliário vs Consórcio',
+    '5 motivos para usar crédito com garantia de ativos para crescer',
+    'Planejamento Inteligente: Quando é a hora de refinanciar?',
+    'Guia Completo: Florescimento do Crédito Imobiliário',
 ]
 
 export default function AgendaPage() {
@@ -40,10 +40,10 @@ export default function AgendaPage() {
     const [isAnalyzing, setIsAnalyzing] = useState(false)
     const [analysisResult, setAnalysisResult] = useState('')
     const [posts] = useState([
-        { id: '1', titulo: 'Home Equity — Benefits for Freelancers', status: 'rascunho', data: '2024-12-10' },
-        { id: '2', titulo: 'Financing: Your Questions Answered', status: 'em revisão', data: '2024-12-12' },
-        { id: '3', titulo: 'Real Estate Credit in 2025 Bloom', status: 'aprovado', data: '2024-12-15' },
-        { id: '4', titulo: 'Market Rates and Growth Impacts', status: 'publicado', data: '2024-12-08' },
+        { id: '1', titulo: 'Home Equity — Benefícios para Autônomos', status: 'rascunho', data: '2024-12-10' },
+        { id: '2', titulo: 'Financiamento: Suas Dúvidas Respondidas', status: 'em revisão', data: '2024-12-12' },
+        { id: '3', titulo: 'Crédito Imobiliário em 2025: O Florescer', status: 'aprovado', data: '2024-12-15' },
+        { id: '4', titulo: 'Taxas de Mercado e Impactos no Crescimento', status: 'publicado', data: '2024-12-08' },
     ])
 
     useEffect(() => {
@@ -63,7 +63,7 @@ export default function AgendaPage() {
 
     const handleConnectNotion = async () => {
         if (!notionToken.trim()) {
-            toast.error('Insert your Notion bloom secret')
+            toast.error('Insira sua chave secreta (bloom secret) do Notion')
             return
         }
         setConnectState('connecting')
@@ -77,17 +77,17 @@ export default function AgendaPage() {
         })
 
         if (!res.ok) {
-            toast.error('Error blooming with Notion')
+            toast.error('Erro ao florescer integração com Notion')
             setConnectState('disconnected')
         } else {
-            toast.success('Notion synced successfully!')
+            toast.success('Notion sincronizado com sucesso!')
             setConnectState('connected')
         }
     }
 
     const handleGenerateIdeas = async () => {
         if (!ideaInput.trim()) {
-            toast.error('Describe the product to grow ideas')
+            toast.error('Descreva o produto para gerar ideias')
             return
         }
         setIsGeneratingIdeas(true)
@@ -101,37 +101,37 @@ export default function AgendaPage() {
 
     const handleAnalyzeCompetitor = async () => {
         if (!concorrenteInput.trim()) {
-            toast.error('Insert profile handler for analysis')
+            toast.error('Insira o @usuario do perfil para análise')
             return
         }
         setIsAnalyzing(true)
         await new Promise((r) => setTimeout(r, 2500))
         setAnalysisResult(`
-**Profile Pulse: ${concorrenteInput}**
+**Pulso do Perfil: ${concorrenteInput}**
 
-📊 **Content Flow**
-Highly informative bloom with accessible language. Strong focus on short-form reels and infographics.
+📊 **Fluxo de Conteúdo**
+Conteúdo altamente informativo com linguagem acessível. Foco forte em reels curtos e infográficos.
 
-📅 **Posting Frequency**
-Average of 5-7 blooms per week. Peak visibility on Tuesdays and Thursdays.
+📅 **Frequência de Postagens**
+Média de 5-7 postagens por semana. Pico de visibilidade às terças e quintas-feiras.
 
-🎯 **Asset Distribution**
-- 40% Education Blooms (30-60s)
-- 30% Data-driven Carousels
-- 20% Tip-based Static Posts
-- 10% Interactive Polls
+🎯 **Distribuição de Ativos**
+- 40% Conteúdos Educativos (30-60s)
+- 30% Carrosséis baseados em Dados
+- 20% Posts Estáticos de Dicas
+- 10% Enquetes Interativas
 
-💡 **Growth Opportunities**
-Competitor is missing: Long-term planning paths, comparative resource blooms, and client success stories.
+💡 **Oportunidades de Crescimento**
+Falta no concorrente: Caminhos de planejamento a longo prazo, vídeos comparativos de recursos e histórias de sucesso de clientes.
     `.trim())
         setIsAnalyzing(false)
     }
 
     const statusConfig: Record<string, { label: string; icon: typeof Circle; color: string; bg: string }> = {
-        'rascunho': { label: 'Seed', icon: Circle, color: 'text-text-muted', bg: 'bg-surface-100' },
-        'em revisão': { label: 'Watering', icon: AlertCircle, color: 'text-amber-500', bg: 'bg-amber-50' },
-        'aprovado': { label: 'Bloom', icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-        'publicado': { label: 'Harvested', icon: Zap, color: 'text-primary', bg: 'bg-primary/5' },
+        'rascunho': { label: 'Semente', icon: Circle, color: 'text-text-muted', bg: 'bg-surface-100' },
+        'em revisão': { label: 'Regando', icon: AlertCircle, color: 'text-amber-500', bg: 'bg-amber-50' },
+        'aprovado': { label: 'Florescer', icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
+        'publicado': { label: 'Colhido', icon: Zap, color: 'text-primary', bg: 'bg-primary/5' },
     }
 
     if (connectState !== 'connected') {
@@ -139,8 +139,8 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
             <main className="flex-1 p-8 lg:p-12 bg-surface-50 min-h-screen">
                 <div className="max-w-2xl mx-auto space-y-12">
                     <header>
-                        <h1 className="text-4xl font-black text-text-primary tracking-tight">Content Calendar</h1>
-                        <p className="text-text-muted mt-2 font-medium">Sync your strategy with the Notion ecosystem.</p>
+                        <h1 className="text-4xl font-black text-text-primary tracking-tight">Calendário de Conteúdo</h1>
+                        <p className="text-text-muted mt-2 font-medium">Sincronize sua estratégia com o ecossistema Notion.</p>
                     </header>
 
                     <div className="bg-white border border-surface-200 rounded-[40px] p-12 shadow-premium text-center flex flex-col items-center gap-8">
@@ -148,9 +148,9 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                             <Calendar className="w-10 h-10 text-primary" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-black text-text-primary">Connect Notion Workspace</h2>
+                            <h2 className="text-2xl font-black text-text-primary">Conectar Workspace do Notion</h2>
                             <p className="text-text-muted mt-3 font-medium max-w-sm">
-                                Integrate with Notion to manage your content hub, approvals, and scheduling directly from your garden.
+                                Integre com o Notion para gerenciar seu hub de conteúdo, aprovações e agendamentos diretamente do seu painel.
                             </p>
                         </div>
 
@@ -165,7 +165,7 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                                     className="w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm"
                                 />
                                 <p className="text-[10px] text-text-muted font-bold px-2">
-                                    Get yours at notion.so → Settings → Integrations
+                                    Obtenha a sua em notion.so → Configurações → Integrações
                                 </p>
                             </div>
                             <button
@@ -176,12 +176,12 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                                 {connectState === 'connecting' ? (
                                     <>
                                         <Loader2 className="w-5 h-5 animate-spin" />
-                                        SYNCING GARDEN...
+                                        SINCRONIZANDO O PAINEL...
                                     </>
                                 ) : (
                                     <>
                                         <Link2 className="w-5 h-5" />
-                                        CONNECT WORKSPACE
+                                        CONECTAR WORKSPACE
                                     </>
                                 )}
                             </button>
@@ -197,12 +197,12 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
             <div className="max-w-6xl mx-auto flex flex-col gap-10">
                 <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                     <div>
-                        <h1 className="text-4xl font-black text-text-primary tracking-tight">Strategy Calendar</h1>
-                        <p className="text-text-muted mt-2 font-medium">Integrated content hub synced with Notion.</p>
+                        <h1 className="text-4xl font-black text-text-primary tracking-tight">Calendário Estratégico</h1>
+                        <p className="text-text-muted mt-2 font-medium">Hub de conteúdo integrado sincronizado com o Notion.</p>
                     </div>
                     <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 shadow-sm animate-fade-in">
                         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">Workspace Synced</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">Workspace Sincronizado</span>
                     </div>
                 </header>
 
@@ -213,7 +213,7 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                             <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
                                 <Share2 className="w-7 h-7" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Content Hub Flow</h2>
+                            <h2 className="text-xl font-black text-text-primary">Fluxo do Hub de Conteúdo</h2>
                         </div>
 
                         <div className="space-y-3">
@@ -247,16 +247,16 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                             <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
                                 <Brain className="w-7 h-7" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Idea Bloom Generator</h2>
+                            <h2 className="text-xl font-black text-text-primary">Gerador de Ideias (Bloom)</h2>
                         </div>
 
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Product Seed or Theme</label>
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Semente ou Tema do Produto</label>
                                 <div className="flex gap-3">
                                     <input
                                         type="text"
-                                        placeholder="Ex: Real Estate Investment for Teens"
+                                        placeholder="Ex: Investimento Imobiliário para Jovens"
                                         value={ideaInput}
                                         onChange={(e) => setIdeaInput(e.target.value)}
                                         className="flex-1 bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm"
@@ -297,16 +297,16 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                             <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
                                 <Target className="w-7 h-7" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Ecosystem Pulse Analysis</h2>
+                            <h2 className="text-xl font-black text-text-primary">Análise de Pulso do Ecossistema</h2>
                         </div>
 
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Competitor @Handle</label>
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">@Usuario do Concorrente</label>
                                 <div className="flex gap-3">
                                     <input
                                         type="text"
-                                        placeholder="@digital_bloom or link..."
+                                        placeholder="@digital_bloom ou link..."
                                         value={concorrenteInput}
                                         onChange={(e) => setConcorrenteInput(e.target.value)}
                                         className="flex-1 bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm"
@@ -335,10 +335,10 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                             <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
                                 <Clock className="w-7 h-7" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Automatic Harvesting</h2>
+                            <h2 className="text-xl font-black text-text-primary">Agendamento Automático</h2>
                         </div>
                         <p className="text-sm font-medium text-text-muted leading-relaxed px-2">
-                            Schedule automatic blooming of your assets across synced social gardens.
+                            Agende a publicação automática dos seus materiais em seus canais sociais sincronizados.
                         </p>
                         
                         <div className="mt-8 p-10 rounded-[32px] bg-surface-50 border-2 border-surface-100 text-center flex flex-col items-center gap-4 border-dashed">
@@ -346,9 +346,9 @@ Competitor is missing: Long-term planning paths, comparative resource blooms, an
                                 <Zap className="w-6 h-6 opacity-30" />
                             </div>
                             <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] max-w-[200px]">
-                                Configure your Social Ecosystem in{' '}
+                                Configure seu Ecossistema Social em{' '}
                                 <a href="/configuracoes" className="text-primary hover:underline italic">
-                                    Identity → Ecosystem
+                                    Identidade → Ecossistema
                                 </a>
                             </p>
                         </div>

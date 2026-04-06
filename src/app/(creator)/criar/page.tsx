@@ -74,8 +74,8 @@ export default function CriarPage() {
                 {/* Left Side: Creation Engine Form */}
                 <div className="flex-1 p-8 lg:p-12 space-y-12">
                     <header>
-                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">CREATION ENGINE</p>
-                        <h1 className="text-5xl font-extrabold text-text-primary tracking-tight">New Video Project</h1>
+                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">MOTOR DE GERAÇÃO</p>
+                        <h1 className="text-5xl font-extrabold text-text-primary tracking-tight">Novo Projeto de Vídeo</h1>
                     </header>
 
                     <div className="space-y-16 max-w-xl">
@@ -83,13 +83,13 @@ export default function CriarPage() {
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary/5">01</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Product Identity</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Identidade do Produto</h3>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-widest pl-1">PRODUCT NAME</label>
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-widest pl-1">NOME DO PRODUTO</label>
                                 <input 
                                     type="text" 
-                                    placeholder="e.g. Lumina Smart Watch"
+                                    placeholder="Ex: Tênis Ultra Flow"
                                     className="w-full bg-surface-50 border-none rounded-2xl p-5 text-text-primary placeholder-surface-300 focus:ring-2 focus:ring-primary/20 transition-all outline-none"
                                     value={productName}
                                     onChange={(e) => setProductName(e.target.value)}
@@ -101,7 +101,7 @@ export default function CriarPage() {
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-surface-100 text-text-muted flex items-center justify-center text-xs font-bold">02</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Product Assets</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Arquivos do Produto</h3>
                             </div>
                             <div 
                                 onClick={() => fileInputRef.current?.click()}
@@ -123,8 +123,8 @@ export default function CriarPage() {
                                             <Upload className="w-6 h-6" />
                                         </div>
                                         <div className="text-center">
-                                            <p className="font-bold text-text-primary">Drop product photo here</p>
-                                            <p className="text-xs text-text-muted mt-1">PNG or JPG, up to 10MB</p>
+                                            <p className="font-bold text-text-primary">Arraste a foto do produto aqui</p>
+                                            <p className="text-xs text-text-muted mt-1">PNG ou JPG, até 10MB</p>
                                         </div>
                                     </>
                                 )}
@@ -136,7 +136,7 @@ export default function CriarPage() {
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-surface-100 text-text-muted flex items-center justify-center text-xs font-bold">03</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Video Duration</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Duração do Vídeo</h3>
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                                 {['15s', '30s', '60s'].map((d) => (
@@ -152,7 +152,7 @@ export default function CriarPage() {
                                     >
                                         <span className="text-xl font-black tracking-tighter leading-none">{d}</span>
                                         <span className="text-[10px] font-black uppercase tracking-widest opacity-60">
-                                            {d === '15s' ? 'SHORT' : d === '30s' ? 'STANDARD' : 'LONG'}
+                                            {d === '15s' ? 'CURTO' : d === '30s' ? 'PADRÃO' : 'LONGO'}
                                         </span>
                                     </button>
                                 ))}
@@ -163,7 +163,7 @@ export default function CriarPage() {
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-surface-100 text-text-muted flex items-center justify-center text-xs font-bold">04</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Narrative Style</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Estilo de Narrativa</h3>
                             </div>
                             <div className="relative group">
                                 <select 
@@ -171,10 +171,10 @@ export default function CriarPage() {
                                     onChange={(e) => setNarrativeStyle(e.target.value)}
                                     className="w-full bg-surface-50 border-none rounded-2xl p-5 text-text-primary font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/20"
                                 >
-                                    <option>High-Energy Hype</option>
-                                    <option>Professional Overview</option>
-                                    <option>Casual Review</option>
-                                    <option>Educational Deep-dive</option>
+                                    <option>Impacto e Energia</option>
+                                    <option>Visão Profissional</option>
+                                    <option>Review Casual</option>
+                                    <option>Imersão Educativa</option>
                                 </select>
                                 <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-hover:text-primary transition-colors pointer-events-none" />
                             </div>
@@ -187,9 +187,9 @@ export default function CriarPage() {
                                     <Sparkles className="w-5 h-5" />
                                 </div>
                                 <div className="space-y-2">
-                                    <p className="text-xs font-black text-accent uppercase tracking-widest">AI Suggestion</p>
+                                    <p className="text-xs font-black text-accent uppercase tracking-widest">Sugestão da IA</p>
                                     <p className="text-sm font-bold text-text-secondary leading-relaxed">
-                                        Based on your product name, a cinematic aesthetic with 30s duration usually converts 40% better.
+                                        Com base no nome do produto, um estilo cinematográfico de 30s costuma converter 40% mais.
                                     </p>
                                 </div>
                             </div>
@@ -212,7 +212,7 @@ export default function CriarPage() {
                         <div className="flex items-center gap-4">
                             <div className="bg-white px-4 py-2 rounded-full border border-surface-200 shadow-sm flex items-center gap-2">
                                 <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-text-primary">LIVE PREVIEW</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-text-primary">PRÉVIA AO VIVO</span>
                             </div>
                             <button className="p-3 bg-white rounded-2xl border border-surface-200 shadow-sm hover:rotate-180 transition-all duration-500 text-text-muted hover:text-primary">
                                 <RotateCcw className="w-5 h-5" />
@@ -237,9 +237,9 @@ export default function CriarPage() {
                             {/* AI Generated Script Bubble */}
                             <div className="absolute bottom-24 left-4 right-4 bg-white/10 backdrop-blur-xl p-5 rounded-2xl border border-white/20 animate-slide-up">
                                 <div className="flex flex-col gap-3">
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-white/60">AI GENERATED SCRIPT</p>
+                                    <p className="text-[8px] font-black uppercase tracking-widest text-white/60">ROTEIRO GERADO POR IA</p>
                                     <p className="text-xs font-bold text-white leading-relaxed">
-                                        Experience the future of {productName || "time"}. Introducing the all-new Lumina. Precision meets elegance.
+                                        Experimente o futuro com {productName || "seu produto"}. Design mestre. Precisão e elegância.
                                     </p>
                                 </div>
                             </div>
@@ -250,8 +250,8 @@ export default function CriarPage() {
                                     <img src="https://i.pravatar.cc/150?u=4" alt="User" />
                                 </div>
                                 <div>
-                                    <p className="text-[10px] font-black text-white">@YourBrand</p>
-                                    <p className="text-[8px] text-white/60">AI Voice: 'Premium Male'</p>
+                                    <p className="text-[10px] font-black text-white">@SuaMarca</p>
+                                    <p className="text-[8px] text-white/60">Voz IA: 'Premium Masculina'</p>
                                 </div>
                             </div>
 
@@ -274,7 +274,7 @@ export default function CriarPage() {
                             ) : (
                                 <>
                                     <Sparkles className="w-6 h-6" />
-                                    Generate Video with AI
+                                    Gerar Vídeo com IA
                                     <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
                                 </>
                             )}

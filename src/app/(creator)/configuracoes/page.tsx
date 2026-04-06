@@ -30,22 +30,22 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 const TABS = [
-    { id: 'perfil', label: 'My Identity', icon: User },
-    { id: 'integracoes', label: 'Ecosystem', icon: Puzzle },
-    { id: 'personalizacao', label: 'Bloom Kit', icon: Palette },
+    { id: 'perfil', label: 'Minha Identidade', icon: User },
+    { id: 'integracoes', label: 'Ecossistema', icon: Puzzle },
+    { id: 'personalizacao', label: 'Kit de Estilo', icon: Palette },
 ]
 
 const passwordSchema = z.object({
-    senhaAtual: z.string().min(1, 'Current password is required'),
+    senhaAtual: z.string().min(1, 'Senha atual é obrigatória'),
     novaSenha: z
         .string()
-        .min(8, 'Minimum 8 characters')
-        .regex(/[A-Z]/, 'Must have an uppercase letter')
-        .regex(/[0-9]/, 'Must have a number')
-        .regex(/[^A-Za-z0-9]/, 'Must have a special character'),
+        .min(8, 'Mínimo 8 caracteres')
+        .regex(/[A-Z]/, 'Deve ter uma letra maiúscula')
+        .regex(/[0-9]/, 'Deve ter um número')
+        .regex(/[^A-Za-z0-9]/, 'Deve ter um caractere especial'),
     confirmarSenha: z.string(),
 }).refine((d) => d.novaSenha === d.confirmarSenha, {
-    message: 'Passwords do not match',
+    message: 'As senhas não coincidem',
     path: ['confirmarSenha'],
 })
 
@@ -58,11 +58,11 @@ interface Integration {
 }
 
 const INTEGRATIONS = [
-    { id: 'google_drive', label: 'Google Drive', icon: HardDrive, desc: 'Auto-save your blooms' },
-    { id: 'dropbox', label: 'Dropbox', icon: Cloud, desc: 'Secure cloud backup' },
-    { id: 'instagram', label: 'Instagram', icon: Instagram, desc: 'Auto-schedule reels' },
-    { id: 'facebook', label: 'Facebook', icon: Facebook, desc: 'Publish to your pages' },
-    { id: 'webhook', label: 'Custom Webhook', icon: Webhook, desc: 'Connect to any flow' },
+    { id: 'google_drive', label: 'Google Drive', icon: HardDrive, desc: 'Salve seus vídeos automaticamente' },
+    { id: 'dropbox', label: 'Dropbox', icon: Cloud, desc: 'Backup seguro na nuvem' },
+    { id: 'instagram', label: 'Instagram', icon: Instagram, desc: 'Agende seus Reels automaticamente' },
+    { id: 'facebook', label: 'Facebook', icon: Facebook, desc: 'Publique em suas páginas' },
+    { id: 'webhook', label: 'Webhook Personalizado', icon: Webhook, desc: 'Conecte a qualquer fluxo' },
 ]
 
 export default function ConfiguracoesPage() {
@@ -76,7 +76,7 @@ export default function ConfiguracoesPage() {
     const [integrations, setIntegrations] = useState<Record<string, Integration>>({})
     const [webhookUrl, setWebhookUrl] = useState('')
     const [logoPreview, setLogoPreview] = useState<string | null>(null)
-    const [brandColors, setBrandColors] = useState({ primary: '#6B21A8', secondary: '#F472B6' })
+    const [brandColors, setBrandColors] = useState({ primary: '#E11D48', secondary: '#F472B6' })
     const logoInputRef = useRef<HTMLInputElement>(null)
     const avatarInputRef = useRef<HTMLInputElement>(null)
 
@@ -125,9 +125,9 @@ export default function ConfiguracoesPage() {
         })
 
         if (!res.ok) {
-            toast.error('Error saving profile')
+            toast.error('Erro ao salvar perfil')
         } else {
-            toast.success('Identity blooming!')
+            toast.success('Perfil atualizado!')
         }
         setIsSavingProfile(false)
     }
@@ -142,9 +142,9 @@ export default function ConfiguracoesPage() {
 
         if (!res.ok) {
             const err = await res.json()
-            toast.error(err.error || 'Error updating password')
+            toast.error(err.error || 'Erro ao atualizar senha')
         } else {
-            toast.success('Security blooming!')
+            toast.success('Segurança reforçada!')
             resetPasswordForm()
         }
         setIsSavingPw(false)
@@ -155,7 +155,7 @@ export default function ConfiguracoesPage() {
         if (!file) return
         const preview = URL.createObjectURL(file)
         setProfile((p) => ({ ...p, avatar_url: preview }))
-        toast.success('Icon updated!')
+        toast.success('Ícone atualizado!')
     }
 
     const handleToggleIntegration = async (tipo: string) => {
@@ -174,23 +174,23 @@ export default function ConfiguracoesPage() {
         })
 
         if (!res.ok) {
-            toast.error('Error updating ecosystem')
+            toast.error('Erro ao atualizar ecossistema')
             return
         }
 
         setIntegrations((prev) => ({
             ...prev,
-            [tipo]: { tipo, ativo: newState, configuracoes: tipo === 'webhook' ? { url: webhookUrl } : {} },
+            [tipo]: { tipo, ativo: newState, configuracoes: (tipo === 'webhook' ? { url: webhookUrl } : {}) as any },
         }))
 
-        toast.success(newState ? `${tipo} synced!` : `${tipo} disconnected`)
+        toast.success(newState ? `${tipo} sincronizado!` : `${tipo} desconectado`)
     }
 
     const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
         if (!file) return
         setLogoPreview(URL.createObjectURL(file))
-        toast.success('Brand asset uploaded!')
+        toast.success('Logo da marca enviado!')
     }
 
     if (isLoadingProfile) {
@@ -206,8 +206,8 @@ export default function ConfiguracoesPage() {
         <main className="flex-1 p-8 lg:p-12 bg-surface-50 min-h-screen">
             <div className="max-w-4xl mx-auto flex flex-col gap-8">
                 <header>
-                    <h1 className="text-4xl font-black text-text-primary tracking-tight">System Preferences</h1>
-                    <p className="text-text-muted mt-2 font-medium">Fine-tune your Luminous experience.</p>
+                    <h1 className="text-4xl font-black text-text-primary tracking-tight">Preferências do Sistema</h1>
+                    <p className="text-text-muted mt-2 font-medium">Ajuste sua experiência no Pétalas.</p>
                 </header>
 
                 {/* Tabs */}
@@ -254,13 +254,13 @@ export default function ConfiguracoesPage() {
                                     </button>
                                 </div>
                                 <div className="flex-1 text-center sm:text-left">
-                                    <h3 className="text-xl font-black text-text-primary">Profile Icon</h3>
-                                    <p className="text-text-muted mt-2 font-medium">Resolution blooming at best size 400x400.</p>
+                                    <h3 className="text-xl font-black text-text-primary">Ícone do Perfil</h3>
+                                    <p className="text-text-muted mt-2 font-medium">Recomendamos o tamanho 400x400 para melhor qualidade.</p>
                                     <button 
                                         onClick={() => avatarInputRef.current?.click()} 
                                         className="mt-6 bg-surface-50 text-text-primary font-black px-8 py-3 rounded-2xl hover:bg-surface-100 transition-all text-sm"
                                     >
-                                        Change Icon
+                                        Mudar Ícone
                                     </button>
                                 </div>
                             </div>
@@ -269,10 +269,10 @@ export default function ConfiguracoesPage() {
 
                         {/* Info */}
                         <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-8">
-                            <h3 className="text-xl font-black text-text-primary">Identity Details</h3>
+                            <h3 className="text-xl font-black text-text-primary">Detalhes da Identidade</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Creator Full Name</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Nome Completo</label>
                                     <input
                                         type="text"
                                         value={profile.nome}
@@ -281,7 +281,7 @@ export default function ConfiguracoesPage() {
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">E-mail Address</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Endereço de E-mail</label>
                                     <input
                                         type="email"
                                         value={profile.email}
@@ -297,7 +297,7 @@ export default function ConfiguracoesPage() {
                                     className="bg-primary text-white font-black px-12 py-4 rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-3 disabled:opacity-50"
                                 >
                                     {isSavingProfile ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                                    REFRESH IDENTITY
+                                    ATUALIZAR PERFIL
                                 </button>
                             </div>
                         </div>
@@ -306,12 +306,12 @@ export default function ConfiguracoesPage() {
                         <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-8">
                             <h3 className="text-xl font-black text-text-primary flex items-center gap-3">
                                 <ShieldCheck className="w-6 h-6 text-primary" />
-                                Vault Access
+                                Acesso e Segurança
                             </h3>
                             <form onSubmit={handleSubmit(handleChangePassword)} className="space-y-8">
                                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2">Old Secret</label>
+                                        <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2">Senha Atual</label>
                                         <div className="relative group">
                                             <input 
                                                 type={showOldPw ? 'text' : 'password'} 
@@ -327,7 +327,7 @@ export default function ConfiguracoesPage() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2">New Bloom Secret</label>
+                                        <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2">Nova Senha (Bloom Secret)</label>
                                         <div className="relative group">
                                             <input 
                                                 type={showNewPw ? 'text' : 'password'} 
@@ -343,7 +343,7 @@ export default function ConfiguracoesPage() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2">Confirm Bloom</label>
+                                        <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2">Confirmar Nova Senha</label>
                                         <input 
                                             type="password" 
                                             className={cn(
@@ -357,7 +357,7 @@ export default function ConfiguracoesPage() {
                                 <div className="flex justify-end">
                                     <button type="submit" disabled={isSavingPw} className="bg-text-primary text-white font-black px-12 py-4 rounded-2xl hover:bg-black transition-all flex items-center gap-3 disabled:opacity-50">
                                         {isSavingPw ? <Loader2 className="w-5 h-5 animate-spin" /> : <Zap className="w-5 h-5" />}
-                                        UPDATE ACCESS
+                                        ATUALIZAR ACESSO
                                     </button>
                                 </div>
                             </form>
@@ -386,12 +386,12 @@ export default function ConfiguracoesPage() {
                                             {isActive ? (
                                                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest">
                                                     <CheckCircle className="w-3 h-3" />
-                                                    Synced
+                                                    Sincronizado
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-100 text-text-muted text-[10px] font-black uppercase tracking-widest">
                                                     <XCircle className="w-3 h-3" />
-                                                    Dormant
+                                                    Inativo
                                                 </div>
                                             )}
                                         </div>
@@ -400,7 +400,7 @@ export default function ConfiguracoesPage() {
                                             <div className="mt-4 max-w-lg">
                                                 <input
                                                     type="url"
-                                                    placeholder="https://bloom-stream.io/webhook"
+                                                    placeholder="https://seu-servidor.com/webhook"
                                                     value={webhookUrl}
                                                     onChange={(e) => setWebhookUrl(e.target.value)}
                                                     className="w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-inner"
@@ -417,7 +417,7 @@ export default function ConfiguracoesPage() {
                                                 : "bg-surface-50 text-text-primary hover:bg-primary hover:text-white"
                                         )}
                                     >
-                                        {isActive ? 'DISCONNECT' : 'SYNC NOW'}
+                                        {isActive ? 'DESCONECTAR' : 'SINCRONIZAR AGORA'}
                                     </button>
                                 </div>
                             )
@@ -429,9 +429,9 @@ export default function ConfiguracoesPage() {
                 {activeTab === 'personalizacao' && (
                     <div className="space-y-6 animate-fade-in">
                         <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-6">
-                            <h3 className="text-xl font-black text-text-primary">Master Brand Asset</h3>
+                            <h3 className="text-xl font-black text-text-primary">Marca Mestra</h3>
                             <p className="text-text-muted font-medium">
-                                This bloom logo will be automatically injected into all your HD creations for consistent branding.
+                                Logo que será aplicado automaticamente em todas as suas criações em HD.
                             </p>
                             <div
                                 className="w-full h-48 rounded-[32px] border-4 border-dashed border-surface-200 hover:border-primary/30 bg-surface-50 flex flex-col items-center justify-center gap-4 transition-all cursor-pointer group relative overflow-hidden"
@@ -442,7 +442,7 @@ export default function ConfiguracoesPage() {
                                 ) : (
                                     <>
                                         <Upload className="w-8 h-8 text-text-muted group-hover:text-primary transition-colors group-hover:scale-110 duration-500" />
-                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Inject Master Logo Asset</span>
+                                        <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">Inserir Logo Mestra</span>
                                     </>
                                 )}
                             </div>
@@ -452,11 +452,11 @@ export default function ConfiguracoesPage() {
                         <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-8">
                             <h3 className="text-xl font-black text-text-primary flex items-center gap-4">
                                 <Palette className="w-6 h-6 text-primary" />
-                                Luminous Tone Kit
+                                Kit de Cores Pétalas
                             </h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <div className="space-y-4">
-                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Primary Bloom Tone</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Cor Primária (Bloom)</label>
                                     <div className="flex items-center gap-4">
                                         <div 
                                             className="w-14 h-14 rounded-2xl border-2 border-surface-200 shadow-sm relative overflow-hidden"
@@ -478,7 +478,7 @@ export default function ConfiguracoesPage() {
                                     </div>
                                 </div>
                                 <div className="space-y-4">
-                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Accent Bloom Tone</label>
+                                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Cor de Destaque (Accent)</label>
                                     <div className="flex items-center gap-4">
                                         <div 
                                             className="w-14 h-14 rounded-2xl border-2 border-surface-200 shadow-sm relative overflow-hidden"
@@ -505,10 +505,10 @@ export default function ConfiguracoesPage() {
                         <div className="bg-white border border-surface-200 rounded-[40px] p-10 shadow-sm flex flex-col gap-6">
                             <h3 className="text-xl font-black text-text-primary flex items-center gap-4">
                                 <Type className="w-6 h-6 text-primary" />
-                                Typography Flow
+                                Tipografia do Fluxo
                             </h3>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Standard Text Face</label>
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Fonte de Texto Padrão</label>
                                 <select className="w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm appearance-none cursor-pointer">
                                     {['Outfit', 'Inter', 'Montserrat', 'Outfit Bold', 'Roboto', 'Syne'].map((f) => (
                                         <option key={f} value={f}>{f}</option>
@@ -519,11 +519,11 @@ export default function ConfiguracoesPage() {
 
                         <div className="flex justify-end pt-4">
                             <button
-                                onClick={() => toast.success('Kit saved!')}
+                                onClick={() => toast.success('Kit salvo!')}
                                 className="bg-primary text-white font-black px-12 py-5 rounded-3xl shadow-2xl shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-3"
                             >
                                 <Save className="w-5 h-5" />
-                                SAVE BLOOM KIT
+                                SALVAR KIT DE ESTILO
                             </button>
                         </div>
                     </div>

@@ -22,7 +22,7 @@ const cadastroSchema = z.object({
         .regex(/[^A-Za-z0-9]/, 'Must contain at least 1 special character'),
     confirmarSenha: z.string(),
 }).refine((d) => d.senha === d.confirmarSenha, {
-    message: 'Passwords do not match',
+    message: 'As senhas não coincidem',
     path: ['confirmarSenha'],
 })
 
@@ -66,10 +66,10 @@ export default function CadastroPage() {
     }
 
     const getStrengthLabel = () => {
-        if (strength === 0) return 'Type a secret'
-        if (strength <= 2) return 'Weak bloom'
-        if (strength === 3) return 'Growing'
-        return 'Strong oak'
+        if (strength === 0) return 'Digite uma senha'
+        if (strength <= 2) return 'Senha fraca'
+        if (strength === 3) return 'Média'
+        return 'Senha forte'
     }
 
     const onSubmit = async (data: CadastroForm) => {
@@ -89,9 +89,9 @@ export default function CadastroPage() {
 
             if (!response.ok) {
                 if (result.error?.includes('Email já cadastrado') || result.error?.includes('already')) {
-                    toast.error('Identity already exists. Try blooming in via login.')
+                    toast.error('Este e-mail já existe. Tente fazer login.')
                 } else {
-                    toast.error(result.error || 'Failed to plant your account. Try again.')
+                    toast.error(result.error || 'Erro ao criar conta. Tente novamente.')
                 }
                 return
             }
@@ -103,15 +103,15 @@ export default function CadastroPage() {
             })
 
             if (signInResult?.ok) {
-                toast.success('Your garden is ready! Welcome to Pétalas.')
+                toast.success('Sua conta foi criada! Bem-vindo ao Pétalas.')
                 router.push('/dashboard')
                 router.refresh()
             } else {
-                toast.success('Account planted! Bloom in through login.')
+                toast.success('Conta criada! Faça login para continuar.')
                 router.push('/login')
             }
         } catch {
-            toast.error('Error planting account. Try again.')
+            toast.error('Erro ao criar conta. Tente novamente.')
         } finally {
             setIsLoading(false)
         }
@@ -122,11 +122,11 @@ export default function CadastroPage() {
             <div className="mb-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-4">
                     <Sparkles className="w-3 h-3" />
-                    Join the ecosystem
+                    Entre no ecossistema
                 </div>
-                <h2 className="text-4xl font-black text-text-primary tracking-tight">Plant your Account</h2>
+                <h2 className="text-4xl font-black text-text-primary tracking-tight">Crie sua Conta</h2>
                 <p className="text-text-muted mt-3 font-medium">
-                    Start blooming professional AI content today.
+                    Comece a gerar conteúdo profissional com IA hoje.
                 </p>
             </div>
 
@@ -242,11 +242,11 @@ export default function CadastroPage() {
                     {isLoading ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            Planting Identity...
+                            Criando conta...
                         </>
                     ) : (
                         <>
-                            BLOOM MY ACCOUNT
+                            CRIAR MINHA CONTA
                             <ArrowRight className="w-5 h-5" />
                         </>
                     )}
@@ -254,9 +254,9 @@ export default function CadastroPage() {
             </form>
 
             <p className="mt-10 text-center text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">
-                Already a member?{' '}
+                Já é um membro?{' '}
                 <Link href="/login" className="text-primary hover:underline underline-offset-4 decoration-2">
-                    Bloom-in
+                    Acessar
                 </Link>
             </p>
         </div>

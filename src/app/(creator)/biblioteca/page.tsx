@@ -42,7 +42,7 @@ const FORMATO_LABELS: Record<string, string> = {
     instagram: 'Instagram',
     stories: 'Stories',
     educativo: 'Educativo',
-    divulgacao: 'Divulgacao',
+    divulgacao: 'Divulgação',
 }
 
 export default function BibliotecaPage() {
@@ -147,7 +147,7 @@ export default function BibliotecaPage() {
             {/* Folder Sidebar */}
             <aside className="w-full lg:w-72 flex-shrink-0 bg-white border-r border-surface-200 p-8 flex flex-col gap-8">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Folders</h3>
+                    <h3 className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">Pastas</h3>
                     <button
                         onClick={() => setShowNewFolder(true)}
                         className="w-8 h-8 rounded-xl bg-primary/5 text-primary hover:bg-primary hover:text-white transition-all flex items-center justify-center"
@@ -166,7 +166,7 @@ export default function BibliotecaPage() {
                                 if (e.key === 'Enter') handleCreateFolder()
                                 if (e.key === 'Escape') setShowNewFolder(false)
                             }}
-                            placeholder="New folder..."
+                            placeholder="Nova pasta..."
                             autoFocus
                             className="w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-xl px-3 py-2 text-sm font-bold text-text-primary outline-none"
                         />
@@ -184,7 +184,7 @@ export default function BibliotecaPage() {
                         )}
                     >
                         <LayoutGrid className="w-4 h-4" />
-                        All Videos
+                        Todos os Vídeos
                         <span className={cn(
                             'ml-auto text-[10px] font-black px-2 py-0.5 rounded-full',
                             selectedPasta === null ? 'bg-white/20' : 'bg-surface-100 text-text-muted'
@@ -201,7 +201,7 @@ export default function BibliotecaPage() {
                         )}
                     >
                         <FolderOpen className="w-4 h-4" />
-                        Unsorted
+                        Sem Pasta
                         <span className={cn(
                             'ml-auto text-[10px] font-black px-2 py-0.5 rounded-full',
                             selectedPasta === 'sem-pasta' ? 'bg-white/20' : 'bg-surface-100 text-text-muted'
@@ -218,7 +218,7 @@ export default function BibliotecaPage() {
                         )}
                     >
                         <Clock className="w-4 h-4" />
-                        Drafts
+                        Rascunhos
                         <span className={cn(
                             'ml-auto text-[10px] font-black px-2 py-0.5 rounded-full',
                             selectedPasta === 'rascunhos' ? 'bg-white/20' : 'bg-surface-100 text-text-muted'
@@ -252,8 +252,8 @@ export default function BibliotecaPage() {
                 <div className="flex flex-col gap-8 max-w-7xl mx-auto">
                     <header className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                         <div>
-                            <h1 className="text-4xl font-black text-text-primary tracking-tight">Content Library</h1>
-                            <p className="text-text-muted mt-2 font-medium">Manage and organize your generated assets.</p>
+                            <h1 className="text-4xl font-black text-text-primary tracking-tight">Biblioteca de Conteúdo</h1>
+                            <p className="text-text-muted mt-2 font-medium">Gerencie e organize suas criações.</p>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -261,7 +261,7 @@ export default function BibliotecaPage() {
                                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors" />
                                 <input
                                     type="text"
-                                    placeholder="Search library..."
+                                    placeholder="Pesquisar na biblioteca..."
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     className="bg-white border border-surface-200 focus:border-primary/20 rounded-2xl pl-12 pr-6 py-3 text-sm font-bold text-text-primary outline-none shadow-sm transition-all w-80"
@@ -273,10 +273,11 @@ export default function BibliotecaPage() {
                                 onChange={(e) => setFilterFormato(e.target.value)}
                                 className="bg-white border border-surface-200 rounded-2xl px-6 py-3 text-sm font-bold text-text-primary outline-none shadow-sm cursor-pointer"
                             >
-                                <option value="todos">All formats</option>
+                                <option value="todos">Todos os formatos</option>
                                 <option value="instagram">Instagram</option>
                                 <option value="stories">Stories</option>
                                 <option value="educativo">Educativo</option>
+                                <option value="divulgacao">Divulgação</option>
                             </select>
                         </div>
                     </header>
@@ -297,8 +298,8 @@ export default function BibliotecaPage() {
                             <div className="w-20 h-20 rounded-3xl bg-surface-100 flex items-center justify-center text-surface-300 mb-6">
                                 <Video className="w-10 h-10" />
                             </div>
-                            <h3 className="text-xl font-bold text-text-primary">No videos found</h3>
-                            <p className="text-text-muted mt-2">Start creating your bloom of content.</p>
+                            <h3 className="text-xl font-bold text-text-primary">Nenhum vídeo encontrado</h3>
+                            <p className="text-text-muted mt-2">Comece a criar seu ecossistema de conteúdo.</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -369,7 +370,7 @@ export default function BibliotecaPage() {
                                                     className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-text-secondary hover:bg-surface-50 transition-colors"
                                                 >
                                                     <Move className="w-4 h-4" />
-                                                    Move to folder
+                                                    Mover para pasta
                                                 </button>
                                                 <div className="h-[1px] bg-surface-100 my-2" />
                                                 <button
@@ -377,7 +378,7 @@ export default function BibliotecaPage() {
                                                     className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
-                                                    Delete
+                                                    Excluir
                                                 </button>
                                             </div>
                                         )}
@@ -385,13 +386,13 @@ export default function BibliotecaPage() {
                                         {/* Move to folder sub-menu */}
                                         {movingVideo === video.id && (
                                             <div className="absolute right-0 mt-2 w-48 bg-white border border-surface-200 rounded-2xl shadow-2xl z-30 py-2 animate-fade-in">
-                                                <p className="px-4 py-2 text-[10px] font-black text-text-muted uppercase tracking-[0.2em] border-b border-surface-100 mb-2">Move to</p>
+                                                <p className="px-4 py-2 text-[10px] font-black text-text-muted uppercase tracking-[0.2em] border-b border-surface-100 mb-2">Mover para</p>
                                                 <button
                                                     onClick={() => handleMoveVideo(video.id, null)}
                                                     className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-text-secondary hover:bg-surface-50 transition-colors"
                                                 >
                                                     <FolderOpen className="w-4 h-4" />
-                                                    Home Library
+                                                    Biblioteca Principal
                                                 </button>
                                                 {pastas.map((pasta) => (
                                                     <button
@@ -428,7 +429,7 @@ export default function BibliotecaPage() {
                                     <span className="text-[10px] font-black text-primary uppercase tracking-widest bg-primary/5 px-3 py-1 rounded-full">
                                         {selectedVideo.formato}
                                     </span>
-                                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">{selectedVideo.duracao} Seconds</span>
+                                    <span className="text-[10px] font-bold text-text-muted uppercase tracking-widest">{selectedVideo.duracao} Segundos</span>
                                 </div>
                             </div>
                             <button
@@ -453,7 +454,7 @@ export default function BibliotecaPage() {
                                         <div className="w-16 h-16 rounded-3xl bg-surface-100 flex items-center justify-center">
                                             <Clock className="w-8 h-8 animate-pulse text-primary" />
                                         </div>
-                                        <p className="font-bold">Content is blooming...</p>
+                                        <p className="font-bold">Conteúdo sendo gerado...</p>
                                     </div>
                                 )}
                             </div>
@@ -473,7 +474,7 @@ export default function BibliotecaPage() {
                                     onClick={() => setSelectedVideo(null)}
                                     className="flex-1 bg-surface-50 text-text-primary font-black py-4 rounded-2xl hover:bg-surface-100 transition-all"
                                 >
-                                    CLOSE
+                                    FECHAR
                                 </button>
                             </div>
                         </div>

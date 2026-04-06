@@ -29,8 +29,15 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ id: user.id })
-  } catch (error) {
-    console.error('Register error:', error)
-    return NextResponse.json({ error: 'Erro interno do servidor' }, { status: 500 })
+  } catch (error: any) {
+    console.error('Register error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack,
+    })
+    return NextResponse.json({ 
+      error: 'Erro interno do servidor',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined 
+    }, { status: 500 })
   }
 }
