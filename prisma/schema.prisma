@@ -21,11 +21,14 @@ model Profile {
   last_activity DateTime?
   created_at    DateTime  @default(now())
 
-  videos       Video[]
-  pastas       Pasta[]
-  integracoes  Integracao[]
-  notificacoes Notificacao[]
-  reset_tokens PasswordResetToken[]
+  videos          Video[]
+  pastas          Pasta[]
+  integracoes     Integracao[]
+  notificacoes    Notificacao[]
+  reset_tokens    PasswordResetToken[]
+  pipeline_stages PipelineStage[]
+  opportunities   Opportunity[]
+  contacts        Contact[]
 
   @@map("profiles")
 }
@@ -120,4 +123,53 @@ model PasswordResetToken {
   user Profile @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@map("password_reset_tokens")
+}
+
+model PipelineStage {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  title      String
+  color      String
+  order      Int
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user          Profile       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunities Opportunity[]
+
+  @@map("pipeline_stages")
+}
+
+model Opportunity {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  stageId     String   @map("stage_id")
+  title       String
+  value       Float
+  priority    String   @default("media")
+  date        DateTime @default(now())
+  isNew       Boolean  @default(true) @map("is_new")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user  Profile       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stage PipelineStage @relation(fields: [stageId], references: [id], onDelete: Cascade)
+
+  @@map("opportunities")
+}
+
+model Contact {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  nome            String
+  empresa         String?
+  email           String?
+  telefone        String?
+  cargo           String?
+  status          String   @default("lead")
+  canal           String?
+  ultimaAtividade DateTime @default(now()) @map("ultima_activity")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  user Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("contacts")
 }

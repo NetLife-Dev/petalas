@@ -20,18 +20,17 @@ import {
     ChevronDown,
     ArrowRight
 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 import toast from 'react-hot-toast'
+import { saveGeneratedVideo } from './actions'
 
 export default function CriarPage() {
     const router = useRouter()
-    const { data: session } = useSession()
     
     // States
     const [productName, setProductName] = useState('')
     const [duration, setDuration] = useState('15s')
-    const [narrativeStyle, setNarrativeStyle] = useState('High-Energy Hype')
+    const [narrativeStyle, setNarrativeStyle] = useState('Impacto e Energia')
     const [productPhoto, setProductPhoto] = useState<File | null>(null)
     const [photoPreview, setPhotoPreview] = useState<string | null>(null)
     const [isGenerating, setIsGenerating] = useState(false)
@@ -53,40 +52,52 @@ export default function CriarPage() {
             return
         }
         setIsGenerating(true)
-        // Mock progress
+        
         let p = 0
         const interval = setInterval(() => {
             p += 5
             setProgress(p)
             if (p >= 100) {
                 clearInterval(interval)
-                setTimeout(() => {
-                    toast.success('Vídeo gerado com sucesso!')
-                    router.push('/biblioteca')
-                }, 500)
+                completeGeneration()
             }
-        }, 200)
+        }, 150)
+    }
+
+    const completeGeneration = async () => {
+        try {
+            await saveGeneratedVideo({
+                titulo: productName,
+                status: 'concluido',
+                thumbnail: photoPreview || undefined
+            })
+            toast.success('Vídeo gerado e salvo na biblioteca!')
+            router.push('/biblioteca')
+        } catch (error) {
+            toast.error('Ocorreu um erro ao salvar o vídeo')
+            setIsGenerating(false)
+        }
     }
 
     return (
         <div className="min-h-screen bg-white">
             <div className="flex flex-col lg:flex-row h-full min-h-[calc(100vh-64px)]">
                 {/* Left Side: Creation Engine Form */}
-                <div className="flex-1 p-8 lg:p-12 space-y-12">
+                <div className="flex-1 p-8 lg:p-12 space-y-12 overflow-y-auto">
                     <header>
-                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">MOTOR DE GERAÇÃO</p>
-                        <h1 className="text-5xl font-extrabold text-text-primary tracking-tight">Novo Projeto de Vídeo</h1>
+                        <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2">GERADOR DE CONTEÚDO</p>
+                        <h1 className="text-5xl font-extrabold text-text-primary tracking-tight">Criar Novo Vídeo</h1>
                     </header>
 
                     <div className="space-y-16 max-w-xl">
-                        {/* 01 Product Identity */}
+                        {/* 01 Nome do Produto */}
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary/5">01</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Identidade do Produto</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Nome e Identidade</h3>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-widest pl-1">NOME DO PRODUTO</label>
+                                <label className="text-[10px] font-black text-text-muted uppercase tracking-widest pl-1">Título do Projeto</label>
                                 <input 
                                     type="text" 
                                     placeholder="Ex: Tênis Ultra Flow"
@@ -97,34 +108,34 @@ export default function CriarPage() {
                             </div>
                         </section>
 
-                        {/* 02 Product Assets */}
+                        {/* 02 Upload de Foto */}
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-surface-100 text-text-muted flex items-center justify-center text-xs font-bold">02</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Arquivos do Produto</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Foto do Produto</h3>
                             </div>
                             <div 
                                 onClick={() => fileInputRef.current?.click()}
-                                className="w-full aspect-[4/3] rounded-[32px] border-2 border-dashed border-surface-200 bg-white hover:bg-surface-50 hover:border-primary/30 transition-all flex flex-col items-center justify-center gap-4 cursor-pointer group group"
+                                className="w-full aspect-video rounded-[32px] border-2 border-dashed border-surface-200 bg-white hover:bg-surface-50 hover:border-primary/30 transition-all flex flex-col items-center justify-center gap-4 cursor-pointer group"
                             >
                                 {photoPreview ? (
                                     <div className="relative w-full h-full p-4">
                                         <img src={photoPreview} className="w-full h-full object-contain rounded-2xl" alt="Preview" />
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); setPhotoPreview(null); setProductPhoto(null); }}
-                                            className="absolute top-6 right-6 p-2 bg-white rounded-full shadow-lg text-text-muted hover:text-red-500"
+                                            className="absolute top-6 right-6 p-2 bg-white rounded-full shadow-lg text-text-muted hover:text-red-500 transition-colors"
                                         >
                                             <X className="w-4 h-4" />
                                         </button>
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-all">
                                             <Upload className="w-6 h-6" />
                                         </div>
                                         <div className="text-center">
-                                            <p className="font-bold text-text-primary">Arraste a foto do produto aqui</p>
-                                            <p className="text-xs text-text-muted mt-1">PNG ou JPG, até 10MB</p>
+                                            <p className="font-bold text-text-primary">Faça o upload da foto principal</p>
+                                            <p className="text-xs text-text-muted mt-1 uppercase tracking-widest font-black">PNG, JPG ou WEBP até 10MB</p>
                                         </div>
                                     </>
                                 )}
@@ -132,11 +143,11 @@ export default function CriarPage() {
                             </div>
                         </section>
 
-                        {/* 03 Video Duration */}
+                        {/* 03 Duração */}
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-surface-100 text-text-muted flex items-center justify-center text-xs font-bold">03</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Duração do Vídeo</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Duração Recomendada</h3>
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                                 {['15s', '30s', '60s'].map((d) => (
@@ -152,7 +163,7 @@ export default function CriarPage() {
                                     >
                                         <span className="text-xl font-black tracking-tighter leading-none">{d}</span>
                                         <span className="text-[10px] font-black uppercase tracking-widest opacity-60">
-                                            {d === '15s' ? 'CURTO' : d === '30s' ? 'PADRÃO' : 'LONGO'}
+                                            {d === '15s' ? 'Curto' : d === '30s' ? 'Padrão' : 'Longo'}
                                         </span>
                                     </button>
                                 ))}
@@ -163,7 +174,7 @@ export default function CriarPage() {
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
                                 <div className="w-8 h-8 rounded-full bg-surface-100 text-text-muted flex items-center justify-center text-xs font-bold">04</div>
-                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Estilo de Narrativa</h3>
+                                <h3 className="text-lg font-bold text-text-primary tracking-tight">Narração e Estilo</h3>
                             </div>
                             <div className="relative group">
                                 <select 
@@ -171,61 +182,40 @@ export default function CriarPage() {
                                     onChange={(e) => setNarrativeStyle(e.target.value)}
                                     className="w-full bg-surface-50 border-none rounded-2xl p-5 text-text-primary font-bold appearance-none outline-none focus:ring-2 focus:ring-primary/20"
                                 >
-                                    <option>Impacto e Energia</option>
-                                    <option>Visão Profissional</option>
-                                    <option>Review Casual</option>
-                                    <option>Imersão Educativa</option>
+                                    <option>Impacto e Alta Energia</option>
+                                    <option>Elegante e Profissional</option>
+                                    <option>Review e Descoberta</option>
+                                    <option>Casual e TikTok Style</option>
                                 </select>
-                                <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted group-hover:text-primary transition-colors pointer-events-none" />
+                                <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted pointer-events-none" />
                             </div>
                         </section>
-
-                        {/* AI Suggestion Box */}
-                        <div className="bg-accent/5 p-8 rounded-[32px] border border-accent/10 relative overflow-hidden group">
-                            <div className="flex items-start gap-4">
-                                <div className="w-10 h-10 rounded-2xl bg-accent/10 text-accent flex items-center justify-center flex-shrink-0">
-                                    <Sparkles className="w-5 h-5" />
-                                </div>
-                                <div className="space-y-2">
-                                    <p className="text-xs font-black text-accent uppercase tracking-widest">Sugestão da IA</p>
-                                    <p className="text-sm font-bold text-text-secondary leading-relaxed">
-                                        Com base no nome do produto, um estilo cinematográfico de 30s costuma converter 40% mais.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 {/* Right Side: Preview Display */}
-                <div className="w-full lg:w-[600px] bg-surface-50 p-8 lg:p-12 flex flex-col items-center justify-center relative shadow-inner">
-                    {/* Header Controls */}
-                    <div className="w-full flex items-center justify-between absolute top-12 px-12">
-                        <div className="flex bg-white p-2 rounded-2xl shadow-sm gap-2">
-                            <div className="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20 pointer-events-none">
-                                <Smartphone className="w-5 h-5" />
+                <div className="w-full lg:w-[600px] bg-surface-50 p-8 lg:p-12 flex flex-col items-center justify-center relative shadow-inner overflow-hidden">
+                    {/* Progress Loader overlay */}
+                    {isGenerating && (
+                        <div className="absolute inset-0 bg-white/80 backdrop-blur-md z-40 flex flex-col items-center justify-center p-12 text-center">
+                            <div className="w-24 h-24 relative mb-8">
+                                <svg className="w-full h-full rotate-[-90deg]">
+                                    <circle cx="48" cy="48" r="44" fill="none" stroke="currentColor" strokeWidth="8" className="text-slate-100" />
+                                    <circle cx="48" cy="48" r="44" fill="none" stroke="currentColor" strokeWidth="8" strokeDasharray={276} strokeDashoffset={276 - (276 * progress) / 100} className="text-rose-500 transition-all duration-300" strokeLinecap="round" />
+                                </svg>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <Sparkles className="w-8 h-8 text-rose-500 animate-pulse" />
+                                </div>
                             </div>
-                            <div className="w-10 h-10 rounded-xl hover:bg-surface-50 text-text-muted flex items-center justify-center transition-colors cursor-pointer">
-                                <Play className="w-5 h-5" />
-                            </div>
+                            <h2 className="text-2xl font-black text-slate-900 mb-2 uppercase">Vibrando Ideias...</h2>
+                            <p className="text-slate-500 font-bold max-w-xs">{progress}% concluído • Nossa IA está renderizando o vídeo perfeito para {productName || 'seu produto'}.</p>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div className="bg-white px-4 py-2 rounded-full border border-surface-200 shadow-sm flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-text-primary">PRÉVIA AO VIVO</span>
-                            </div>
-                            <button className="p-3 bg-white rounded-2xl border border-surface-200 shadow-sm hover:rotate-180 transition-all duration-500 text-text-muted hover:text-primary">
-                                <RotateCcw className="w-5 h-5" />
-                            </button>
-                        </div>
-                    </div>
+                    )}
 
                     {/* Preview iPhone Frame */}
-                    <div className="relative w-[320px] aspect-[9/18.5] bg-text-primary rounded-[48px] p-4 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] ring-12 ring-surface-200 overflow-hidden transform hover:-translate-y-2 transition-transform duration-700">
-                        {/* Notch */}
+                    <div className="relative w-[320px] aspect-[9/19] bg-text-primary rounded-[48px] p-4 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] ring-12 ring-surface-200 overflow-hidden transform hover:-translate-y-2 transition-transform duration-700">
                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-text-primary rounded-b-2xl z-20" />
                         
-                        {/* Screen Content */}
                         <div className="w-full h-full rounded-[36px] overflow-hidden bg-surface-900 relative">
                             <img 
                                 src={photoPreview || "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop"} 
@@ -234,50 +224,40 @@ export default function CriarPage() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                             
-                            {/* AI Generated Script Bubble */}
-                            <div className="absolute bottom-24 left-4 right-4 bg-white/10 backdrop-blur-xl p-5 rounded-2xl border border-white/20 animate-slide-up">
+                            <div className="absolute bottom-24 left-4 right-4 bg-white/10 backdrop-blur-xl p-5 rounded-2xl border border-white/20">
                                 <div className="flex flex-col gap-3">
                                     <p className="text-[8px] font-black uppercase tracking-widest text-white/60">ROTEIRO GERADO POR IA</p>
                                     <p className="text-xs font-bold text-white leading-relaxed">
-                                        Experimente o futuro com {productName || "seu produto"}. Design mestre. Precisão e elegância.
+                                        Experimente o futuro com <span className="text-rose-400">@{productName || "seu produto"}</span>. Design mestre. Precisão e elegância que você merece.
                                     </p>
                                 </div>
                             </div>
 
-                            {/* User Profile Hook */}
                             <div className="absolute bottom-8 left-4 flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full border-2 border-white/20 overflow-hidden">
-                                    <img src="https://i.pravatar.cc/150?u=4" alt="User" />
+                                <div className="w-8 h-8 rounded-full border-2 border-white/20 bg-rose-500 flex items-center justify-center text-[10px] font-black text-white italic">
+                                    P
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black text-white">@SuaMarca</p>
-                                    <p className="text-[8px] text-white/60">Voz IA: 'Premium Masculina'</p>
+                                    <p className="text-[8px] text-white/60">Estilo: {narrativeStyle}</p>
                                 </div>
                             </div>
 
-                            {/* Progress Indicator */}
                             <div className="absolute bottom-4 left-4 right-4 h-1 bg-white/20 rounded-full overflow-hidden">
                                 <div className="h-full bg-primary w-1/3" />
                             </div>
                         </div>
                     </div>
 
-                    {/* Bottom CTA Button */}
-                    <div className="absolute bottom-12 w-full px-12">
+                    <div className="mt-12 w-full max-w-[320px]">
                         <button 
                             onClick={handleGenerate}
-                            disabled={isGenerating}
-                            className="w-full bg-primary text-white p-6 rounded-[32px] font-extrabold flex items-center justify-center gap-3 shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 group"
+                            disabled={isGenerating || !productName}
+                            className="w-full bg-rose-600 text-white p-6 rounded-[32px] font-extrabold flex items-center justify-center gap-3 shadow-2xl shadow-rose-500/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 group uppercase tracking-widest text-sm"
                         >
-                            {isGenerating ? (
-                                <Loader2 className="w-6 h-6 animate-spin" />
-                            ) : (
-                                <>
-                                    <Sparkles className="w-6 h-6" />
-                                    Gerar Vídeo com IA
-                                    <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
-                                </>
-                            )}
+                            <Sparkles className="w-6 h-6 border-rose-400" />
+                            Gerar Vídeo Agora
+                            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </div>
                 </div>
@@ -285,4 +265,3 @@ export default function CriarPage() {
         </div>
     )
 }
-

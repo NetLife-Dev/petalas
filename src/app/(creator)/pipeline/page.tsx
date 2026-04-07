@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
     Plus, 
     MoreVertical, 
@@ -19,63 +19,66 @@ import {
     X,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const columns = [
-    { title: 'NOVO LEAD', count: 1, color: 'bg-blue-500', totalValue: 'R$ 123.232,00' },
-    { title: 'QUALIFICAÇÃO', count: 1, color: 'bg-purple-500', totalValue: 'R$ 50.000,00' },
-    { title: 'REUNIÃO MARCADA', count: 0, color: 'bg-orange-500', totalValue: 'R$ 0,00' },
-    { title: 'PROPOSTA', count: 1, color: 'bg-emerald-500', totalValue: 'R$ 0,00' },
-    { title: 'NEGOCIAÇÃO', count: 0, color: 'bg-red-500', totalValue: 'R$ 0,00' },
-    { title: 'FOLLOW UP', count: 0, color: 'bg-indigo-500', totalValue: 'R$ 0,00' },
-]
-
-const cards = [
-    { 
-        id: 1, 
-        column: 'NOVO LEAD', 
-        title: 'trtrt', 
-        value: 'R$ 123.232,00',
-        priority: 'Média',
-        priorityColor: 'bg-orange-400',
-        date: '05 de mai',
-        avatar: 'H',
-        isNew: true
-    },
-    { 
-        id: 2, 
-        column: 'QUALIFICAÇÃO', 
-        title: 'Testeando', 
-        value: 'R$ 50.000,00',
-        priority: 'Alta',
-        priorityColor: 'bg-red-500',
-        date: '12 de mai',
-        avatar: 'S',
-        isNew: true
-    },
-    { 
-        id: 3, 
-        column: 'PROPOSTA', 
-        title: 'Reunião com o Fulano', 
-        value: 'R$ 0,00',
-        priority: 'Média',
-        priorityColor: 'bg-orange-400',
-        date: '02 de abr',
-        avatar: 'H',
-        isNew: true
-    }
-]
+import { getPipelineData, createColumn } from './actions'
+import toast from 'react-hot-toast'
 
 export default function PipelinePage() {
     const [isNewColumnModalOpen, setIsNewColumnModalOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [columns, setColumns] = useState<any[]>([])
+    const [cards, setCards] = useState<any[]>([])
+    const [newColumnName, setNewColumnName] = useState('')
+    const [selectedColor, setSelectedColor] = useState('bg-rose-500')
+
+    const fetchData = async () => {
+        setIsLoading(true)
+        try {
+            const data = await getPipelineData()
+            setColumns(data.columns)
+            setCards(data.cards)
+        } catch (error) {
+            console.error('Erro ao buscar dados:', error)
+            toast.error('Erro ao carregar pipeline')
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const handleCreateColumn = async () => {
+        if (!newColumnName) return
+        try {
+            await createColumn(newColumnName, selectedColor)
+            toast.success('Coluna criada com sucesso!')
+            setNewColumnName('')
+            setIsNewColumnModalOpen(false)
+            fetchData()
+        } catch (error) {
+            toast.error('Erro ao criar coluna')
+        }
+    }
+
+    if (isLoading) {
+        return (
+            <div className="p-8 flex items-center justify-center min-h-[60vh]">
+                <div className="animate-spin text-rose-500">
+                    <Zap className="w-12 h-12" />
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="p-8 space-y-10 max-w-full mx-auto animate-fade-in bg-transparent min-h-screen text-slate-900">
-            {/* Header Section */}
+            {/* Cabeçalho */}
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div>
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-rose-500/10 text-rose-600 text-[10px] font-black uppercase tracking-widest mb-4">
                         <Kanban className="w-3 h-3" />
-                        Pipeline Comercial
+                        Funil de Vendas Comercial
                     </div>
                     <h1 className="text-6xl font-black tracking-tight text-slate-900 mb-2">Pipeline</h1>
                     <p className="text-slate-500 text-sm font-medium tracking-wide uppercase font-outfit">Gestão de Oportunidades + Visão Kanban</p>
@@ -96,14 +99,14 @@ export default function PipelinePage() {
                         <Plus className="w-5 h-5 text-white" />
                         Nova Coluna
                     </button>
-                    <button className="bg-white border border-slate-200 px-6 py-2.5 rounded-xl font-bold text-sm text-slate-400 hover:text-slate-900 transition-all flex items-center gap-2 shadow-sm">
+                    <button className="bg-white border border-slate-200 px-6 py-2.5 rounded-xl font-bold text-sm text-slate-400 hover:text-slate-900 transition-all flex items-center gap-2 shadow-sm italic" title="Em desenvolvimento">
                         <Plus className="w-5 h-5" />
                         Novo Board
                     </button>
                 </div>
             </div>
 
-            {/* Metrics Row */}
+            {/* Linha de Métricas */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm flex items-center gap-6">
                     <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center">
@@ -111,7 +114,7 @@ export default function PipelinePage() {
                     </div>
                     <div>
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total de Cards</p>
-                        <p className="text-4xl font-black text-slate-900">3</p>
+                        <p className="text-4xl font-black text-slate-900">{cards.length}</p>
                     </div>
                 </div>
                 <div className="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm flex items-center gap-6">
@@ -119,8 +122,13 @@ export default function PipelinePage() {
                         <DollarSign className="w-6 h-6 text-rose-500" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Valor Total</p>
-                        <p className="text-4xl font-black text-rose-600">R$ 173.232,00</p>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Valor do Funil</p>
+                        <p className="text-4xl font-black text-rose-600">
+                            {columns.reduce((acc, col) => {
+                                const val = parseFloat(col.totalValue.replace(/[^\d]/g, '')) / 100
+                                return acc + (isNaN(val) ? 0 : val)
+                            }, 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        </p>
                     </div>
                 </div>
                 <div className="bg-white p-8 rounded-[32px] border border-slate-200 shadow-sm flex items-center gap-6">
@@ -128,8 +136,8 @@ export default function PipelinePage() {
                         <AlertCircle className="w-6 h-6 text-red-500" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Cards Vencidos</p>
-                        <p className="text-4xl font-black text-slate-900">1</p>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Oportunidades Vencidas</p>
+                        <p className="text-4xl font-black text-slate-900">0</p>
                     </div>
                 </div>
             </div>
@@ -137,7 +145,7 @@ export default function PipelinePage() {
             {/* Kanban Board */}
             <div className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide">
                 {columns.map((col) => (
-                    <div key={col.title} className="flex-shrink-0 w-[280px] flex flex-col gap-4">
+                    <div key={col.id} className="flex-shrink-0 w-[280px] flex flex-col gap-4">
                         {/* Column Header */}
                         <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-2">
                             <div className="flex items-center justify-between">
@@ -153,7 +161,7 @@ export default function PipelinePage() {
                         {/* Drop Area / Cards */}
                         <div className="flex flex-col gap-4 min-h-[500px]">
                             {cards
-                                .filter(c => c.column === col.title)
+                                .filter(c => c.columnId === col.id)
                                 .map(card => (
                                     <div key={card.id} className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-rose-500/50 transition-all cursor-pointer group relative shadow-soft">
                                         <div className="flex justify-between items-start mb-4">
@@ -185,10 +193,10 @@ export default function PipelinePage() {
                                     </div>
                                 ))}
 
-                            {/* Add Card Placeholder */}
+                            {/* Placeholder de Adicionar Card */}
                             <button className="w-full py-3 border border-dashed border-slate-200 rounded-2xl flex items-center justify-center gap-2 text-slate-400 hover:border-rose-500/30 hover:text-rose-600 transition-all text-[10px] font-black uppercase tracking-widest">
                                 <Plus className="w-3 h-3" />
-                                Adicionar Card
+                                Adicionar Oportunidade
                             </button>
 
                             {col.count === 0 && (
@@ -201,7 +209,7 @@ export default function PipelinePage() {
                     </div>
                 ))}
 
-                {/* New Column Button */}
+                {/* Botão de Nova Coluna */}
                 <div className="flex-shrink-0 w-[280px]">
                     <button 
                         onClick={() => setIsNewColumnModalOpen(true)}
@@ -220,7 +228,7 @@ export default function PipelinePage() {
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
                     <div className="bg-white border border-slate-200 rounded-[32px] w-full max-w-sm overflow-hidden animate-scale-in shadow-2xl">
                         <div className="p-8 border-b border-slate-100 flex items-center justify-between">
-                            <h2 className="text-xl font-black text-slate-900">NOVA COLUNA</h2>
+                            <h2 className="text-xl font-black text-slate-900 uppercase">Criar Nova Coluna</h2>
                             <button onClick={() => setIsNewColumnModalOpen(false)} className="text-slate-400 hover:text-slate-900 transition-colors">
                                 <X className="w-6 h-6" />
                             </button>
@@ -230,17 +238,24 @@ export default function PipelinePage() {
                                 <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Nome da Coluna</label>
                                 <input 
                                     type="text" 
-                                    placeholder="Ex: Em Negociação"
+                                    value={newColumnName}
+                                    onChange={(e) => setNewColumnName(e.target.value)}
+                                    placeholder="Ex: Qualificação"
                                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-rose-500 transition-all"
                                 />
                             </div>
                             <div>
-                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Cor</label>
+                                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Selecione a Identidade Visual</label>
                                 <div className="flex flex-wrap gap-3">
                                     {['bg-blue-500', 'bg-blue-400', 'bg-purple-500', 'bg-orange-500', 'bg-red-400', 'bg-rose-500', 'bg-emerald-500'].map((color) => (
                                         <button 
                                             key={color} 
-                                            className={cn("w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform shadow-sm", color)} 
+                                            onClick={() => setSelectedColor(color)}
+                                            className={cn(
+                                                "w-8 h-8 rounded-full cursor-pointer hover:scale-110 transition-transform shadow-sm border-2",
+                                                color,
+                                                selectedColor === color ? 'border-slate-900' : 'border-transparent'
+                                            )} 
                                         />
                                     ))}
                                 </div>
@@ -251,10 +266,13 @@ export default function PipelinePage() {
                                 onClick={() => setIsNewColumnModalOpen(false)}
                                 className="flex-1 px-6 py-3 rounded-xl border border-slate-200 text-slate-400 font-bold hover:text-slate-900 transition-all bg-white"
                             >
-                                Cancelar
+                                Voltar
                             </button>
-                            <button className="flex-2 bg-rose-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-rose-500/20 hover:bg-rose-500 transition-all">
-                                Criar Coluna
+                            <button 
+                                onClick={handleCreateColumn}
+                                className="flex-2 bg-rose-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-rose-500/20 hover:bg-rose-500 transition-all"
+                            >
+                                Confirmar e Criar
                             </button>
                         </div>
                     </div>
