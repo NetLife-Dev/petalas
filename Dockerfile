@@ -48,11 +48,11 @@ COPY --from=builder /app/package.json ./package.json
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-# Crucial: Ensure the Prisma client generated in node_modules is also carried over
+# Essential Prisma and Binaries
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin ./node_modules/.bin
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 
 USER nextjs
 
@@ -61,6 +61,7 @@ ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 ENV HOME /tmp
 
-CMD ["node", "server.js"]
+# Auto-migrate on start
+CMD ["sh", "-c", "./node_modules/.bin/prisma db push && node server.js"]
 
 
