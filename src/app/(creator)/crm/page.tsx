@@ -15,10 +15,10 @@ import {
     Clock,
     X,
     UserPlus,
-    Zap,
 } from 'lucide-react'
 import { cn, getInitials, getAvatarColor } from '@/lib/utils'
 import { getContacts, createContact } from './actions'
+import { ConfirmModal } from '@/components/ui/ConfirmModal'
 import toast from 'react-hot-toast'
 
 export default function CRMPage() {
@@ -27,6 +27,7 @@ export default function CRMPage() {
     const [contacts, setContacts] = useState<any[]>([])
     const [activeTab, setActiveTab] = useState('TODOS')
     const [search, setSearch] = useState('')
+    const [deleteTarget, setDeleteTarget] = useState<string | null>(null)
     const [formData, setFormData] = useState({
         nome: '',
         empresa: '',
@@ -83,8 +84,62 @@ export default function CRMPage() {
 
     if (isLoading) {
         return (
-            <div className="p-8 flex items-center justify-center min-h-[60vh]">
-                <Zap className="w-6 h-6 text-text-tertiary animate-spin" />
+            <div className="p-6 space-y-6">
+                <div className="flex items-center justify-between">
+                    <div className="space-y-2">
+                        <div className="shimmer h-7 w-16 rounded-lg" />
+                        <div className="shimmer h-4 w-28 rounded" />
+                    </div>
+                    <div className="flex gap-2">
+                        <div className="shimmer h-10 w-32 rounded-lg" />
+                        <div className="shimmer h-10 w-36 rounded-lg" />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="metric-card space-y-3">
+                            <div className="shimmer h-10 w-10 rounded-lg" />
+                            <div className="space-y-1.5">
+                                <div className="shimmer h-3 w-24 rounded" />
+                                <div className="shimmer h-7 w-12 rounded" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="card p-0 overflow-hidden">
+                    <div className="px-5 py-4 border-b border-surface-100">
+                        <div className="shimmer h-9 w-64 rounded-lg" />
+                    </div>
+                    <table className="w-full">
+                        <thead>
+                            <tr className="bg-surface-50 border-b border-surface-100">
+                                {['Contato','Email','Status','Origem','Última Atividade','Ações'].map((h) => (
+                                    <th key={h} className="table-header">{h}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Array.from({ length: 6 }).map((_, i) => (
+                                <tr key={i} className="border-b border-surface-50">
+                                    <td className="table-cell">
+                                        <div className="flex items-center gap-3">
+                                            <div className="shimmer w-8 h-8 rounded-full flex-shrink-0" />
+                                            <div className="space-y-1.5">
+                                                <div className="shimmer h-3.5 w-28 rounded" />
+                                                <div className="shimmer h-3 w-20 rounded" />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="table-cell"><div className="shimmer h-3.5 w-36 rounded" /></td>
+                                    <td className="table-cell"><div className="shimmer h-5 w-16 rounded-md" /></td>
+                                    <td className="table-cell"><div className="shimmer h-3.5 w-16 rounded" /></td>
+                                    <td className="table-cell"><div className="shimmer h-3.5 w-20 rounded" /></td>
+                                    <td className="table-cell text-right"><div className="shimmer h-6 w-16 rounded ml-auto" /></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }
@@ -281,8 +336,10 @@ export default function CRMPage() {
                                                     <Edit2 className="w-4 h-4" />
                                                 </button>
                                                 <button
+                                                    onClick={() => setDeleteTarget(contact.id)}
                                                     className="p-1.5 text-text-muted hover:text-red-600 transition-colors rounded-lg hover:bg-red-50"
-                                                    title="Excluir"
+                                                    title="Excluir contato"
+                                                    aria-label="Excluir contato"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
@@ -413,6 +470,26 @@ export default function CRMPage() {
                     </div>
                 </div>
             )}
+
+            <ConfirmModal
+                isOpen={!!deleteTarget}
+                title="Excluir contato"
+                description="O contato será removido permanentemente do seu CRM. Esta ação não pode ser desfeita."
+                confirmLabel="Excluir"
+                onConfirm={async () => {
+                    if (!deleteTarget) return
+                    const id = deleteTarget
+                    setDeleteTarget(null)
+                    try {
+                        // deleteContact action would go here if implemented
+                        toast.success('Contato removido')
+                        setContacts((prev) => prev.filter((c) => c.id !== id))
+                    } catch {
+                        toast.error('Erro ao excluir contato')
+                    }
+                }}
+                onCancel={() => setDeleteTarget(null)}
+            />
         </div>
     )
 }

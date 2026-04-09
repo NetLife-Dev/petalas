@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import {
     Plus,
     Search,
-    Zap,
     Calendar,
     DollarSign,
     AlertCircle,
@@ -104,8 +103,38 @@ export default function PipelinePage() {
 
     if (isLoading) {
         return (
-            <div className="p-8 flex items-center justify-center min-h-[60vh]">
-                <Zap className="w-6 h-6 text-text-tertiary animate-spin" />
+            <div className="p-6 space-y-6">
+                <div className="flex items-center justify-between">
+                    <div className="space-y-2">
+                        <div className="shimmer h-7 w-28 rounded-lg" />
+                        <div className="shimmer h-4 w-40 rounded" />
+                    </div>
+                    <div className="shimmer h-10 w-36 rounded-lg" />
+                </div>
+                <div className="flex gap-4 overflow-x-auto pb-2">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="flex-shrink-0 w-72">
+                            <div className="card p-0 overflow-hidden">
+                                <div className="px-4 py-3 border-b border-surface-100 flex items-center justify-between">
+                                    <div className="shimmer h-4 w-24 rounded" />
+                                    <div className="shimmer h-5 w-8 rounded-full" />
+                                </div>
+                                <div className="p-3 space-y-3">
+                                    {Array.from({ length: 3 - (i % 2) }).map((_, j) => (
+                                        <div key={j} className="card p-4 space-y-2">
+                                            <div className="shimmer h-4 w-full rounded" />
+                                            <div className="shimmer h-3 w-2/3 rounded" />
+                                            <div className="flex gap-2 mt-2">
+                                                <div className="shimmer h-5 w-14 rounded-md" />
+                                                <div className="shimmer h-5 w-16 rounded-md" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         )
     }

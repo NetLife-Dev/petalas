@@ -10,7 +10,7 @@ const config: Config = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "#E11D48",
+                    DEFAULT: "var(--color-primary)",
                     50: "#fff1f2",
                     100: "#ffe4e6",
                     200: "#fecdd3",
@@ -24,18 +24,18 @@ const config: Config = {
                     950: "#4c0519",
                 },
                 surface: {
-                    DEFAULT: "#FFFFFF",
-                    50: "#F9FAFB",
-                    100: "#F3F4F6",
-                    200: "#E5E7EB",
-                    300: "#D1D5DB",
-                    muted: "#9CA3AF",
+                    DEFAULT: "var(--color-bg-surface)",
+                    50: "var(--surface-50)",
+                    100: "var(--surface-100)",
+                    200: "var(--surface-200)",
+                    300: "var(--surface-300)",
+                    muted: "var(--color-text-tertiary)",
                 },
                 text: {
-                    primary: "#111827",
-                    secondary: "#374151",
-                    muted: "#6B7280",
-                    tertiary: "#9CA3AF",
+                    primary: "var(--color-text-main)",
+                    secondary: "var(--color-text-secondary)",
+                    muted: "var(--color-text-muted)",
+                    tertiary: "var(--color-text-tertiary)",
                     inverted: "#FFFFFF",
                 }
             },

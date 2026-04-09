@@ -10,25 +10,52 @@ import {
     Circle,
     AlertCircle,
     Send,
-    Search,
     Loader2,
     Link2,
     Zap,
     Share2,
     Target,
+    Video,
+    Plus,
 } from 'lucide-react'
+import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
 
 type NotionConnectState = 'disconnected' | 'connecting' | 'connected'
 
-const SAMPLE_IDEAS = [
-    'Como o Home Equity pode impulsionar sua reforma residencial',
-    'Diferenças financeiras: Imobiliário vs Consórcio',
-    '5 motivos para usar crédito com garantia de ativos para crescer',
-    'Planejamento Inteligente: Quando é a hora de refinanciar?',
-    'Guia Completo: Florescimento do Crédito Imobiliário',
+const IDEAS_TEMPLATES = [
+    'Como {produto} pode transformar sua estratégia de vendas',
+    '5 razões para investir em {produto} agora',
+    'O guia definitivo sobre {produto}: tudo que você precisa saber',
+    '{produto}: mitos e verdades que ninguém te conta',
+    'Como seus concorrentes usam {produto} para crescer',
 ]
+
+type Post = {
+    id: string
+    titulo: string
+    status: string
+    data: string
+}
+
+const statusConfig: Record<string, { label: string; icon: typeof Circle; color: string; bg: string }> = {
+    processando: { label: 'Processando', icon: Loader2, color: 'text-amber-600', bg: 'bg-amber-50' },
+    concluido: { label: 'Concluído', icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    erro: { label: 'Erro', icon: AlertCircle, color: 'text-red-600', bg: 'bg-red-50' },
+    rascunho: { label: 'Rascunho', icon: Circle, color: 'text-text-muted', bg: 'bg-surface-100' },
+    'em revisão': { label: 'Em revisão', icon: AlertCircle, color: 'text-amber-600', bg: 'bg-amber-50' },
+    aprovado: { label: 'Aprovado', icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+    publicado: { label: 'Publicado', icon: Zap, color: 'text-primary', bg: 'bg-primary/5' },
+}
+
+function formatDate(dateStr: string) {
+    try {
+        return new Date(dateStr).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' })
+    } catch {
+        return dateStr
+    }
+}
 
 export default function AgendaPage() {
     const [notionToken, setNotionToken] = useState('')
@@ -39,36 +66,51 @@ export default function AgendaPage() {
     const [concorrenteInput, setConcorrenteInput] = useState('')
     const [isAnalyzing, setIsAnalyzing] = useState(false)
     const [analysisResult, setAnalysisResult] = useState('')
-    const [posts] = useState([
-        { id: '1', titulo: 'Home Equity — Benefícios para Autônomos', status: 'rascunho', data: '2024-12-10' },
-        { id: '2', titulo: 'Financiamento: Suas Dúvidas Respondidas', status: 'em revisão', data: '2024-12-12' },
-        { id: '3', titulo: 'Crédito Imobiliário em 2025: O Florescer', status: 'aprovado', data: '2024-12-15' },
-        { id: '4', titulo: 'Taxas de Mercado e Impactos no Crescimento', status: 'publicado', data: '2024-12-08' },
-    ])
+    const [posts, setPosts] = useState<Post[]>([])
+    const [isLoadingPosts, setIsLoadingPosts] = useState(true)
 
     useEffect(() => {
-        async function loadIntegration() {
+        async function init() {
+            // Check Notion integration
             try {
                 const res = await fetch('/api/creator/integracoes')
-                if (!res.ok) return
-                const data: Array<{ tipo: string; ativo: boolean }> = await res.json()
-                const notion = data.find((i) => i.tipo === 'notion')
-                if (notion?.ativo) setConnectState('connected')
+                if (res.ok) {
+                    const data: Array<{ tipo: string; ativo: boolean }> = await res.json()
+                    const notion = data.find((i) => i.tipo === 'notion')
+                    if (notion?.ativo) setConnectState('connected')
+                }
             } catch {
                 // ignore
             }
+
+            // Load real videos as content posts
+            try {
+                const res = await fetch('/api/creator/videos')
+                if (res.ok) {
+                    const data = await res.json()
+                    const videos = (data.videos || data || []).slice(0, 10).map((v: any) => ({
+                        id: v.id,
+                        titulo: v.nome_produto || 'Vídeo sem título',
+                        status: v.status || 'rascunho',
+                        data: v.created_at || v.data || new Date().toISOString(),
+                    }))
+                    setPosts(videos)
+                }
+            } catch {
+                // ignore
+            } finally {
+                setIsLoadingPosts(false)
+            }
         }
-        loadIntegration()
+        init()
     }, [])
 
     const handleConnectNotion = async () => {
         if (!notionToken.trim()) {
-            toast.error('Insira sua chave secreta (bloom secret) do Notion')
+            toast.error('Insira sua chave secreta do Notion')
             return
         }
         setConnectState('connecting')
-
-        await new Promise((r) => setTimeout(r, 1500))
 
         const res = await fetch('/api/creator/integracoes', {
             method: 'POST',
@@ -77,10 +119,10 @@ export default function AgendaPage() {
         })
 
         if (!res.ok) {
-            toast.error('Erro ao florescer integração com Notion')
+            toast.error('Erro ao conectar com Notion')
             setConnectState('disconnected')
         } else {
-            toast.success('Notion sincronizado com sucesso!')
+            toast.success('Notion conectado com sucesso!')
             setConnectState('connected')
         }
     }
@@ -91,11 +133,10 @@ export default function AgendaPage() {
             return
         }
         setIsGeneratingIdeas(true)
-        await new Promise((r) => setTimeout(r, 2000))
-        const customIdeas = SAMPLE_IDEAS.map((idea) =>
-            idea.replace('Home Equity', ideaInput.split(' ')[0] || 'Asset')
-        )
-        setIdeas(customIdeas)
+        await new Promise((r) => setTimeout(r, 1200))
+        const term = ideaInput.trim()
+        const generated = IDEAS_TEMPLATES.map((t) => t.replace('{produto}', term))
+        setIdeas(generated)
         setIsGeneratingIdeas(false)
     }
 
@@ -105,83 +146,62 @@ export default function AgendaPage() {
             return
         }
         setIsAnalyzing(true)
-        await new Promise((r) => setTimeout(r, 2500))
-        setAnalysisResult(`
-**Pulso do Perfil: ${concorrenteInput}**
-
-📊 **Fluxo de Conteúdo**
-Conteúdo altamente informativo com linguagem acessível. Foco forte em reels curtos e infográficos.
-
-📅 **Frequência de Postagens**
-Média de 5-7 postagens por semana. Pico de visibilidade às terças e quintas-feiras.
-
-🎯 **Distribuição de Ativos**
-- 40% Conteúdos Educativos (30-60s)
-- 30% Carrosséis baseados em Dados
-- 20% Posts Estáticos de Dicas
-- 10% Enquetes Interativas
-
-💡 **Oportunidades de Crescimento**
-Falta no concorrente: Caminhos de planejamento a longo prazo, vídeos comparativos de recursos e histórias de sucesso de clientes.
-    `.trim())
+        await new Promise((r) => setTimeout(r, 2000))
+        setAnalysisResult(
+            `Análise de ${concorrenteInput}\n\nDistribuição de conteúdo estimada:\n• 40% Conteúdo Educativo (30–60s)\n• 30% Carrosséis baseados em dados\n• 20% Posts estáticos\n• 10% Interativos\n\nOportunidades identificadas: vídeos comparativos, histórias de sucesso e planejamentos de longo prazo estão ausentes no perfil analisado.`
+        )
         setIsAnalyzing(false)
-    }
-
-    const statusConfig: Record<string, { label: string; icon: typeof Circle; color: string; bg: string }> = {
-        'rascunho': { label: 'Semente', icon: Circle, color: 'text-text-muted', bg: 'bg-surface-100' },
-        'em revisão': { label: 'Regando', icon: AlertCircle, color: 'text-amber-500', bg: 'bg-amber-50' },
-        'aprovado': { label: 'Florescer', icon: CheckCircle, color: 'text-emerald-500', bg: 'bg-emerald-50' },
-        'publicado': { label: 'Colhido', icon: Zap, color: 'text-primary', bg: 'bg-primary/5' },
     }
 
     if (connectState !== 'connected') {
         return (
-            <main className="flex-1 p-8 lg:p-12 bg-surface-50 min-h-screen">
-                <div className="max-w-2xl mx-auto space-y-12">
-                    <header>
-                        <h1 className="text-4xl font-black text-text-primary tracking-tight">Calendário de Conteúdo</h1>
-                        <p className="text-text-muted mt-2 font-medium">Sincronize sua estratégia com o ecossistema Notion.</p>
-                    </header>
+            <main className="p-6 lg:p-8">
+                <div className="max-w-xl mx-auto space-y-8">
+                    <div>
+                        <h1 className="text-2xl font-bold text-text-primary">Calendário de Conteúdo</h1>
+                        <p className="text-text-muted text-sm mt-1">Sincronize sua estratégia com o Notion.</p>
+                    </div>
 
-                    <div className="bg-white border border-surface-200 rounded-[40px] p-12 shadow-premium text-center flex flex-col items-center gap-8">
-                        <div className="w-24 h-24 rounded-[32px] bg-surface-50 border-2 border-surface-100 flex items-center justify-center">
-                            <Calendar className="w-10 h-10 text-primary" />
+                    <div className="card p-8 flex flex-col items-center gap-6 text-center">
+                        <div className="w-14 h-14 rounded-xl bg-surface-100 flex items-center justify-center">
+                            <Calendar className="w-7 h-7 text-text-muted" />
                         </div>
                         <div>
-                            <h2 className="text-2xl font-black text-text-primary">Conectar Workspace do Notion</h2>
-                            <p className="text-text-muted mt-3 font-medium max-w-sm">
-                                Integre com o Notion para gerenciar seu hub de conteúdo, aprovações e agendamentos diretamente do seu painel.
+                            <h2 className="text-lg font-semibold text-text-primary">Conectar Workspace do Notion</h2>
+                            <p className="text-text-muted text-sm mt-1 max-w-sm">
+                                Integre com o Notion para gerenciar conteúdo, aprovações e agendamentos diretamente do seu painel.
                             </p>
                         </div>
 
-                        <div className="w-full max-w-sm space-y-6 text-left">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Notion Bloom Secret</label>
+                        <div className="w-full max-w-sm space-y-4 text-left">
+                            <div>
+                                <label className="label">Notion Secret Key</label>
                                 <input
                                     type="text"
                                     placeholder="secret_..."
                                     value={notionToken}
                                     onChange={(e) => setNotionToken(e.target.value)}
-                                    className="w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm"
+                                    className="input-field"
+                                    onKeyDown={(e) => e.key === 'Enter' && handleConnectNotion()}
                                 />
-                                <p className="text-[10px] text-text-muted font-bold px-2">
+                                <p className="text-xs text-text-muted mt-1.5">
                                     Obtenha a sua em notion.so → Configurações → Integrações
                                 </p>
                             </div>
                             <button
                                 onClick={handleConnectNotion}
                                 disabled={connectState === 'connecting'}
-                                className="w-full bg-primary text-white font-black py-5 rounded-2xl shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+                                className="btn-primary w-full disabled:opacity-50"
                             >
                                 {connectState === 'connecting' ? (
                                     <>
-                                        <Loader2 className="w-5 h-5 animate-spin" />
-                                        SINCRONIZANDO O PAINEL...
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        Sincronizando...
                                     </>
                                 ) : (
                                     <>
-                                        <Link2 className="w-5 h-5" />
-                                        CONECTAR WORKSPACE
+                                        <Link2 className="w-4 h-4" />
+                                        Conectar Workspace
                                     </>
                                 )}
                             </button>
@@ -193,97 +213,121 @@ Falta no concorrente: Caminhos de planejamento a longo prazo, vídeos comparativ
     }
 
     return (
-        <main className="flex-1 p-8 lg:p-12 bg-surface-50 min-h-screen">
-            <div className="max-w-6xl mx-auto flex flex-col gap-10">
-                <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <main className="p-6 lg:p-8">
+            <div className="max-w-6xl mx-auto space-y-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <h1 className="text-4xl font-black text-text-primary tracking-tight">Calendário Estratégico</h1>
-                        <p className="text-text-muted mt-2 font-medium">Hub de conteúdo integrado sincronizado com o Notion.</p>
+                        <h1 className="text-2xl font-bold text-text-primary">Calendário Estratégico</h1>
+                        <p className="text-text-muted text-sm mt-0.5">Hub de conteúdo integrado com Notion.</p>
                     </div>
-                    <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 shadow-sm animate-fade-in">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">Workspace Sincronizado</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-xs font-medium">
+                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        Workspace Sincronizado
                     </div>
-                </header>
+                </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-                    {/* Content Hub */}
-                    <div className="bg-white border border-surface-200 rounded-[40px] p-8 shadow-sm group">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                                <Share2 className="w-7 h-7" />
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    {/* Content Flow */}
+                    <div className="card">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+                                <Share2 className="w-4.5 h-4.5 text-blue-600" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Fluxo do Hub de Conteúdo</h2>
+                            <h2 className="section-title">Fluxo de Conteúdo</h2>
                         </div>
 
-                        <div className="space-y-3">
-                            {posts.map((post) => {
-                                const config = statusConfig[post.status]
-                                const Icon = config.icon
-                                return (
-                                    <div key={post.id} className="flex items-center gap-4 p-4 rounded-[24px] bg-surface-50/50 hover:bg-white border-2 border-transparent hover:border-surface-100 transition-all cursor-pointer group/item">
-                                        <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center border border-white shadow-sm", config.bg, config.color)}>
-                                            <Icon className="w-5 h-5" />
+                        {isLoadingPosts ? (
+                            <div className="space-y-3">
+                                {Array.from({ length: 4 }).map((_, i) => (
+                                    <div key={i} className="flex items-center gap-3 p-3">
+                                        <div className="shimmer w-9 h-9 rounded-lg flex-shrink-0" />
+                                        <div className="flex-1 space-y-1.5">
+                                            <div className="shimmer h-3.5 w-full rounded" />
+                                            <div className="shimmer h-3 w-1/3 rounded" />
                                         </div>
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-sm text-text-primary font-black truncate">{post.titulo}</p>
-                                            <p className="text-[10px] text-text-muted font-black uppercase tracking-widest mt-1">{post.data}</p>
-                                        </div>
-                                        <div className={cn(
-                                            "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.1em]",
-                                            config.bg, config.color
-                                        )}>
-                                            {config.label}
-                                        </div>
+                                        <div className="shimmer h-5 w-16 rounded-md" />
                                     </div>
-                                )
-                            })}
-                        </div>
+                                ))}
+                            </div>
+                        ) : posts.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center py-12 gap-3">
+                                <div className="w-12 h-12 rounded-xl bg-surface-100 flex items-center justify-center">
+                                    <Video className="w-6 h-6 text-text-tertiary" />
+                                </div>
+                                <p className="text-sm text-text-muted text-center">Nenhum vídeo criado ainda.</p>
+                                <Link href="/criar" className="btn-primary text-xs px-4 py-2">
+                                    <Plus className="w-3.5 h-3.5" />
+                                    Criar vídeo
+                                </Link>
+                            </div>
+                        ) : (
+                            <div className="space-y-2">
+                                {posts.map((post) => {
+                                    const cfg = statusConfig[post.status] || statusConfig['rascunho']
+                                    const Icon = cfg.icon
+                                    return (
+                                        <div key={post.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface-50 transition-colors cursor-pointer">
+                                            <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0', cfg.bg)}>
+                                                <Icon className={cn('w-4 h-4', cfg.color, post.status === 'processando' && 'animate-spin')} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-medium text-text-primary truncate">{post.titulo}</p>
+                                                <p className="text-xs text-text-muted mt-0.5">{formatDate(post.data)}</p>
+                                            </div>
+                                            <span className={cn('badge text-[11px]', cfg.bg, cfg.color)}>
+                                                {cfg.label}
+                                            </span>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        )}
                     </div>
 
                     {/* Idea Generator */}
-                    <div className="bg-white border border-surface-200 rounded-[40px] p-8 shadow-sm group">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                                <Brain className="w-7 h-7" />
+                    <div className="card">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center">
+                                <Brain className="w-4.5 h-4.5 text-purple-600" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Gerador de Ideias (Bloom)</h2>
+                            <h2 className="section-title">Gerador de Ideias</h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Semente ou Tema do Produto</label>
-                                <div className="flex gap-3">
+                        <div className="space-y-4">
+                            <div>
+                                <label className="label">Produto ou tema</label>
+                                <div className="flex gap-2">
                                     <input
                                         type="text"
-                                        placeholder="Ex: Investimento Imobiliário para Jovens"
+                                        placeholder="Ex: Crédito imobiliário para jovens"
                                         value={ideaInput}
                                         onChange={(e) => setIdeaInput(e.target.value)}
-                                        className="flex-1 bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm"
+                                        className="input-field"
                                         onKeyDown={(e) => e.key === 'Enter' && handleGenerateIdeas()}
                                     />
                                     <button
                                         onClick={handleGenerateIdeas}
                                         disabled={isGeneratingIdeas}
-                                        className="bg-primary text-white px-8 rounded-2xl shadow-lg shadow-primary/20 hover:scale-[1.05] active:scale-[0.95] transition-all disabled:opacity-50"
+                                        className="btn-primary flex-shrink-0 disabled:opacity-50"
+                                        aria-label="Gerar ideias"
                                     >
                                         {isGeneratingIdeas ? (
-                                            <Loader2 className="w-5 h-5 animate-spin" />
+                                            <Loader2 className="w-4 h-4 animate-spin" />
                                         ) : (
-                                            <Send className="w-5 h-5" />
+                                            <Send className="w-4 h-4" />
                                         )}
                                     </button>
                                 </div>
                             </div>
 
                             {ideas.length > 0 && (
-                                <div className="grid grid-cols-1 gap-2 animate-fade-in">
+                                <div className="space-y-2 animate-fade-in">
                                     {ideas.map((idea, i) => (
-                                        <div key={i} className="flex items-start gap-4 p-5 rounded-[24px] bg-surface-50 hover:bg-primary/5 group/idea transition-all cursor-pointer border-2 border-transparent hover:border-primary/10">
-                                            <div className="w-8 h-8 rounded-full bg-white text-primary flex items-center justify-center text-xs font-black shadow-sm group-hover/idea:bg-primary group-hover/idea:text-white transition-colors">
+                                        <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-surface-50 hover:bg-surface-100 transition-colors cursor-pointer">
+                                            <span className="w-5 h-5 rounded-full bg-white border border-surface-200 flex items-center justify-center text-xs font-medium text-text-muted flex-shrink-0 mt-0.5">
                                                 {i + 1}
-                                            </div>
-                                            <p className="text-sm text-text-primary font-bold leading-relaxed">{idea}</p>
+                                            </span>
+                                            <p className="text-sm text-text-secondary leading-relaxed">{idea}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -292,64 +336,63 @@ Falta no concorrente: Caminhos de planejamento a longo prazo, vídeos comparativ
                     </div>
 
                     {/* Competitor Analysis */}
-                    <div className="bg-white border border-surface-200 rounded-[40px] p-8 shadow-sm group">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                                <Target className="w-7 h-7" />
+                    <div className="card">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center">
+                                <Target className="w-4.5 h-4.5 text-amber-600" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Análise de Pulso do Ecossistema</h2>
+                            <h2 className="section-title">Análise de Concorrente</h2>
                         </div>
 
-                        <div className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">@Usuario do Concorrente</label>
-                                <div className="flex gap-3">
+                        <div className="space-y-4">
+                            <div>
+                                <label className="label">@Usuario do concorrente</label>
+                                <div className="flex gap-2">
                                     <input
                                         type="text"
-                                        placeholder="@digital_bloom ou link..."
+                                        placeholder="@perfil ou link do perfil"
                                         value={concorrenteInput}
                                         onChange={(e) => setConcorrenteInput(e.target.value)}
-                                        className="flex-1 bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm"
+                                        className="input-field"
                                     />
                                     <button
                                         onClick={handleAnalyzeCompetitor}
                                         disabled={isAnalyzing}
-                                        className="bg-text-primary text-white px-8 rounded-2xl shadow-lg hover:scale-[1.05] active:scale-[0.95] transition-all disabled:opacity-50"
+                                        className="btn-secondary flex-shrink-0 disabled:opacity-50"
+                                        aria-label="Analisar concorrente"
                                     >
-                                        {isAnalyzing ? <Loader2 className="w-5 h-5 animate-spin" /> : <BarChart2 className="w-5 h-5" />}
+                                        {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <BarChart2 className="w-4 h-4" />}
                                     </button>
                                 </div>
                             </div>
 
                             {analysisResult && (
-                                <div className="p-8 rounded-[32px] bg-surface-50 border-2 border-surface-100 text-sm text-text-primary font-medium whitespace-pre-line leading-relaxed italic animate-fade-in">
+                                <div className="p-4 rounded-lg bg-surface-50 border border-surface-200 text-sm text-text-secondary leading-relaxed whitespace-pre-line animate-fade-in">
                                     {analysisResult}
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    {/* Scheduling */}
-                    <div className="bg-white border border-surface-200 rounded-[40px] p-8 shadow-sm group relative overflow-hidden">
-                        <div className="flex items-center gap-4 mb-8">
-                            <div className="w-14 h-14 rounded-2xl bg-primary/5 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                                <Clock className="w-7 h-7" />
+                    {/* Scheduling (coming soon) */}
+                    <div className="card">
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
+                                <Clock className="w-4.5 h-4.5 text-emerald-600" />
                             </div>
-                            <h2 className="text-xl font-black text-text-primary">Agendamento Automático</h2>
+                            <h2 className="section-title">Agendamento Automático</h2>
                         </div>
-                        <p className="text-sm font-medium text-text-muted leading-relaxed px-2">
-                            Agende a publicação automática dos seus materiais em seus canais sociais sincronizados.
+                        <p className="text-sm text-text-muted leading-relaxed mb-4">
+                            Agende a publicação automática dos seus materiais nos canais sociais sincronizados.
                         </p>
-                        
-                        <div className="mt-8 p-10 rounded-[32px] bg-surface-50 border-2 border-surface-100 text-center flex flex-col items-center gap-4 border-dashed">
-                            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-text-muted shadow-sm">
-                                <Zap className="w-6 h-6 opacity-30" />
-                            </div>
-                            <p className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] max-w-[200px]">
-                                Configure seu Ecossistema Social em{' '}
-                                <a href="/configuracoes" className="text-primary hover:underline italic">
-                                    Identidade → Ecossistema
-                                </a>
+
+                        <div className="flex flex-col items-center gap-3 py-8 border border-dashed border-surface-200 rounded-lg bg-surface-50">
+                            <Zap className="w-8 h-8 text-text-tertiary opacity-50" />
+                            <p className="text-xs text-text-muted text-center max-w-[180px]">
+                                Configure seus canais em{' '}
+                                <Link href="/configuracoes" className="text-primary hover:underline">
+                                    Configurações → Integrações
+                                </Link>
                             </p>
                         </div>
                     </div>

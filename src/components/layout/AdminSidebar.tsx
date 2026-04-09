@@ -13,9 +13,12 @@ import {
     Menu,
     X,
     Shield,
+    Sun,
+    Moon,
 } from 'lucide-react'
 import { useSession, signOut } from 'next-auth/react'
 import { cn, getInitials } from '@/lib/utils'
+import { useTheme } from '@/components/providers/ThemeProvider'
 import toast from 'react-hot-toast'
 
 const navItems = [
@@ -39,6 +42,8 @@ export function AdminSidebar() {
               avatar_url: session.user.image || null,
           }
         : null
+
+    const { theme, toggleTheme } = useTheme()
 
     const handleLogout = async () => {
         await signOut({ redirect: false })
@@ -105,9 +110,18 @@ export function AdminSidebar() {
                             <p className="text-xs text-text-muted leading-tight">Administrador</p>
                         </div>
                         <button
+                            onClick={toggleTheme}
+                            className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-100 rounded-lg transition-colors"
+                            title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
+                            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+                        >
+                            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                        </button>
+                        <button
                             onClick={handleLogout}
                             className="p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Sair"
+                            aria-label="Sair"
                         >
                             <LogOut className="w-4 h-4" />
                         </button>

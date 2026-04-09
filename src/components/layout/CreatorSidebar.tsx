@@ -14,9 +14,12 @@ import {
     X,
     Sparkles,
     Kanban,
+    Sun,
+    Moon,
 } from 'lucide-react'
 import { useSession, signOut } from 'next-auth/react'
 import { cn, getInitials, getAvatarColor } from '@/lib/utils'
+import { useTheme } from '@/components/providers/ThemeProvider'
 import toast from 'react-hot-toast'
 
 const navItems = [
@@ -43,6 +46,8 @@ export function CreatorSidebar() {
               plan: sessionUser.plan || 'Pro Plan',
           }
         : null
+
+    const { theme, toggleTheme } = useTheme()
 
     const handleLogout = async () => {
         await signOut({ redirect: false })
@@ -116,13 +121,23 @@ export function CreatorSidebar() {
                         </div>
                     </div>
                 )}
-                <button
-                    onClick={handleLogout}
-                    className="sidebar-item w-full text-left"
-                >
-                    <LogOut className="w-4 h-4 flex-shrink-0" />
-                    <span>Sair</span>
-                </button>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={handleLogout}
+                        className="sidebar-item flex-1 text-left"
+                    >
+                        <LogOut className="w-4 h-4 flex-shrink-0" />
+                        <span>Sair</span>
+                    </button>
+                    <button
+                        onClick={toggleTheme}
+                        className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-100 transition-colors"
+                        title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
+                        aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+                    >
+                        {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    </button>
+                </div>
             </div>
         </div>
     )

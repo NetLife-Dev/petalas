@@ -36,7 +36,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR" className={outfit.variable}>
-            <body className="font-sans antialiased bg-gray-50 text-gray-900 selection:bg-primary/20 selection:text-primary">
+            <head>
+                {/* Apply theme before first paint to avoid FOUC */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark');} }catch(e){}})();`,
+                    }}
+                />
+            </head>
+            <body className="font-sans antialiased selection:bg-primary/20 selection:text-primary">
                 <Providers>
                     {children}
                     <Toaster
