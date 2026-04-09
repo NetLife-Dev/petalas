@@ -130,8 +130,12 @@ export function CreatorSidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex flex-col w-60 bg-white border-r border-surface-100 h-screen sticky top-0 flex-shrink-0 z-40">
-                <SidebarContent />
+            {/* O <aside> se estica com a página (self-stretch) e carrega o bg/border em toda a altura.
+                O div interno fica sticky+h-screen para manter a nav visível durante o scroll. */}
+            <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 z-40 self-stretch bg-white border-r border-surface-100">
+                <div className="sticky top-0 h-screen flex flex-col overflow-y-auto">
+                    <SidebarContent />
+                </div>
             </aside>
 
             {/* Mobile Header */}

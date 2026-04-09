@@ -120,8 +120,10 @@ export function AdminSidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex flex-col w-60 bg-white border-r border-surface-100 h-screen sticky top-0 flex-shrink-0">
-                <SidebarContent />
+            <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 self-stretch bg-white border-r border-surface-100">
+                <div className="sticky top-0 h-screen flex flex-col overflow-y-auto">
+                    <SidebarContent />
+                </div>
             </aside>
 
             {/* Mobile Header */}
