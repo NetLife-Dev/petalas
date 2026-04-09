@@ -365,3 +365,18 @@ body {
   color: var(--color-text-main) !important;
   border: 1px solid var(--color-border) !important;
 }
+
+/* Primary color overrides in dark mode (Tailwind primary is hardcoded, override here) */
+[data-theme="dark"] .btn-primary {
+  background-color: var(--color-primary);
+}
+[data-theme="dark"] .btn-primary:hover {
+  background-color: #f43f5e;
+}
+[data-theme="dark"] .sidebar-item-active {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+[data-theme="dark"] .text-primary {
+  color: var(--color-primary) !important;
+}

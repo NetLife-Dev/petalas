@@ -10,7 +10,7 @@ const config: Config = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "var(--color-primary)",
+                    DEFAULT: "#E11D48",
                     50: "#fff1f2",
                     100: "#ffe4e6",
                     200: "#fecdd3",
