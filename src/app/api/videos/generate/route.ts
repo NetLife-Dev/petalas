@@ -54,6 +54,14 @@ export async function POST(request: NextRequest) {
       imageName = imageFile.name || 'logo.png'
     }
 
+    // Busca webhook customizada do usuário, se cadastrada
+    const integracao = await prisma.integracao.findUnique({
+      where: { user_id_tipo: { user_id: userId, tipo: 'n8n_video' } },
+    })
+    const webhookUrl = integracao?.ativo && integracao?.token_acesso
+      ? integracao.token_acesso
+      : undefined
+
     // Dispara n8n em background sem aguardar — retorna imediatamente
     triggerVideoN8N({
       video_id: video.id,
@@ -62,6 +70,7 @@ export async function POST(request: NextRequest) {
       imageBuffer,
       imageType,
       imageName,
+      webhookUrl,
     })
 
     return NextResponse.json({ video_id: video.id })

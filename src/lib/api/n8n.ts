@@ -1,4 +1,4 @@
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL || 'https://auto.devnetlife.com/webhook/financeiro'
+const N8N_WEBHOOK_DEFAULT = process.env.N8N_WEBHOOK_URL || 'https://auto.devnetlife.com/webhook/financeiro'
 
 export function triggerVideoN8N(params: {
   video_id: string
@@ -7,7 +7,10 @@ export function triggerVideoN8N(params: {
   imageBuffer?: Buffer
   imageType?: string
   imageName?: string
+  webhookUrl?: string   // URL customizada do usuário — sobrescreve a padrão
 }): void {
+  const url = params.webhookUrl || N8N_WEBHOOK_DEFAULT
+
   const formData = new FormData()
   formData.append('video_id', params.video_id)
   formData.append('service_name', params.service_name)
@@ -19,7 +22,7 @@ export function triggerVideoN8N(params: {
   }
 
   // Dispara sem aguardar — n8n processará e chamará o callback quando terminar
-  fetch(N8N_WEBHOOK_URL, {
+  fetch(url, {
     method: 'POST',
     body: formData,
   }).catch(err => console.error('n8n trigger error:', err))
