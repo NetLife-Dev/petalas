@@ -52,9 +52,9 @@ export function AdminSidebar() {
     }
 
     const SidebarContent = () => (
-        <div className="flex flex-col h-full bg-white">
+        <div className="flex flex-col h-full">
             {/* Logo */}
-            <div className="px-5 py-6 border-b border-surface-100">
+            <div className="px-5 py-6">
                 <Link href="/admin/dashboard" className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity">
                     <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
                         <Shield className="w-4 h-4 text-white" />
@@ -92,7 +92,7 @@ export function AdminSidebar() {
 
             {/* Admin Footer */}
             {admin && (
-                <div className="px-3 py-4 border-t border-surface-100">
+                <div className="px-3 py-4">
                     <div className="flex items-center gap-3 px-2 py-2">
                         <div className="w-8 h-8 rounded-full bg-surface-100 flex items-center justify-center text-xs font-semibold text-text-muted flex-shrink-0">
                             {admin.avatar_url ? (
@@ -134,7 +134,7 @@ export function AdminSidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 self-stretch bg-white border-r border-surface-100">
+            <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 self-stretch border-r border-surface-100">
                 <div className="sticky top-0 h-screen flex flex-col overflow-y-auto">
                     <SidebarContent />
                 </div>
@@ -168,7 +168,7 @@ export function AdminSidebar() {
 
             <aside
                 className={cn(
-                    'lg:hidden fixed top-0 left-0 h-full w-64 bg-white border-r border-surface-100 z-50 transition-transform duration-300',
+                    'lg:hidden fixed top-0 left-0 h-full w-64 border-r border-surface-100 z-50 transition-transform duration-300',
                     mobileOpen ? 'translate-x-0' : '-translate-x-full'
                 )}
             >
