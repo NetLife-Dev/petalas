@@ -6,24 +6,24 @@
 
 :root,
 [data-theme="light"] {
-  --color-primary: #E11D48;
-  --color-primary-light: rgba(225, 29, 72, 0.08);
-  --color-bg-main: #F8F9FA;
-  --color-bg-surface: #FFFFFF;
-  --color-border: #EEEFF1;
-  --color-text-main: #111827;
-  --color-text-secondary: #374151;
-  --color-text-muted: #6B7280;
-  --color-text-tertiary: #9CA3AF;
+  --color-primary: #e8457a;
+  --color-primary-light: rgba(232, 69, 122, 0.15);
+  --color-bg-main: #fdf5f7;
+  --color-bg-surface: #ffffff;
+  --color-border: #f0d5e0;
+  --color-text-main: #1a0a10;
+  --color-text-secondary: #7a4558;
+  --color-text-muted: #c9a0b4;
+  --color-text-tertiary: #c9a0b4;
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-error: #EF4444;
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+  --shadow-card: 0 2px 12px rgba(232, 69, 122, 0.08);
   /* surface scale */
-  --surface-50: #F9FAFB;
-  --surface-100: #F3F4F6;
-  --surface-200: #E5E7EB;
-  --surface-300: #D1D5DB;
+  --surface-50: #ffffff;
+  --surface-100: #fef0f4;
+  --surface-200: #f0d5e0;
+  --surface-300: #f5dde7;
 }
 
 [data-theme="dark"] {
@@ -155,11 +155,25 @@ body {
   .sidebar-item-active {
     @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary font-semibold text-sm whitespace-nowrap;
     background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+
+  .bg-primary-tint {
+    background-color: var(--color-primary-light);
+  }
+
+  .text-primary-var {
+    color: var(--color-primary) !important;
   }
 
   .metric-card {
     @apply bg-white border border-surface-200 rounded-xl p-5 flex flex-col gap-3;
     box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(232, 69, 122, 0.12);
   }
 
   .page-title {
@@ -258,6 +272,178 @@ body {
 
 .animate-scale-in {
   animation: scaleIn 0.2s ease-out;
+}
+
+/* ── Light Mode Customizações Específicas ── */
+
+[data-theme="light"] .btn-secondary {
+  background-color: #fdf5f7;
+  border-color: #f0d5e0;
+  color: #7a4558;
+}
+[data-theme="light"] .btn-secondary:hover {
+  background-color: #fef0f4;
+}
+
+[data-theme="light"] .card,
+[data-theme="light"] .metric-card,
+[data-theme="light"] .modal-panel {
+  border-color: #f5e0e8 !important;
+}
+
+/* Inputs no Light Mode */
+[data-theme="light"] aside,
+[data-theme="light"] aside.bg-white,
+[data-theme="light"] aside .bg-white {
+  background-color: #1a0a10 !important;
+  border-right-color: #2d0f1e !important;
+}
+
+[data-theme="light"] aside .text-text-primary {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] aside .text-text-muted,
+[data-theme="light"] aside .sidebar-item {
+  color: #c9a0b4 !important;
+}
+
+[data-theme="light"] aside .sidebar-item:hover,
+[data-theme="light"] aside .sidebar-item:hover * {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme="light"] aside .sidebar-item-active {
+  background-color: rgba(232, 69, 122, 0.15) !important;
+  color: #e8457a !important;
+  box-shadow: inset 3px 0 0 #e8457a !important;
+}
+[data-theme="light"] aside .sidebar-item-active * {
+  color: #e8457a !important;
+}
+
+/* Sidebar Footer Dividers in Light Mode */
+[data-theme="light"] aside .border-t,
+[data-theme="light"] aside .border-b {
+  border-color: #2d0f1e !important;
+}
+
+/* Scrollbar no Light mode */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: var(--color-bg-main);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: var(--surface-200);
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 69, 122, 0.4);
+}
+
+/* Inputs no Light Mode */
+[data-theme="light"] .input-field {
+  background-color: #ffffff;
+  border-color: #f0d5e0;
+}
+[data-theme="light"] .input-field:focus {
+  border-color: #e8457a;
+  box-shadow: 0 0 0 4px rgba(232, 69, 122, 0.1);
+}
+[data-theme="light"] .input-field::placeholder {
+  color: #c9a0b4;
+}
+[data-theme="light"] .label {
+  color: #5c2d3e;
+  font-weight: 500;
+  @apply text-[11px] uppercase tracking-wider;
+}
+
+/* Dashboard Metric Icons no Light Mode */
+[data-theme="light"] .bg-primary-tint {
+  background-color: rgba(232, 69, 122, 0.12) !important;
+}
+[data-theme="light"] .text-primary-var {
+  color: #e8457a !important;
+}
+
+[data-theme="light"] aside,
+[data-theme="light"] aside.bg-white,
+[data-theme="light"] aside .bg-white,
+[data-theme="light"] aside .bg-surface-100 {
+  background-color: #1a0a10 !important;
+}
+
+[data-theme="light"] aside {
+  border-right: 1px solid #2d0f1e !important;
+}
+
+[data-theme="light"] aside .border-b,
+[data-theme="light"] aside .border-t,
+[data-theme="light"] aside .border-surface-100 {
+  border-color: #2d0f1e !important;
+}
+
+[data-theme="light"] aside .text-text-primary,
+[data-theme="light"] aside span.text-text-primary,
+[data-theme="light"] aside p.text-text-primary {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] aside .text-text-muted,
+[data-theme="light"] aside .sidebar-item,
+[data-theme="light"] aside .text-text-secondary {
+  color: #c9a0b4 !important;
+}
+
+[data-theme="light"] aside .sidebar-item:hover,
+[data-theme="light"] aside button:hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-theme="light"] aside .sidebar-item-active {
+  background-color: rgba(232, 69, 122, 0.15) !important;
+  color: #e8457a !important;
+  box-shadow: inset 3px 0 0 #e8457a !important;
+}
+
+[data-theme="light"] aside .sidebar-item-active * {
+  color: #e8457a !important;
+}
+
+/* Ensure avatar and small badges in sidebar look okay */
+[data-theme="light"] aside .bg-surface-100 {
+  background-color: #2d0f1e !important;
+}
+
+[data-theme="light"] .btn-primary {
+  /* Ajuste no shadow para light mode */
+  box-shadow: 0 4px 14px rgba(232, 69, 122, 0.4);
+}
+[data-theme="light"] .btn-primary:hover {
+  background-color: #d13063; /* 8% darker pink */
+}
+
+/* Sidebar footer elements no Light mode */
+[data-theme="light"] aside .bg-avatar {
+  background-color: #2d0f1e !important;
+}
+
+[data-theme="light"] .lg\:hidden.fixed.top-0 {
+  background-color: #ffffff; /* Mobile header stays light if requested by context, but usually it should match topbar */
+  border-bottom: 1px solid #f0d5e0;
+}
+
+/* Tabs no Light mode */
+[data-theme="light"] .tab-active {
+  color: #e8457a !important;
+  border-bottom: 2px solid #e8457a !important;
+}
+[data-theme="light"] .tab-inactive {
+  color: #7a4558 !important;
+}
+[data-theme="light"] .tab-inactive:hover {
+  color: #e8457a !important;
 }
 
 /* ── Dark mode overrides ── */

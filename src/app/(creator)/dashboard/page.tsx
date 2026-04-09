@@ -103,10 +103,10 @@ export default function DashboardPage() {
     const chartData = data?.chartData || []
 
     const iconConfigs = [
-        { icon: Video, bg: 'bg-blue-50', color: 'text-blue-600' },
-        { icon: UserPlus, bg: 'bg-purple-50', color: 'text-purple-600' },
-        { icon: DollarSign, bg: 'bg-emerald-50', color: 'text-emerald-600' },
-        { icon: Zap, bg: 'bg-amber-50', color: 'text-amber-600' },
+        { icon: Video, bg: 'bg-primary-tint', color: 'text-primary-var' },
+        { icon: UserPlus, bg: 'bg-primary-tint', color: 'text-primary-var' },
+        { icon: DollarSign, bg: 'bg-primary-tint', color: 'text-primary-var' },
+        { icon: Zap, bg: 'bg-primary-tint', color: 'text-primary-var' },
     ]
 
     return (
