@@ -47,26 +47,26 @@ export function AdminSidebar() {
     }
 
     const SidebarContent = () => (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-white">
             {/* Logo */}
-            <div className="p-6 border-b border-surface-200">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                        <Shield className="w-5 h-5 text-white" />
+            <div className="px-5 py-6 border-b border-surface-100">
+                <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
+                        <Shield className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                        <span className="text-text-primary font-black text-xl tracking-tighter block leading-none">
+                        <span className="text-text-primary font-bold text-base tracking-tight block leading-none">
                             Pétalas
                         </span>
-                        <div className="flex items-center gap-1.5 mt-1">
-                            <span className="text-[10px] text-primary font-black uppercase tracking-widest">Admin Panel</span>
-                        </div>
+                        <span className="text-[10px] text-text-muted font-medium mt-0.5 block">
+                            Admin Panel
+                        </span>
                     </div>
                 </div>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+            <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
                 {navItems.map((item) => {
                     const Icon = item.icon
                     const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
@@ -78,11 +78,8 @@ export function AdminSidebar() {
                             onClick={() => setMobileOpen(false)}
                             className={cn(isActive ? 'sidebar-item-active' : 'sidebar-item')}
                         >
-                            <Icon className="w-5 h-5 flex-shrink-0" />
+                            <Icon className="w-4 h-4 flex-shrink-0" />
                             <span>{item.label}</span>
-                            {isActive && (
-                                <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />
-                            )}
                         </Link>
                     )
                 })}
@@ -90,9 +87,9 @@ export function AdminSidebar() {
 
             {/* Admin Footer */}
             {admin && (
-                <div className="p-4 border-t border-surface-200">
-                    <div className="flex items-center gap-3 px-2">
-                        <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <div className="px-3 py-4 border-t border-surface-100">
+                    <div className="flex items-center gap-3 px-2 py-2">
+                        <div className="w-8 h-8 rounded-full bg-surface-100 flex items-center justify-center text-xs font-semibold text-text-muted flex-shrink-0">
                             {admin.avatar_url ? (
                                 <img
                                     src={admin.avatar_url}
@@ -100,18 +97,16 @@ export function AdminSidebar() {
                                     className="w-full h-full rounded-full object-cover"
                                 />
                             ) : (
-                                <span className="text-primary text-xs font-bold">
-                                    {getInitials(admin.nome)}
-                                </span>
+                                getInitials(admin.nome)
                             )}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-text-primary truncate">{admin.nome}</p>
-                            <p className="text-xs text-text-muted truncate">Administrador</p>
+                            <p className="text-sm font-medium text-text-primary truncate leading-tight">{admin.nome}</p>
+                            <p className="text-xs text-text-muted leading-tight">Administrador</p>
                         </div>
                         <button
                             onClick={handleLogout}
-                            className="text-text-muted hover:text-red-500 transition-colors p-1"
+                            className="p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             title="Sair"
                         >
                             <LogOut className="w-4 h-4" />
@@ -125,24 +120,24 @@ export function AdminSidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex flex-col w-64 bg-surface-50 border-r border-surface-200 h-screen sticky top-0 flex-shrink-0">
+            <aside className="hidden lg:flex flex-col w-60 bg-white border-r border-surface-100 h-screen sticky top-0 flex-shrink-0">
                 <SidebarContent />
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white/95 backdrop-blur-md border-b border-surface-200">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white border-b border-surface-100">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
-                        <Shield className="w-5 h-5 text-white" />
+                    <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+                        <Shield className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-text-primary font-black text-lg">
+                    <span className="text-text-primary font-bold text-base tracking-tight">
                         Pétalas
                     </span>
-                    <span className="text-[10px] text-primary font-black uppercase tracking-widest ml-2">Admin</span>
+                    <span className="text-xs text-text-muted ml-1">Admin</span>
                 </div>
                 <button
                     onClick={() => setMobileOpen(!mobileOpen)}
-                    className="p-2 text-text-muted hover:text-primary"
+                    className="p-2 text-text-muted hover:text-text-primary rounded-lg hover:bg-surface-100 transition-colors"
                 >
                     {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </button>
@@ -150,14 +145,14 @@ export function AdminSidebar() {
 
             {mobileOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 z-40 bg-text-primary/20 backdrop-blur-sm"
+                    className="lg:hidden fixed inset-0 z-40 bg-black/20"
                     onClick={() => setMobileOpen(false)}
                 />
             )}
 
             <aside
                 className={cn(
-                    'lg:hidden fixed top-0 left-0 h-full w-72 bg-white border-r border-surface-200 z-50 transition-transform duration-300',
+                    'lg:hidden fixed top-0 left-0 h-full w-64 bg-white border-r border-surface-100 z-50 transition-transform duration-300',
                     mobileOpen ? 'translate-x-0' : '-translate-x-full'
                 )}
             >

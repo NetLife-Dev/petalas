@@ -6,29 +6,30 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import toast from 'react-hot-toast'
-import { Eye, EyeOff, Loader2, Lock, Mail, User, Sparkles, ArrowRight } from 'lucide-react'
+import { Eye, EyeOff, Loader2, Lock, Mail, User, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 
-const cadastroSchema = z.object({
-    nome: z.string().min(3, 'Name must be at least 3 characters'),
-    email: z.string().email('Invalid email'),
-    senha: z
-        .string()
-        .min(8, 'Minimum 8 characters')
-        .regex(/[A-Z]/, 'Must contain at least 1 uppercase letter')
-        .regex(/[0-9]/, 'Must contain at least 1 number')
-        .regex(/[^A-Za-z0-9]/, 'Must contain at least 1 special character'),
-    confirmarSenha: z.string(),
-}).refine((d) => d.senha === d.confirmarSenha, {
-    message: 'As senhas não coincidem',
-    path: ['confirmarSenha'],
-})
+const cadastroSchema = z
+    .object({
+        nome: z.string().min(3, 'Mínimo 3 caracteres'),
+        email: z.string().email('E-mail inválido'),
+        senha: z
+            .string()
+            .min(8, 'Mínimo 8 caracteres')
+            .regex(/[A-Z]/, 'Precisa de ao menos 1 letra maiúscula')
+            .regex(/[0-9]/, 'Precisa de ao menos 1 número')
+            .regex(/[^A-Za-z0-9]/, 'Precisa de ao menos 1 caractere especial'),
+        confirmarSenha: z.string(),
+    })
+    .refine((d) => d.senha === d.confirmarSenha, {
+        message: 'As senhas não coincidem',
+        path: ['confirmarSenha'],
+    })
 
 type CadastroForm = z.infer<typeof cadastroSchema>
 
-// Helper to calculate password strength (0 to 4)
 const calculateStrength = (password: string) => {
     let strength = 0
     if (!password) return strength
@@ -50,25 +51,21 @@ export default function CadastroPage() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm<CadastroForm>({
-        resolver: zodResolver(cadastroSchema),
-    })
+    } = useForm<CadastroForm>({ resolver: zodResolver(cadastroSchema) })
 
-    // Watch password to calculate strength
     const senhaValue = watch('senha', '')
     const strength = calculateStrength(senhaValue)
 
     const getStrengthColor = () => {
-        if (strength === 0) return 'bg-surface-200'
-        if (strength <= 2) return 'bg-red-400'       
-        if (strength === 3) return 'bg-amber-400' 
-        return 'bg-emerald-400'                      
+        if (strength <= 2) return 'bg-red-400'
+        if (strength === 3) return 'bg-amber-400'
+        return 'bg-emerald-500'
     }
 
     const getStrengthLabel = () => {
         if (strength === 0) return 'Digite uma senha'
         if (strength <= 2) return 'Senha fraca'
-        if (strength === 3) return 'Média'
+        if (strength === 3) return 'Senha média'
         return 'Senha forte'
     }
 
@@ -88,11 +85,11 @@ export default function CadastroPage() {
             const result = await response.json()
 
             if (!response.ok) {
-                if (result.error?.includes('Email já cadastrado') || result.error?.includes('already')) {
-                    toast.error('Este e-mail já existe. Tente fazer login.')
-                } else {
-                    toast.error(result.error || 'Erro ao criar conta. Tente novamente.')
-                }
+                toast.error(
+                    result.error?.includes('Email já cadastrado') || result.error?.includes('already')
+                        ? 'Este e-mail já existe. Tente fazer login.'
+                        : result.error || 'Erro ao criar conta. Tente novamente.'
+                )
                 return
             }
 
@@ -103,7 +100,7 @@ export default function CadastroPage() {
             })
 
             if (signInResult?.ok) {
-                toast.success('Sua conta foi criada! Bem-vindo ao Pétalas.')
+                toast.success('Conta criada! Bem-vindo ao Pétalas.')
                 router.push('/dashboard')
                 router.refresh()
             } else {
@@ -118,145 +115,145 @@ export default function CadastroPage() {
     }
 
     return (
-        <div className="animate-fade-in max-w-md w-full">
-            <div className="mb-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-4">
-                    <Sparkles className="w-3 h-3" />
-                    Entre no ecossistema
-                </div>
-                <h2 className="text-4xl font-black text-text-primary tracking-tight">Crie sua Conta</h2>
-                <p className="text-text-muted mt-3 font-medium">
-                    Comece a gerar conteúdo profissional com IA hoje.
+        <div className="animate-fade-in">
+            <div className="mb-8">
+                <h2 className="text-2xl font-bold text-text-primary">Criar conta</h2>
+                <p className="text-text-muted text-sm mt-1">
+                    Comece a gerar conteúdo profissional com IA.
                 </p>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Full Identity Name</label>
-                    <div className="relative group mt-2">
-                        <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors" />
+                    <label className="label">Nome completo</label>
+                    <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                         <input
                             type="text"
-                            placeholder="Alex Smith"
+                            placeholder="João Silva"
                             className={cn(
-                                'w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl pl-12 pr-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm',
-                                errors.nome && 'border-red-200'
+                                'input-field pl-9',
+                                errors.nome && 'border-red-300'
                             )}
                             {...register('nome')}
                         />
                     </div>
-                    {errors.nome && <p className="mt-2 text-[10px] font-black text-red-500 uppercase tracking-wider px-2">{errors.nome.message}</p>}
+                    {errors.nome && (
+                        <p className="mt-1 text-xs text-red-500">{errors.nome.message}</p>
+                    )}
                 </div>
 
                 <div>
-                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">E-mail Address</label>
-                    <div className="relative group mt-2">
-                        <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors" />
+                    <label className="label">E-mail</label>
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                         <input
                             type="email"
-                            placeholder="alex@bloom.io"
+                            placeholder="joao@empresa.com"
                             className={cn(
-                                'w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl pl-12 pr-6 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm',
-                                errors.email && 'border-red-200'
+                                'input-field pl-9',
+                                errors.email && 'border-red-300'
                             )}
                             {...register('email')}
                         />
                     </div>
-                    {errors.email && <p className="mt-2 text-[10px] font-black text-red-500 uppercase tracking-wider px-2">{errors.email.message}</p>}
+                    {errors.email && (
+                        <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>
+                    )}
                 </div>
 
                 <div>
-                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Access Secret</label>
-                    <div className="relative group mt-2">
-                        <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors" />
+                    <label className="label">Senha</label>
+                    <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                         <input
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Min. 8 characters"
+                            placeholder="Mínimo 8 caracteres"
                             className={cn(
-                                'w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl pl-12 pr-14 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm',
-                                errors.senha && 'border-red-200'
+                                'input-field pl-9 pr-10',
+                                errors.senha && 'border-red-300'
                             )}
                             {...register('senha')}
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-5 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary transition-colors"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
                         >
                             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                     </div>
 
-                    <div className="mt-4 px-2">
-                        <div className="flex gap-1.5 h-1">
+                    {/* Strength meter */}
+                    <div className="mt-2">
+                        <div className="flex gap-1 h-1">
                             {[1, 2, 3, 4].map((level) => (
                                 <div
                                     key={level}
                                     className={cn(
-                                        'flex-1 rounded-full transition-all duration-500',
+                                        'flex-1 rounded-full transition-colors duration-300',
                                         strength >= level ? getStrengthColor() : 'bg-surface-200'
                                     )}
                                 />
                             ))}
                         </div>
-                        <div className="mt-2 flex justify-between items-center">
-                            <span className="text-[10px] font-black text-text-muted uppercase tracking-widest">
-                                {getStrengthLabel()}
-                            </span>
-                        </div>
+                        <p className="text-xs text-text-muted mt-1">{getStrengthLabel()}</p>
                     </div>
-                    {errors.senha && <p className="mt-2 text-[10px] font-black text-red-500 uppercase tracking-wider px-2">{errors.senha.message}</p>}
+
+                    {errors.senha && (
+                        <p className="mt-1 text-xs text-red-500">{errors.senha.message}</p>
+                    )}
                 </div>
 
                 <div>
-                    <label className="text-[10px] font-black text-text-muted uppercase tracking-[0.2em] px-2 italic">Confirm Secret</label>
-                    <div className="relative group mt-2">
-                        <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted group-focus-within:text-primary transition-colors" />
+                    <label className="label">Confirmar senha</label>
+                    <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                         <input
                             type={showConfirm ? 'text' : 'password'}
-                            placeholder="Repeat secret"
+                            placeholder="Repita a senha"
                             className={cn(
-                                'w-full bg-surface-50 border-2 border-transparent focus:border-primary/20 rounded-2xl pl-12 pr-14 py-4 text-sm font-bold text-text-primary outline-none transition-all shadow-sm',
-                                errors.confirmarSenha && 'border-red-200'
+                                'input-field pl-9 pr-10',
+                                errors.confirmarSenha && 'border-red-300'
                             )}
                             {...register('confirmarSenha')}
                         />
                         <button
                             type="button"
                             onClick={() => setShowConfirm(!showConfirm)}
-                            className="absolute right-5 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary transition-colors"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
                         >
                             {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                     </div>
                     {errors.confirmarSenha && (
-                        <p className="mt-2 text-[10px] font-black text-red-500 uppercase tracking-wider px-2">{errors.confirmarSenha.message}</p>
+                        <p className="mt-1 text-xs text-red-500">{errors.confirmarSenha.message}</p>
                     )}
                 </div>
 
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-primary text-white font-black py-5 rounded-[24px] shadow-2xl shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50 mt-4"
+                    className="w-full btn-primary py-3 justify-center mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {isLoading ? (
                         <>
-                            <Loader2 className="w-5 h-5 animate-spin" />
+                            <Loader2 className="w-4 h-4 animate-spin" />
                             Criando conta...
                         </>
                     ) : (
                         <>
-                            CRIAR MINHA CONTA
-                            <ArrowRight className="w-5 h-5" />
+                            Criar Conta
+                            <ArrowRight className="w-4 h-4" />
                         </>
                     )}
                 </button>
             </form>
 
-            <p className="mt-10 text-center text-[10px] font-black text-text-muted uppercase tracking-[0.2em]">
-                Já é um membro?{' '}
-                <Link href="/login" className="text-primary hover:underline underline-offset-4 decoration-2">
-                    Acessar
+            <p className="mt-8 text-center text-sm text-text-muted">
+                Já tem uma conta?{' '}
+                <Link href="/login" className="text-primary hover:underline font-medium">
+                    Entrar
                 </Link>
             </p>
         </div>
