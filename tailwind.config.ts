@@ -10,18 +10,23 @@ const config: Config = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "#E11D48",
-                    50: "#fff1f2",
-                    100: "#ffe4e6",
-                    200: "#fecdd3",
-                    300: "#fda4af",
-                    400: "#fb7185",
-                    500: "#f43f5e",
-                    600: "#e11d48",
-                    700: "#be123c",
-                    800: "#9f1239",
-                    900: "#881337",
-                    950: "#4c0519",
+                    DEFAULT: "#B05070",
+                    50: "#fdf2f5",
+                    100: "#fbe6ec",
+                    200: "#f5c8d6",
+                    300: "#eda0b8",
+                    400: "#e07090",
+                    500: "#c85878",
+                    600: "#B05070",
+                    700: "#8B3A55",
+                    800: "#6e2d42",
+                    900: "#5a2438",
+                    950: "#2d0f1e",
+                },
+                secondary: {
+                    DEFAULT: "#6B7C45",
+                    light: "#8a9e5a",
+                    dark: "#4e5c32",
                 },
                 surface: {
                     DEFAULT: "var(--color-bg-surface)",
@@ -37,28 +42,40 @@ const config: Config = {
                     muted: "var(--color-text-muted)",
                     tertiary: "var(--color-text-tertiary)",
                     inverted: "#FFFFFF",
-                }
+                },
             },
             fontFamily: {
-                sans: ["var(--font-outfit)", "Inter", "system-ui", "sans-serif"],
-                outfit: ["var(--font-outfit)", "Inter", "sans-serif"],
+                display: ["var(--font-display)", "Cormorant Garamond", "Georgia", "serif"],
+                sans: ["var(--font-sans)", "DM Sans", "system-ui", "sans-serif"],
             },
             backgroundImage: {
                 "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
             },
             boxShadow: {
-                soft: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03)",
-                medium: "0 4px 6px rgba(0,0,0,0.05), 0 10px 25px rgba(0,0,0,0.06)",
-                card: "0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03)",
+                soft: "0 2px 8px rgba(176, 80, 112, 0.08)",
+                medium: "0 4px 16px rgba(176, 80, 112, 0.12)",
+                card: "0 8px 32px rgba(176, 80, 112, 0.10)",
+                "card-hover": "0 12px 40px rgba(176, 80, 112, 0.18)",
+                glow: "0 0 20px rgba(176, 80, 112, 0.25)",
             },
             animation: {
                 "fade-in": "fadeIn 0.3s ease-out",
+                "fade-bloom": "fadeBloom 0.35s ease-out",
+                "slide-up": "slideUp 0.4s ease-out",
                 "scale-in": "scaleIn 0.2s ease-out",
                 shimmer: "shimmer 1.5s linear infinite",
             },
             keyframes: {
                 fadeIn: {
-                    "0%": { opacity: "0", transform: "translateY(6px)" },
+                    "0%": { opacity: "0", transform: "translateY(8px)" },
+                    "100%": { opacity: "1", transform: "translateY(0)" },
+                },
+                fadeBloom: {
+                    "0%": { opacity: "0", transform: "scale(0.95)" },
+                    "100%": { opacity: "1", transform: "scale(1)" },
+                },
+                slideUp: {
+                    "0%": { opacity: "0", transform: "translateY(20px)" },
                     "100%": { opacity: "1", transform: "translateY(0)" },
                 },
                 scaleIn: {

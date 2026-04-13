@@ -12,7 +12,6 @@ import {
     LogOut,
     Menu,
     X,
-    Shield,
     Sun,
     Moon,
 } from 'lucide-react'
@@ -54,19 +53,27 @@ export function AdminSidebar() {
     const SidebarContent = () => (
         <div className="flex flex-col h-full">
             {/* Logo */}
-            <div className="px-5 py-6">
-                <Link href="/admin/dashboard" className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                        <Shield className="w-4 h-4 text-white" />
-                    </div>
-                    <div>
-                        <span className="text-text-primary font-bold text-base tracking-tight block leading-none">
-                            Pétalas
-                        </span>
-                        <span className="text-[10px] text-text-muted font-medium mt-0.5 block">
-                            Admin Panel
-                        </span>
-                    </div>
+            <div className="px-5 py-6 border-b border-surface-200">
+                <Link href="/admin/dashboard" className="flex flex-col cursor-pointer hover:opacity-85 transition-opacity">
+                    <span
+                        className="leading-none"
+                        style={{
+                            fontFamily: 'var(--font-display), Cormorant Garamond, serif',
+                            fontStyle: 'italic',
+                            fontWeight: 600,
+                            fontSize: '1.55rem',
+                            color: 'var(--color-sidebar-logo)',
+                            letterSpacing: '0.02em',
+                        }}
+                    >
+                        Doce Lilium
+                    </span>
+                    <span
+                        className="mt-0.5 uppercase tracking-widest text-[10px]"
+                        style={{ color: 'var(--color-sidebar-text-muted)', fontFamily: 'var(--font-sans), sans-serif' }}
+                    >
+                        Admin
+                    </span>
                 </Link>
             </div>
 
@@ -141,15 +148,20 @@ export function AdminSidebar() {
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white border-b border-surface-100">
-                <Link href="/admin/dashboard" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-                        <Shield className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-text-primary font-bold text-base tracking-tight">
-                        Pétalas
+            <div className="mobile-header lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
+                <Link href="/admin/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+                    <span
+                        style={{
+                            fontFamily: 'var(--font-display), serif',
+                            fontStyle: 'italic',
+                            fontWeight: 600,
+                            fontSize: '1.2rem',
+                            color: 'var(--color-text-main)',
+                        }}
+                    >
+                        Doce Lilium
                     </span>
-                    <span className="text-xs text-text-muted ml-1">Admin</span>
+                    <span className="text-[10px] uppercase tracking-widest ml-1" style={{ color: 'var(--color-text-muted)' }}>Admin</span>
                 </Link>
                 <button
                     onClick={() => setMobileOpen(!mobileOpen)}

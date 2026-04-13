@@ -58,10 +58,10 @@ export default function BibliotecaPage() {
         v.title.toLowerCase().includes(search.toLowerCase())
     )
 
-    const statusConfig: Record<string, { label: string; dot: string }> = {
-        concluido: { label: 'Concluído', dot: 'bg-emerald-500' },
-        processando: { label: 'Processando', dot: 'bg-amber-500' },
-        erro: { label: 'Erro', dot: 'bg-red-500' },
+    const statusConfig: Record<string, { label: string; badgeClass: string }> = {
+        concluido:   { label: 'Concluído',   badgeClass: 'badge-concluido' },
+        processando: { label: 'Processando', badgeClass: 'badge-processando' },
+        erro:        { label: 'Erro',        badgeClass: 'badge-erro' },
     }
 
     if (isLoading) {
@@ -90,7 +90,7 @@ export default function BibliotecaPage() {
     }
 
     return (
-        <div className="p-6 space-y-6 animate-fade-in">
+        <div className="p-6 space-y-6 animate-fade-bloom">
             {/* Header */}
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
@@ -140,7 +140,7 @@ export default function BibliotecaPage() {
                     {filteredVideos.map((video) => {
                         const sCfg = statusConfig[video.status] || {
                             label: video.status,
-                            dot: 'bg-surface-300',
+                            badgeClass: 'badge-gray',
                         }
                         return (
                             <div
@@ -176,9 +176,8 @@ export default function BibliotecaPage() {
                                         </div>
                                     )}
 
-                                    <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md">
-                                        <div className={cn('w-1.5 h-1.5 rounded-full', sCfg.dot)} />
-                                        <span className="text-[10px] font-medium text-white">
+                                    <div className="absolute top-2.5 left-2.5">
+                                        <span className={cn('badge text-xs', sCfg.badgeClass)}>
                                             {sCfg.label}
                                         </span>
                                     </div>

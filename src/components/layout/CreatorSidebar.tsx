@@ -12,7 +12,6 @@ import {
     LogOut,
     Menu,
     X,
-    Sparkles,
     Kanban,
     Sun,
     Moon,
@@ -58,13 +57,26 @@ export function CreatorSidebar() {
     const SidebarContent = () => (
         <div className="flex flex-col h-full">
             {/* Logo */}
-            <div className="px-5 py-6">
-                <Link href="/dashboard" className="flex items-center gap-2.5 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
-                        <Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-text-primary font-bold text-lg tracking-tight leading-none">
-                        Pétalas
+            <div className="px-5 py-6 border-b border-surface-200">
+                <Link href="/dashboard" className="flex flex-col cursor-pointer hover:opacity-85 transition-opacity">
+                    <span
+                        className="leading-none"
+                        style={{
+                            fontFamily: 'var(--font-display), Cormorant Garamond, serif',
+                            fontStyle: 'italic',
+                            fontWeight: 600,
+                            fontSize: '1.55rem',
+                            color: 'var(--color-sidebar-logo)',
+                            letterSpacing: '0.02em',
+                        }}
+                    >
+                        Doce Lilium
+                    </span>
+                    <span
+                        className="mt-0.5 uppercase tracking-widest text-[10px]"
+                        style={{ color: 'var(--color-sidebar-text-muted)', fontFamily: 'var(--font-sans), sans-serif' }}
+                    >
+                        Studio
                     </span>
                 </Link>
             </div>
@@ -154,13 +166,18 @@ export function CreatorSidebar() {
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-white border-b border-surface-100">
-                <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-                        <Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-text-primary font-bold text-base tracking-tight">
-                        Pétalas
+            <div className="mobile-header lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
+                <Link href="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
+                    <span
+                        style={{
+                            fontFamily: 'var(--font-display), serif',
+                            fontStyle: 'italic',
+                            fontWeight: 600,
+                            fontSize: '1.2rem',
+                            color: 'var(--color-text-main)',
+                        }}
+                    >
+                        Doce Lilium
                     </span>
                 </Link>
                 <button

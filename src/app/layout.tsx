@@ -1,31 +1,31 @@
 import type { Metadata } from 'next'
-import { Outfit } from 'next/font/google'
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import Providers from '@/components/providers/SessionProvider'
 
-const outfit = Outfit({
+const cormorant = Cormorant_Garamond({
     subsets: ['latin'],
-    variable: '--font-outfit',
+    weight: ['300', '400', '500', '600', '700'],
+    style: ['normal', 'italic'],
+    variable: '--font-display',
+    display: 'swap',
+})
+
+const dmSans = DM_Sans({
+    subsets: ['latin'],
+    variable: '--font-sans',
     display: 'swap',
 })
 
 export const metadata: Metadata = {
     title: {
-        default: 'Pétalas | Vídeo IA & CRM',
-        template: '%s | Pétalas',
+        default: 'Doce Lilium | Vídeo IA & CRM',
+        template: '%s | Doce Lilium',
     },
     description:
-        'Pétalas: A próxima geração de CRM com criação de vídeos por Inteligência Artificial. Potencialize seu pipeline de vendas e conteúdo.',
-    keywords: [
-        'SaaS',
-        'CRM',
-        'IA',
-        'Inteligência Artificial',
-        'Vídeos AI',
-        'Marketing',
-        'Vendas',
-    ],
+        'Doce Lilium: Criação de vídeos UGC por Inteligência Artificial. Potencialize seu conteúdo e pipeline de vendas.',
+    keywords: ['SaaS', 'CRM', 'IA', 'Inteligência Artificial', 'Vídeos AI', 'UGC', 'Marketing', 'Moda'],
     robots: 'index, follow',
 }
 
@@ -35,7 +35,7 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="pt-BR" className={outfit.variable}>
+        <html lang="pt-BR" className={`${cormorant.variable} ${dmSans.variable}`}>
             <head>
                 {/* Apply theme before first paint to avoid FOUC */}
                 <script
@@ -51,17 +51,17 @@ export default function RootLayout({
                         position="top-right"
                         toastOptions={{
                             style: {
-                                background: '#ffffff',
-                                color: '#111827',
-                                border: '1px solid #e5e7eb',
+                                background: '#FFF0F0',
+                                color: '#3D1A1A',
+                                border: '1px solid #D4A0A0',
                                 borderRadius: '16px',
                                 fontSize: '14px',
-                                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                                boxShadow: '0 8px 32px rgba(176, 80, 112, 0.12)',
                                 padding: '12px 16px',
                             },
                             success: {
                                 iconTheme: {
-                                    primary: '#E11D48',
+                                    primary: '#B05070',
                                     secondary: '#ffffff',
                                 },
                             },
