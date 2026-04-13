@@ -8,6 +8,39 @@ import { ConfirmModal } from '@/components/ui/ConfirmModal'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
 
+// ─── VideoFrameThumb ───────────────────────────────────────────
+// Seeks to frame 0.5s to show a real thumbnail without canvas/CORS issues.
+function VideoFrameThumb({ src }: { src: string }) {
+    const ref = useRef<HTMLVideoElement>(null)
+    const [ready, setReady] = useState(false)
+
+    return (
+        <div className="absolute inset-0 bg-[#2c1a1a]">
+            <video
+                ref={ref}
+                src={src}
+                preload="metadata"
+                muted
+                playsInline
+                onLoadedMetadata={() => {
+                    if (ref.current) ref.current.currentTime = 0.5
+                }}
+                onSeeked={() => setReady(true)}
+                className="w-full h-full object-cover transition-opacity duration-500"
+                style={{ display: 'block', opacity: ready ? 1 : 0 }}
+            />
+            {/* Placeholder visible while seeking */}
+            {!ready && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div
+                        className="w-8 h-8 rounded-full border-2 border-white/10 border-t-white/40 animate-spin"
+                    />
+                </div>
+            )}
+        </div>
+    )
+}
+
 // ─── Filter tags ───────────────────────────────────────────────
 const FILTERS = [
     { id: 'todos',       label: 'TODOS' },
@@ -279,15 +312,17 @@ export default function BibliotecaPage() {
                                     }}
                                     onClick={() => setSelectedVideo(video)}
                                 >
-                                    {/* Thumbnail */}
+                                    {/* Thumbnail — product image > video frame > placeholder */}
                                     {video.thumbnail ? (
                                         <img
                                             src={video.thumbnail}
                                             alt={video.title}
                                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
                                         />
+                                    ) : video.video_url ? (
+                                        <VideoFrameThumb src={video.video_url} />
                                     ) : (
-                                        <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="absolute inset-0 bg-[#2c1a1a] flex items-center justify-center">
                                             <Video className="w-10 h-10 opacity-20 text-white" />
                                         </div>
                                     )}
