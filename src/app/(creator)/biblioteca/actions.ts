@@ -26,7 +26,11 @@ export async function getVideos() {
         date: new Date(video.created_at).toLocaleDateString('pt-BR'),
         thumbnail: video.imagem_produto_url || null,
         video_url: video.video_url || null,
-        duration: `${Math.floor(video.duracao / 60)}:${(video.duracao % 60).toString().padStart(2, '0')}`
+        formato: video.formato || 'instagram',
+        duracao_s: video.duracao || 0,
+        duration: video.duracao
+            ? `${video.duracao}S`
+            : '—',
     }))
 }
 
