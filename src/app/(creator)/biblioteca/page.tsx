@@ -150,8 +150,11 @@ export default function BibliotecaPage() {
                             >
                                 {/* Thumbnail */}
                                 <div
-                                    className="relative aspect-video bg-surface-100 cursor-pointer overflow-hidden"
-                                    onClick={() => setSelectedVideo(video)}
+                                    className={cn(
+                                        'relative aspect-video bg-surface-100 overflow-hidden',
+                                        video.video_url ? 'cursor-pointer' : 'cursor-default'
+                                    )}
+                                    onClick={() => video.video_url && setSelectedVideo(video)}
                                 >
                                     {video.thumbnail ? (
                                         <img
@@ -165,11 +168,13 @@ export default function BibliotecaPage() {
                                         </div>
                                     )}
 
-                                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
-                                            <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                                    {video.video_url && (
+                                        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
+                                                <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
 
                                     <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-md">
                                         <div className={cn('w-1.5 h-1.5 rounded-full', sCfg.dot)} />
@@ -213,46 +218,47 @@ export default function BibliotecaPage() {
                 </div>
             )}
 
-            {/* Preview Modal */}
+            {/* Video Player Modal */}
             {selectedVideo && (
-                <div className="modal-overlay" onClick={() => setSelectedVideo(null)}>
-                    <div className="modal-panel max-w-md" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3 className="section-title truncate">{selectedVideo.title}</h3>
-                            <button
-                                onClick={() => setSelectedVideo(null)}
-                                className="p-1.5 text-text-muted hover:text-text-primary rounded-lg transition-colors"
-                                aria-label="Fechar"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+                <div
+                    className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+                    onClick={() => setSelectedVideo(null)}
+                >
+                    <div
+                        className="relative w-full max-w-[360px]"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Close button */}
+                        <button
+                            onClick={() => setSelectedVideo(null)}
+                            className="absolute -top-10 right-0 p-1.5 text-white/70 hover:text-white transition-colors"
+                            aria-label="Fechar"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        {/* 9:16 player */}
+                        <div className="relative w-full bg-black rounded-xl overflow-hidden" style={{ aspectRatio: '9/16' }}>
+                            <video
+                                src={selectedVideo.video_url}
+                                className="w-full h-full object-contain"
+                                controls
+                                autoPlay
+                                playsInline
+                            />
                         </div>
 
-                        <div className="aspect-video bg-black relative">
-                            {selectedVideo.thumbnail && (
-                                <img
-                                    src={selectedVideo.thumbnail}
-                                    className="w-full h-full object-contain"
-                                    alt={selectedVideo.title}
-                                />
-                            )}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <Play className="w-12 h-12 text-white opacity-40" />
-                            </div>
-                        </div>
-
-                        <div className="modal-footer">
-                            <button className="btn-primary flex-1 justify-center">
-                                <Download className="w-4 h-4" />
-                                Download HD
-                            </button>
-                            <button
-                                onClick={() => setSelectedVideo(null)}
-                                className="btn-secondary flex-1 justify-center"
-                            >
-                                Fechar
-                            </button>
-                        </div>
+                        {/* Download */}
+                        <a
+                            href={selectedVideo.video_url}
+                            download
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-primary w-full justify-center mt-3"
+                        >
+                            <Download className="w-4 h-4" />
+                            Download
+                        </a>
                     </div>
                 </div>
             )}

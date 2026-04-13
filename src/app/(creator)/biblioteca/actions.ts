@@ -24,7 +24,8 @@ export async function getVideos() {
         title: video.nome_produto,
         status: video.status,
         date: new Date(video.created_at).toLocaleDateString('pt-BR'),
-        thumbnail: video.imagem_produto_url || 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=400&auto=format&fit=crop',
+        thumbnail: video.imagem_produto_url || null,
+        video_url: video.video_url || null,
         duration: `${Math.floor(video.duracao / 60)}:${(video.duracao % 60).toString().padStart(2, '0')}`
     }))
 }
