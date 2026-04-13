@@ -514,16 +514,9 @@ aside button:hover {
   background-color: var(--surface-50);
 }
 
-[data-theme="dark"] [class*="bg-white"] {
-  background-color: var(--color-bg-surface) !important;
-}
-
-[data-theme="dark"] .bg-white\/80,
-[data-theme="dark"] .bg-white\/90,
-[data-theme="dark"] .bg-white\/20,
-[data-theme="dark"] .bg-white\/30 {
-  background-color: unset !important;
-}
+/* NOTE: [class*="bg-white"] omitted — substring match captures bg-white/0,
+   bg-white/8 etc., making transparent overlays solid in dark mode.
+   The .bg-white rule above covers actual solid-white elements. */
 
 [data-theme="dark"] .btn-primary {
   background-color: var(--color-primary);

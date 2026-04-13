@@ -330,8 +330,8 @@ export default function BibliotecaPage() {
                                     {/* Bottom gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
 
-                                    {/* Hover brighten overlay */}
-                                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/8 transition-colors duration-300" />
+                                    {/* Hover brighten overlay — bg-transparent avoids dark-mode bg-white/* rules */}
+                                    <div className="absolute inset-0 bg-transparent group-hover:bg-white/10 transition-colors duration-300" />
 
                                     {/* Play icon on hover */}
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
