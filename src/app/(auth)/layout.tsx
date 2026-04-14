@@ -13,16 +13,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 </div>
 
                 <div className="relative z-10 flex flex-col items-start w-full">
-                    <div className="relative w-48 h-32 mb-4">
+                    <div className="relative w-64 h-48">
                          <ImageWithFallback 
                             src="/images/logo.png" 
                             alt="Logo Doce Lilium" 
-                            className="w-full h-full object-contain z-10 -ml-6" 
+                            className="w-full h-full object-contain z-10 -ml-8" 
                         />
-                    </div>
-                    <div className="flex flex-col items-start">
-                        <h1 className="text-3xl font-semibold font-display italic text-text-primary leading-none">Doce Lilium</h1>
-                        <p className="text-[10px] uppercase tracking-[0.4em] font-bold text-text-muted mt-2">Closet</p>
                     </div>
                 </div>
 
@@ -67,16 +63,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                 <div className="w-full max-w-md relative z-10 bg-white p-12 lg:p-16 rounded-[48px] shadow-soft border border-primary/5 animate-scale-up">
                     {/* Mobile Logo */}
                     <div className="lg:hidden flex flex-col items-center justify-center mb-12 w-full">
-                         <div className="relative w-24 h-16 mb-4">
+                         <div className="relative w-32 h-24">
                             <ImageWithFallback 
                                 src="/images/logo.png" 
                                 alt="Logo" 
                                 className="w-full h-full object-contain z-10" 
                             />
-                         </div>
-                         <div className="flex flex-col items-center text-center">
-                            <h2 className="text-xl font-semibold font-display italic text-text-primary leading-none">Doce Lilium</h2>
-                            <p className="text-[8px] uppercase tracking-[0.4em] font-bold text-text-muted mt-1">Closet</p>
                          </div>
                     </div>
 

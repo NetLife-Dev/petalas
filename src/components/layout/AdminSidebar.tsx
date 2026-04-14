@@ -52,36 +52,17 @@ export function AdminSidebar() {
     }
 
     const SidebarContent = () => (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-white">
             {/* Logo */}
-            <div className="px-5 py-6 border-b border-surface-200">
-                <Link href="/admin/dashboard" className="flex flex-col items-center cursor-pointer hover:opacity-85 transition-opacity">
-                    <div className="w-20 h-20 mb-3">
+            <div className="px-5 py-8 border-b border-surface-100 flex justify-center">
+                <Link href="/admin/dashboard" className="flex flex-col items-center cursor-pointer hover:opacity-85 transition-opacity w-full">
+                    <div className="w-20 h-20">
                         <ImageWithFallback 
                             src="/images/logo.png" 
                             alt="Logo" 
                             className="w-full h-full object-contain"
                         />
                     </div>
-                    <span
-                        className="leading-none"
-                        style={{
-                            fontFamily: 'var(--font-display), Cormorant Garamond, serif',
-                            fontStyle: 'italic',
-                            fontWeight: 600,
-                            fontSize: '1.25rem',
-                            color: 'var(--color-sidebar-logo)',
-                            letterSpacing: '0.02em',
-                        }}
-                    >
-                        Doce Lilium
-                    </span>
-                    <span
-                        className="mt-1 uppercase tracking-[0.3em] text-[8px] font-bold"
-                        style={{ color: 'var(--color-sidebar-text-muted)', fontFamily: 'var(--font-sans), sans-serif' }}
-                    >
-                        Admin
-                    </span>
                 </Link>
             </div>
 

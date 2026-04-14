@@ -60,18 +60,14 @@ export function CreatorSidebar() {
     const SidebarContent = () => (
         <div className="flex flex-col h-full bg-white">
             {/* Logo */}
-            <div className="px-6 py-10 flex justify-center">
-                <Link href="/dashboard" className="cursor-pointer group flex flex-col items-center w-full">
-                    <div className="relative w-full h-32 mb-6">
+            <div className="px-6 py-12 flex justify-center">
+                <Link href="/dashboard" className="cursor-pointer group flex justify-center w-full">
+                    <div className="relative w-full h-44">
                         <ImageWithFallback 
                             src="/images/logo.png" 
                             alt="Logo Doce Lilium" 
-                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" 
+                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" 
                         />
-                    </div>
-                    <div className="flex flex-col items-center text-center">
-                        <h2 className="text-xl font-semibold font-display italic text-text-primary leading-none">Doce Lilium</h2>
-                        <p className="text-[9px] uppercase tracking-[0.4em] font-bold text-text-muted mt-2">Closet</p>
                     </div>
                 </Link>
             </div>
@@ -170,16 +166,12 @@ export function CreatorSidebar() {
             {/* Mobile Header */}
             <div className="mobile-header lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
                 <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                    <div className="w-10 h-10">
+                    <div className="w-12 h-12">
                         <ImageWithFallback 
                             src="/images/logo.png" 
                             alt="Logo" 
                             className="w-full h-full object-contain"
                         />
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-lg italic font-display font-semibold text-primary leading-none">Doce Lilium</span>
-                        <span className="text-[7px] uppercase tracking-widest font-bold text-text-muted">Closet</span>
                     </div>
                 </Link>
                 <button
