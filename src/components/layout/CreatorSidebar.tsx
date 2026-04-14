@@ -59,25 +59,13 @@ export function CreatorSidebar() {
     const SidebarContent = () => (
         <div className="flex flex-col h-full bg-white">
             {/* Logo */}
-            <div className="px-10 py-12">
-                <Link href="/dashboard" className="flex flex-col cursor-pointer group">
-                    <span
-                        className="leading-none text-2xl transition-all duration-300 group-hover:tracking-wider"
-                        style={{
-                            fontFamily: 'var(--font-display), Cormorant Garamond, serif',
-                            fontStyle: 'italic',
-                            fontWeight: 600,
-                            color: 'var(--color-primary)',
-                        }}
-                    >
-                        Doce Lilium
-                    </span>
-                    <span
-                        className="mt-2 uppercase tracking-[0.4em] text-[10px] text-text-muted font-bold opacity-60"
-                        style={{ fontFamily: 'var(--font-sans), sans-serif' }}
-                    >
-                        Studio
-                    </span>
+            <div className="px-6 py-10 flex justify-center">
+                <Link href="/dashboard" className="cursor-pointer group flex justify-center">
+                    <img 
+                        src="/images/logo.png" 
+                        alt="Doce Lilium" 
+                        className="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
+                    />
                 </Link>
             </div>
 
@@ -175,17 +163,11 @@ export function CreatorSidebar() {
             {/* Mobile Header */}
             <div className="mobile-header lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
                 <Link href="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                    <span
-                        style={{
-                            fontFamily: 'var(--font-display), serif',
-                            fontStyle: 'italic',
-                            fontWeight: 600,
-                            fontSize: '1.2rem',
-                            color: 'var(--color-text-main)',
-                        }}
-                    >
-                        Doce Lilium
-                    </span>
+                    <img 
+                        src="/images/logo.png" 
+                        alt="Doce Lilium" 
+                        className="h-14 w-auto object-contain" 
+                    />
                 </Link>
                 <button
                     onClick={() => setMobileOpen(!mobileOpen)}

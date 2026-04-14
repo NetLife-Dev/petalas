@@ -11,18 +11,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                     <span className="text-[400px] font-display italic text-primary select-none rotate-12">L</span>
                 </div>
 
-                <div className="relative z-10 flex flex-col items-start gap-1">
-                    <span
-                        className="leading-none text-3xl italic"
-                        style={{
-                            fontFamily: 'var(--font-display), Cormorant Garamond, serif',
-                            fontWeight: 600,
-                            color: 'var(--color-primary)',
-                        }}
-                    >
-                        Doce Lilium
-                    </span>
-                    <span className="uppercase tracking-[0.4em] text-[10px] text-text-muted font-black opacity-60">Studio</span>
+                <div className="relative z-10 flex flex-col items-start">
+                    <img 
+                        src="/images/logo.png" 
+                        alt="Doce Lilium" 
+                        className="h-48 w-auto object-contain -ml-6" 
+                    />
                 </div>
 
                 <div className="relative z-10 space-y-12">
@@ -65,13 +59,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
                 <div className="w-full max-w-md relative z-10 bg-white p-12 lg:p-16 rounded-[48px] shadow-soft border border-primary/5 animate-scale-up">
                     {/* Mobile Logo */}
-                    <div className="lg:hidden flex flex-col items-center justify-center gap-1 mb-12">
-                        <span
-                            className="leading-none text-2xl italic text-primary font-display font-semibold"
-                        >
-                            Doce Lilium
-                        </span>
-                        <span className="uppercase tracking-[0.4em] text-[9px] text-text-muted font-black opacity-60">Studio</span>
+                    <div className="lg:hidden flex flex-col items-center justify-center mb-12">
+                         <img 
+                            src="/images/logo.png" 
+                            alt="Doce Lilium" 
+                            className="h-24 w-auto object-contain" 
+                        />
                     </div>
 
                     {children}
