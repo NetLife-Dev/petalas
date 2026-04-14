@@ -9,6 +9,7 @@ import {
     ArrowRight,
     Play,
     CheckCircle2,
+    Video,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import toast from 'react-hot-toast'
