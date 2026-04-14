@@ -18,6 +18,7 @@ import {
 import { useSession, signOut } from 'next-auth/react'
 import { cn, getInitials } from '@/lib/utils'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback'
 import toast from 'react-hot-toast'
 
 const navItems = [
@@ -54,14 +55,21 @@ export function AdminSidebar() {
         <div className="flex flex-col h-full">
             {/* Logo */}
             <div className="px-5 py-6 border-b border-surface-200">
-                <Link href="/admin/dashboard" className="flex flex-col cursor-pointer hover:opacity-85 transition-opacity">
+                <Link href="/admin/dashboard" className="flex flex-col items-center cursor-pointer hover:opacity-85 transition-opacity">
+                    <div className="w-20 h-20 mb-3">
+                        <ImageWithFallback 
+                            src="/images/logo.png" 
+                            alt="Logo" 
+                            className="w-full h-full object-contain"
+                        />
+                    </div>
                     <span
                         className="leading-none"
                         style={{
                             fontFamily: 'var(--font-display), Cormorant Garamond, serif',
                             fontStyle: 'italic',
                             fontWeight: 600,
-                            fontSize: '1.55rem',
+                            fontSize: '1.25rem',
                             color: 'var(--color-sidebar-logo)',
                             letterSpacing: '0.02em',
                         }}
@@ -69,7 +77,7 @@ export function AdminSidebar() {
                         Doce Lilium
                     </span>
                     <span
-                        className="mt-0.5 uppercase tracking-widest text-[10px]"
+                        className="mt-1 uppercase tracking-[0.3em] text-[8px] font-bold"
                         style={{ color: 'var(--color-sidebar-text-muted)', fontFamily: 'var(--font-sans), sans-serif' }}
                     >
                         Admin

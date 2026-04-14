@@ -20,7 +20,6 @@ import {
 import { useSession, signOut } from 'next-auth/react'
 import { cn, getInitials, getAvatarColor } from '@/lib/utils'
 import { useTheme } from '@/components/providers/ThemeProvider'
-import { Logo } from '@/components/ui/Logo'
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback'
 import toast from 'react-hot-toast'
 
@@ -62,13 +61,18 @@ export function CreatorSidebar() {
         <div className="flex flex-col h-full bg-white">
             {/* Logo */}
             <div className="px-6 py-10 flex justify-center">
-                <Link href="/dashboard" className="cursor-pointer group relative flex justify-center w-full min-h-[160px]">
-                    <ImageWithFallback 
-                        src="/images/logo.png" 
-                        alt="" 
-                        className="absolute inset-0 w-full h-full object-contain z-10 transition-transform duration-500 group-hover:scale-105" 
-                    />
-                    <Logo className="w-full transition-transform duration-500 group-hover:scale-105" />
+                <Link href="/dashboard" className="cursor-pointer group flex flex-col items-center w-full">
+                    <div className="relative w-full h-32 mb-6">
+                        <ImageWithFallback 
+                            src="/images/logo.png" 
+                            alt="Logo Doce Lilium" 
+                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" 
+                        />
+                    </div>
+                    <div className="flex flex-col items-center text-center">
+                        <h2 className="text-xl font-semibold font-display italic text-text-primary leading-none">Doce Lilium</h2>
+                        <p className="text-[9px] uppercase tracking-[0.4em] font-bold text-text-muted mt-2">Closet</p>
+                    </div>
                 </Link>
             </div>
 
@@ -166,8 +170,17 @@ export function CreatorSidebar() {
             {/* Mobile Header */}
             <div className="mobile-header lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
                 <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-                    <Logo className="h-10 w-10" />
-                    <span className="text-lg italic font-display font-semibold text-primary">Doce Lilium</span>
+                    <div className="w-10 h-10">
+                        <ImageWithFallback 
+                            src="/images/logo.png" 
+                            alt="Logo" 
+                            className="w-full h-full object-contain"
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-lg italic font-display font-semibold text-primary leading-none">Doce Lilium</span>
+                        <span className="text-[7px] uppercase tracking-widest font-bold text-text-muted">Closet</span>
+                    </div>
                 </Link>
                 <button
                     onClick={() => setMobileOpen(!mobileOpen)}
