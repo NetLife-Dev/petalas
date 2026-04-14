@@ -20,6 +20,7 @@ import {
 import { useSession, signOut } from 'next-auth/react'
 import { cn, getInitials, getAvatarColor } from '@/lib/utils'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { Logo } from '@/components/ui/Logo'
 import toast from 'react-hot-toast'
 
 const navItems = [
@@ -60,12 +61,14 @@ export function CreatorSidebar() {
         <div className="flex flex-col h-full bg-white">
             {/* Logo */}
             <div className="px-6 py-10 flex justify-center">
-                <Link href="/dashboard" className="cursor-pointer group flex justify-center">
+                <Link href="/dashboard" className="cursor-pointer group relative flex justify-center w-full min-h-[160px]">
                     <img 
                         src="/images/logo.png" 
-                        alt="Doce Lilium" 
-                        className="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
+                        alt="" 
+                        className="absolute inset-0 w-full h-full object-contain z-10 transition-transform duration-500 group-hover:scale-105" 
+                        onError={(e) => (e.currentTarget.style.display = 'none')}
                     />
+                    <Logo className="w-full transition-transform duration-500 group-hover:scale-105" />
                 </Link>
             </div>
 
@@ -162,12 +165,9 @@ export function CreatorSidebar() {
 
             {/* Mobile Header */}
             <div className="mobile-header lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3">
-                <Link href="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                    <img 
-                        src="/images/logo.png" 
-                        alt="Doce Lilium" 
-                        className="h-14 w-auto object-contain" 
-                    />
+                <Link href="/dashboard" className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
+                    <Logo className="h-10 w-10" />
+                    <span className="text-lg italic font-display font-semibold text-primary">Doce Lilium</span>
                 </Link>
                 <button
                     onClick={() => setMobileOpen(!mobileOpen)}

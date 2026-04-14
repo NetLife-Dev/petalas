@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react'
 import { Sparkles, CheckCircle2 } from 'lucide-react'
+import { Logo } from '@/components/ui/Logo'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
     return (
@@ -11,12 +12,16 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
                     <span className="text-[400px] font-display italic text-primary select-none rotate-12">L</span>
                 </div>
 
-                <div className="relative z-10 flex flex-col items-start">
-                    <img 
-                        src="/images/logo.png" 
-                        alt="Doce Lilium" 
-                        className="h-48 w-auto object-contain -ml-6" 
-                    />
+                <div className="relative z-10 flex flex-col items-start w-full">
+                    <div className="relative w-48 h-48">
+                         <img 
+                            src="/images/logo.png" 
+                            alt="" 
+                            className="absolute inset-0 w-full h-full object-contain z-10 -ml-6" 
+                            onError={(e) => (e.currentTarget.style.display = 'none')}
+                        />
+                        <Logo className="w-full h-full -ml-8" />
+                    </div>
                 </div>
 
                 <div className="relative z-10 space-y-12">
@@ -59,12 +64,16 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
                 <div className="w-full max-w-md relative z-10 bg-white p-12 lg:p-16 rounded-[48px] shadow-soft border border-primary/5 animate-scale-up">
                     {/* Mobile Logo */}
-                    <div className="lg:hidden flex flex-col items-center justify-center mb-12">
-                         <img 
-                            src="/images/logo.png" 
-                            alt="Doce Lilium" 
-                            className="h-24 w-auto object-contain" 
-                        />
+                    <div className="lg:hidden flex flex-col items-center justify-center mb-12 w-full">
+                         <div className="relative w-24 h-24">
+                            <img 
+                                src="/images/logo.png" 
+                                alt="" 
+                                className="absolute inset-0 w-full h-full object-contain z-10" 
+                                onError={(e) => (e.currentTarget.style.display = 'none')}
+                            />
+                            <Logo className="w-full h-full scale-75" />
+                         </div>
                     </div>
 
                     {children}
