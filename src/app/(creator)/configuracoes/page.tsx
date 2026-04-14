@@ -295,7 +295,7 @@ export default function ConfiguracoesPage() {
                     {/* ── PERFIL ─────────────────────────────────────────────── */}
                     {activeTab === 'perfil' && (
                         <div className="space-y-8">
-                            <div className="card border-primary/10 p-8">
+                            <div className="surface-card">
                                 <div className="mb-10">
                                     <h3 className="text-2xl font-semibold font-display italic text-text-secondary leading-none">Dados Maestro</h3>
                                     <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Identidade e Acesso</p>
@@ -348,7 +348,7 @@ export default function ConfiguracoesPage() {
                                 </div>
                             </div>
 
-                            <div className="card border-primary/10 p-8">
+                            <div className="surface-card">
                                 <div className="mb-10">
                                     <h3 className="text-2xl font-semibold font-display italic text-text-secondary leading-none">Criptografia</h3>
                                     <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Segurança da Conta</p>
@@ -391,7 +391,7 @@ export default function ConfiguracoesPage() {
                                 </button>
                             </div>
 
-                            <div className="card p-0 overflow-hidden border-primary/10 bg-white">
+                            <div className="surface-card p-0 overflow-hidden">
                                 {stages.length === 0 ? (
                                     <div className="py-24 text-center">
                                         <Kanban className="w-12 h-12 text-primary/10 mx-auto mb-4" />
@@ -454,7 +454,7 @@ export default function ConfiguracoesPage() {
                                 {WEBHOOK_PRESETS.map((preset) => {
                                     const wh = webhooks[preset.tipo]
                                     return (
-                                        <div key={preset.tipo} className="card p-8 border-primary/10 relative group">
+                                        <div key={preset.tipo} className="surface-card relative group">
                                             {/* Header */}
                                             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
                                                 <div className="flex items-start gap-5">

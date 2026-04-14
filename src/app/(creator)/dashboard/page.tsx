@@ -50,7 +50,7 @@ export default function DashboardPage() {
                 {/* Metric cards skeleton */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="metric-card space-y-3">
+                        <div key={i} className="surface-card space-y-3">
                             <div className="shimmer h-10 w-10 rounded-lg" />
                             <div className="space-y-1.5">
                                 <div className="shimmer h-3 w-24 rounded" />
@@ -62,7 +62,7 @@ export default function DashboardPage() {
                 </div>
                 {/* Chart skeleton */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div className="lg:col-span-8 card">
+                    <div className="lg:col-span-8 surface-card">
                         <div className="shimmer h-5 w-48 rounded mb-6" />
                         <div className="flex items-end gap-2 h-48">
                             {Array.from({ length: 8 }).map((_, i) => (
@@ -74,8 +74,8 @@ export default function DashboardPage() {
                         </div>
                     </div>
                     <div className="lg:col-span-4 space-y-4">
-                        <div className="card shimmer h-32" />
-                        <div className="card">
+                        <div className="surface-card shimmer h-32" />
+                        <div className="surface-card">
                             <div className="shimmer h-5 w-36 rounded mb-4" />
                             {Array.from({ length: 3 }).map((_, i) => (
                                 <div key={i} className="flex gap-3 mb-4">
@@ -134,8 +134,8 @@ export default function DashboardPage() {
                     const cfg = iconConfigs[i] || iconConfigs[0]
                     const Icon = cfg.icon
                     return (
-                        <div key={metric.label} className="metric-card group">
-                            <div className="flex items-center justify-between">
+                        <div key={metric.label} className="surface-card group flex flex-col justify-between">
+                            <div className="flex items-center justify-between mb-4">
                                 <Icon className="w-5 h-5 text-text-muted group-hover:text-primary transition-colors" />
                                 {metric.status === 'up' && (
                                     <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
@@ -159,7 +159,7 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Chart */}
                 <div className="lg:col-span-8">
-                    <div className="card h-full flex flex-col p-8">
+                    <div className="surface-card h-full flex flex-col">
                         <div className="flex items-center justify-between mb-10">
                             <div>
                                 <h2 className="text-xl font-semibold font-display italic">Geração de Conteúdo</h2>
@@ -207,7 +207,7 @@ export default function DashboardPage() {
                 {/* Right column */}
                 <div className="lg:col-span-4 space-y-6">
                     {/* AI insight */}
-                    <div className="card border-l-[3px] border-l-primary bg-bg-subtle p-8">
+                    <div className="surface-card border-l-[3px] border-l-primary bg-bg-subtle relative overflow-hidden">
                         <div className="flex items-center gap-2 mb-4">
                             <Sparkles className="w-4 h-4 text-primary" />
                             <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Insight</span>
@@ -227,7 +227,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Recent activity */}
-                    <div className="card p-8">
+                    <div className="surface-card">
                         <div className="flex items-center justify-between mb-8">
                             <div>
                                 <h2 className="text-lg font-semibold font-display italic">Atividade Recente</h2>

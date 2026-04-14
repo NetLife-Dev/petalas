@@ -155,8 +155,8 @@ export default function PipelinePage() {
                     </p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="hidden xl:flex items-center gap-8 mr-8 px-8 border-r border-primary/5">
-                        <div>
+                    <div className="hidden xl:flex items-center gap-4 mr-8">
+                        <div className="surface-card min-w-[200px]">
                             <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-1">Valor do Funil</p>
                             <p className="text-xl font-bold text-primary italic font-display">
                                 {totalValue.toLocaleString('pt-BR', {
@@ -165,7 +165,7 @@ export default function PipelinePage() {
                                 })}
                             </p>
                         </div>
-                        <div>
+                        <div className="surface-card min-w-[200px]">
                             <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-1">Oportunidades</p>
                             <p className="text-xl font-bold text-text-primary italic font-display">{cards.length} Peças</p>
                         </div>
@@ -183,9 +183,9 @@ export default function PipelinePage() {
             {/* Kanban Board */}
             <div className="flex-1 flex gap-8 overflow-x-auto pb-8 no-scrollbar outline-none">
                 {columns.map((col) => (
-                    <div key={col.id} className="flex-shrink-0 w-[320px] flex flex-col group/col">
+                    <div key={col.id} className="flex-shrink-0 w-[320px] flex flex-col group/col surface-card">
                         {/* Column Header */}
-                        <div className="mb-6 flex items-center justify-between px-2">
+                        <div className="mb-6 flex items-center justify-between pb-4 border-b border-surface-100">
                             <div className="flex items-center gap-3">
                                 <div className={cn('w-2.5 h-2.5 rounded-full shadow-glow', col.color)} />
                                 <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-text-primary">
@@ -203,7 +203,7 @@ export default function PipelinePage() {
                         </div>
 
                         {/* Cards Container */}
-                        <div className="flex-1 flex flex-col gap-4 min-h-[500px] p-2 rounded-[32px] bg-bg-subtle/20 border border-primary/5 group-hover/col:bg-bg-subtle/40 transition-colors">
+                        <div className="flex-1 flex flex-col gap-4 min-h-[500px]">
                             <button
                                 onClick={() => {
                                     setNewCardData({ ...newCardData, stageId: col.id })

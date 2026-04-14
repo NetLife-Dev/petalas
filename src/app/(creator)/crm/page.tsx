@@ -203,8 +203,8 @@ export default function CRMPage() {
                         sub: 'Pendências hoje',
                     },
                 ].map(({ icon: Icon, label, value, sub }) => (
-                    <div key={label} className="metric-card group">
-                        <div className="flex items-center justify-between mb-2">
+                    <div key={label} className="surface-card group flex flex-col justify-between">
+                        <div className="flex items-center justify-between mb-4">
                              <Icon className="w-5 h-5 text-primary" />
                         </div>
                         <div>
@@ -219,21 +219,21 @@ export default function CRMPage() {
             </div>
 
             {/* Table section */}
-            <div className="card p-0 overflow-hidden border-none shadow-none bg-transparent">
+            <div>
                 {/* Filters */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                <div className="surface-card flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
                     <div className="relative w-full md:max-w-md">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted transition-colors group-focus-within:text-primary" />
                         <input
                             type="text"
                             placeholder="Pesquisar por nome, empresa ou email..."
-                            className="input-field pl-12 rounded-full border-primary/10 hover:border-primary/20 bg-white"
+                            className="input-field pl-12 rounded-full border-primary/10 hover:border-primary/20 bg-bg-main/50"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
 
-                    <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-primary/10">
+                    <div className="flex items-center gap-1 bg-bg-main/50 p-1 rounded-full border border-primary/10">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
@@ -255,7 +255,7 @@ export default function CRMPage() {
                 </div>
 
                 {/* Table */}
-                <div className="bg-white rounded-2xl border border-primary/10 overflow-hidden">
+                <div className="surface-card overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full">
                             <thead>

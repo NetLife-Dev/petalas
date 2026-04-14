@@ -164,6 +164,13 @@ body {
     @apply glass w-full rounded-[40px] shadow-2xl overflow-hidden;
     animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
+
+  .surface-card {
+    background-color: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+  }
 }
 
 /* ─── Animations ─── */

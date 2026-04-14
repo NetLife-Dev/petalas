@@ -146,10 +146,11 @@ export default function CriarPage() {
                         ))}
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-8">
-                            {/* Step 01 */}
-                            <section className="card p-8 border-primary/10 hover:border-primary/20 transition-all">
+                    <div className="surface-card">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-8">
+                                {/* Step 01 */}
+                                <section>
                                 <div className="flex items-center gap-4 mb-6">
                                     <h3 className="text-2xl font-semibold font-display italic text-text-secondary">Nome do Projeto</h3>
                                 </div>
@@ -166,7 +167,7 @@ export default function CriarPage() {
                             </section>
 
                             {/* Step 03 */}
-                            <section className="card p-8 border-primary/10 hover:border-primary/20 transition-all">
+                            <section>
                                 <div className="flex items-center gap-4 mb-6">
                                     <h3 className="text-2xl font-semibold font-display italic text-text-secondary">Duração</h3>
                                 </div>
@@ -203,7 +204,7 @@ export default function CriarPage() {
                         </div>
 
                         {/* Step 02 */}
-                        <section className="card p-8 border-primary/10 hover:border-primary/20 transition-all flex flex-col">
+                        <section className="flex flex-col">
                             <div className="flex items-center gap-4 mb-6">
                                 <h3 className="text-2xl font-semibold font-display italic text-text-secondary">Referência Visual</h3>
                             </div>
@@ -256,11 +257,12 @@ export default function CriarPage() {
                             </div>
                         </section>
                     </div>
+                    </div>
                 </div>
 
                 {/* Right — Preview & Action */}
                 <div className="w-full xl:w-[480px] space-y-6">
-                    <div className="card p-8 border-primary/10 bg-white relative overflow-hidden">
+                    <div className="surface-card relative overflow-hidden">
                         {isGenerating && (
                             <div className="absolute inset-0 bg-white/95 z-40 flex flex-col items-center justify-center p-8 text-center backdrop-blur-sm animate-fade-in">
                                 <div className="w-16 h-16 rounded-full border-[3px] border-primary/10 border-t-primary animate-spin mb-8" />
