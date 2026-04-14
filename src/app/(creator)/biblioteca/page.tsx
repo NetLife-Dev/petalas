@@ -449,16 +449,5 @@ export default function BibliotecaPage() {
                 onCancel={() => setDeleteTarget(null)}
             />
         </div>
-
-            {/* ── Confirm Delete ── */}
-            <ConfirmModal
-                isOpen={!!deleteTarget}
-                title="Excluir vídeo"
-                description="Esta ação é irreversível. O vídeo será removido permanentemente."
-                confirmLabel="Excluir"
-                onConfirm={handleDeleteConfirm}
-                onCancel={() => setDeleteTarget(null)}
-            />
-        </div>
     )
 }
