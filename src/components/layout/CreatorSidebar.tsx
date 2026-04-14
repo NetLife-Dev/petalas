@@ -63,7 +63,7 @@ export function CreatorSidebar() {
                 <Link href="/dashboard" className="cursor-pointer group flex justify-center">
                     <img 
                         src="/images/logo.png" 
-                        alt="" 
+                        alt="Doce Lilium" 
                         className="h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
                     />
                 </Link>
@@ -165,7 +165,7 @@ export function CreatorSidebar() {
                 <Link href="/dashboard" className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
                     <img 
                         src="/images/logo.png" 
-                        alt="" 
+                        alt="Doce Lilium" 
                         className="h-14 w-auto object-contain" 
                     />
                 </Link>

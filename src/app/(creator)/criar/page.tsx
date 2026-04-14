@@ -95,7 +95,7 @@ export default function CriarPage() {
             <div className="mb-12">
                 <h1 className="text-4xl font-semibold text-text-primary italic font-display">Criar Novo Vídeo</h1>
                 <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
-                    Geração de Conteúdo Inteligente · Studio Doce Lilium
+                    Geração de Conteúdo Inteligente
                 </p>
             </div>
 
@@ -274,7 +274,7 @@ export default function CriarPage() {
                         ) || (
                            <>
                              <div className="mb-8 flex items-baseline justify-between border-b border-primary/5 pb-4">
-                                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-text-muted italic">Preview do Studio</p>
+                                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-text-muted italic">Preview</p>
                                 <Sparkles className="w-4 h-4 text-primary animate-pulse" />
                              </div>
 
@@ -324,7 +324,7 @@ export default function CriarPage() {
                     </div>
 
                     <div className="card bg-bg-subtle/50 p-6 border-none">
-                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-3 italic">Dica do Studio</p>
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-3 italic">Dica</p>
                         <p className="text-xs text-text-secondary leading-relaxed font-medium italic">
                             "Imagens com fundos neutros e iluminação suave resultam em criações com estética superior para marcas de luxo."
                         </p>

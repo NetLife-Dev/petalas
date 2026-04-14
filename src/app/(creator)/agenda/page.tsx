@@ -159,7 +159,7 @@ export default function AgendaPage() {
                 <div className="text-center">
                     <h1 className="text-4xl font-semibold text-text-primary italic font-display">Calendário de Conteúdo</h1>
                     <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-4">
-                        Studio Pétalas · Sincronização Estratégica
+                        Sincronização Estratégica
                     </p>
                 </div>
 
@@ -222,7 +222,7 @@ export default function AgendaPage() {
                     <div>
                         <h1 className="text-4xl font-semibold text-text-primary italic font-display">Calendário Estratégico</h1>
                         <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
-                            Studio Pétalas · Hub Integrado
+                            Hub Integrado
                         </p>
                     </div>
                     <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-50/50 border border-emerald-100/50 text-emerald-600 text-[10px] font-bold uppercase tracking-widest">
@@ -240,7 +240,7 @@ export default function AgendaPage() {
                             </div>
                             <div>
                                 <h2 className="text-xl font-semibold font-display italic text-text-primary">Fluxo de Conteúdo</h2>
-                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Cronograma Studio</p>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Cronograma</p>
                             </div>
                         </div>
 
@@ -356,7 +356,7 @@ export default function AgendaPage() {
                             </div>
                             <div>
                                 <h2 className="text-xl font-semibold font-display italic text-text-primary">Análise Curatorial</h2>
-                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Benchmark Studio</p>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Benchmark</p>
                             </div>
                         </div>
 
@@ -414,7 +414,7 @@ export default function AgendaPage() {
                             <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-text-muted text-center max-w-[240px]">
                                 Configure seus canais maestros em{' '}
                                 <Link href="/configuracoes" className="text-primary hover:underline italic font-display lowercase tracking-normal text-sm ml-1">
-                                    Studio → Integrações
+                                    Integrações
                                 </Link>
                             </p>
                         </div>

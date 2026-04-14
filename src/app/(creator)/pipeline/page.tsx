@@ -151,7 +151,7 @@ export default function PipelinePage() {
                 <div>
                     <h1 className="text-4xl font-semibold text-text-primary italic font-display">Pipeline</h1>
                     <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
-                        Studio Pétalas · Curadoria de Oportunidades
+                        Curadoria de Oportunidades
                     </p>
                 </div>
                 <div className="flex items-center gap-4">
@@ -307,7 +307,7 @@ export default function PipelinePage() {
 
                             <div className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Título do Studio</label>
+                                    <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Título</label>
                                     <input
                                         type="text"
                                         className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
@@ -432,7 +432,7 @@ export default function PipelinePage() {
                              <div className="flex items-center justify-between mb-10">
                                 <div>
                                     <h2 className="text-2xl font-semibold font-display italic text-text-primary leading-none">Nova Coluna</h2>
-                                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-text-muted mt-2">Estrutura Studio</p>
+                                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-text-muted mt-2">Estrutura</p>
                                 </div>
                                 <button
                                     onClick={() => setIsNewColumnModalOpen(false)}

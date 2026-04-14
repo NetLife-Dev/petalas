@@ -263,7 +263,7 @@ export default function ConfiguracoesPage() {
                 <div>
                     <h1 className="text-4xl font-semibold text-text-primary italic font-display">Configurações</h1>
                     <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
-                        Studio Pétalas · Ajustes e Automações
+                        Ajustes e Automações
                     </p>
                 </div>
 
@@ -315,7 +315,7 @@ export default function ConfiguracoesPage() {
                                         </button>
                                     </div>
                                     <div className="flex-1 text-center md:text-left space-y-1">
-                                        <p className="text-sm font-bold text-text-primary uppercase tracking-widest">Retrato Studio</p>
+                                        <p className="text-sm font-bold text-text-primary uppercase tracking-widest">Retrato</p>
                                         <p className="text-xs text-text-muted font-medium italic">Sua imagem será exibida em todas as criações do acervo.</p>
                                         <p className="text-[10px] text-primary/60 font-bold uppercase tracking-widest mt-2">PNG ou JPG · Máximo 2MB</p>
                                     </div>
@@ -437,7 +437,7 @@ export default function ConfiguracoesPage() {
                     {activeTab === 'integracoes' && (
                         <div className="space-y-8 animate-fade-in">
                             <div>
-                                <h3 className="text-3xl font-semibold font-display italic text-text-secondary leading-none">Studio APIs</h3>
+                                <h3 className="text-3xl font-semibold font-display italic text-text-secondary leading-none">APIs</h3>
                                 <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Conexões de Automação Maestro</p>
                             </div>
 
@@ -445,7 +445,7 @@ export default function ConfiguracoesPage() {
                             <div className="flex items-center gap-4 p-5 bg-primary/5 border border-primary/10 rounded-3xl animate-pulse-subtle">
                                 <AlertCircle className="w-5 h-5 text-primary flex-shrink-0" />
                                 <p className="text-[10px] uppercase tracking-[0.1em] font-bold text-primary/80 leading-relaxed">
-                                    O Pétalas Studio se integra perfeitamente com fluxos N8N para automação de vídeos e inteligência de dados.
+                                    O sistema se integra perfeitamente com fluxos N8N para automação de vídeos e inteligência de dados.
                                 </p>
                             </div>
 
@@ -467,7 +467,7 @@ export default function ConfiguracoesPage() {
                                                                 {preset.label}
                                                             </p>
                                                             {preset.required && (
-                                                                <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[8px] font-bold uppercase tracking-widest border border-primary/20">Studio Core</span>
+                                                                <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[8px] font-bold uppercase tracking-widest border border-primary/20">Core</span>
                                                             )}
                                                         </div>
                                                         <p className="text-xs text-text-muted font-medium italic max-w-lg">
@@ -592,7 +592,7 @@ export default function ConfiguracoesPage() {
 
                             {/* Payload reference */}
                             <div className="card bg-bg-subtle/50 border-none p-10">
-                                <h4 className="text-xl font-semibold font-display italic text-text-secondary mb-6">Especificação Studio</h4>
+                                <h4 className="text-xl font-semibold font-display italic text-text-secondary mb-6">Especificação</h4>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                     <div className="space-y-4">
                                         <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary italic">Saída Maestro (POST)</p>

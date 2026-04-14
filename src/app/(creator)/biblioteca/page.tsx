@@ -353,7 +353,7 @@ export default function BibliotecaPage() {
                                     "px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 backdrop-blur-md",
                                     selectedVideo.status === 'concluido' ? 'bg-emerald-500/20' : 'bg-amber-500/20'
                                 )}>
-                                    {selectedVideo.status === 'concluido' ? 'Pronto para Exportar' : 'Processando Studio'}
+                                    {selectedVideo.status === 'concluido' ? 'Pronto para Exportar' : 'Processando' }
                                 </span>
                              </div>
 
@@ -398,10 +398,10 @@ export default function BibliotecaPage() {
 
                             <div className="flex-1 space-y-6">
                                 {[
-                                    { label: 'Duração', value: selectedVideo.duracao_s ? `${selectedVideo.duracao_s}s Studio Edit` : '—' },
+                                    { label: 'Duração', value: selectedVideo.duracao_s ? `${selectedVideo.duracao_s}s` : '—' },
                                     { label: 'Formato',  value: FORMAT_LABEL[selectedVideo.formato] ?? 'Reels / TikTok' },
                                     { label: 'Status',   value: STATUS_MAP[selectedVideo.status]?.label ?? 'Processando' },
-                                    { label: 'Studio Data', value: selectedVideo.date || 'Hoje' },
+                                    { label: 'Data', value: selectedVideo.date || 'Hoje' },
                                 ].map((row) => (
                                     <div key={row.label}>
                                         <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-1">{row.label}</p>
