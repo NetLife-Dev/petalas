@@ -22,12 +22,13 @@ import { useTheme } from '@/components/providers/ThemeProvider'
 import toast from 'react-hot-toast'
 
 const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/dashboard', label: 'Início', icon: LayoutDashboard },
     { href: '/pipeline', label: 'Pipeline', icon: Kanban },
-    { href: '/crm', label: 'CRM', icon: Users },
-    { href: '/criar', label: 'Criar Vídeo', icon: Video },
-    { href: '/biblioteca', label: 'Biblioteca', icon: Library },
-    { href: '/configuracoes', label: 'Configurações', icon: Settings },
+    { href: '/crm', label: 'Audiência', icon: Users },
+    { href: '/agenda', label: 'Estratégia', icon: Calendar },
+    { href: '/criar', label: 'Ateliê', icon: Video },
+    { href: '/biblioteca', label: 'Acervo', icon: Library },
+    { href: '/configuracoes', label: 'Ajustes', icon: Settings },
 ]
 
 export function CreatorSidebar() {
@@ -42,7 +43,7 @@ export function CreatorSidebar() {
               nome: sessionUser.name || 'User',
               email: sessionUser.email || '',
               image: sessionUser.image || null,
-              plan: sessionUser.plan || 'Pro Plan',
+              plan: sessionUser.plan || 'Membro Studio',
           }
         : null
 
@@ -55,26 +56,24 @@ export function CreatorSidebar() {
     }
 
     const SidebarContent = () => (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-white">
             {/* Logo */}
-            <div className="px-5 py-6 border-b border-surface-200">
-                <Link href="/dashboard" className="flex flex-col cursor-pointer hover:opacity-85 transition-opacity">
+            <div className="px-10 py-12">
+                <Link href="/dashboard" className="flex flex-col cursor-pointer group">
                     <span
-                        className="leading-none"
+                        className="leading-none text-2xl transition-all duration-300 group-hover:tracking-wider"
                         style={{
                             fontFamily: 'var(--font-display), Cormorant Garamond, serif',
                             fontStyle: 'italic',
                             fontWeight: 600,
-                            fontSize: '1.55rem',
-                            color: 'var(--color-sidebar-logo)',
-                            letterSpacing: '0.02em',
+                            color: 'var(--color-primary)',
                         }}
                     >
                         Doce Lilium
                     </span>
                     <span
-                        className="mt-0.5 uppercase tracking-widest text-[10px]"
-                        style={{ color: 'var(--color-sidebar-text-muted)', fontFamily: 'var(--font-sans), sans-serif' }}
+                        className="mt-2 uppercase tracking-[0.4em] text-[10px] text-text-muted font-bold opacity-60"
+                        style={{ fontFamily: 'var(--font-sans), sans-serif' }}
                     >
                         Studio
                     </span>
@@ -82,7 +81,7 @@ export function CreatorSidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+            <nav className="flex-1 px-6 py-4 space-y-2 overflow-y-auto no-scrollbar">
                 {navItems.map((item) => {
                     const Icon = item.icon
                     const isActive =
@@ -95,57 +94,64 @@ export function CreatorSidebar() {
                             href={item.href}
                             onClick={() => setMobileOpen(false)}
                             className={cn(
-                                isActive ? 'sidebar-item-active' : 'sidebar-item'
+                                'group relative px-6 py-3.5 rounded-2xl flex items-center gap-4 transition-all duration-300',
+                                isActive 
+                                    ? 'bg-primary text-white shadow-glow translate-x-1' 
+                                    : 'text-text-muted hover:bg-bg-subtle/50 hover:text-primary'
                             )}
                         >
-                            <Icon className="w-4 h-4 flex-shrink-0" />
-                            <span>{item.label}</span>
+                            <Icon className={cn("w-4.5 h-4.5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110", isActive ? "text-white" : "text-primary/40 group-hover:text-primary")} />
+                            <span className="uppercase tracking-[0.15em] text-[10px] font-bold">{item.label}</span>
+                            {isActive && (
+                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-r-full" />
+                            )}
                         </Link>
                     )
                 })}
             </nav>
 
             {/* Footer */}
-            <div className="px-3 py-4">
+            <div className="px-6 py-8 border-t border-primary/5 bg-bg-subtle/10">
                 {user && (
-                    <div className="flex items-center gap-3 px-2 py-2 mb-1">
+                    <div className="flex items-center gap-4 px-2 py-3 mb-6 bg-white rounded-3xl shadow-soft border border-primary/5 group transition-all hover:border-primary/20">
                         <div
                             className={cn(
-                                'w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0',
-                                getAvatarColor(user.nome)
+                                'w-10 h-10 rounded-2xl flex items-center justify-center text-xs font-bold flex-shrink-0 overflow-hidden bg-primary/10 text-primary shadow-inner transition-transform group-hover:scale-105'
                             )}
                         >
                             {user.image ? (
                                 <img
                                     src={user.image}
                                     alt={user.nome}
-                                    className="w-full h-full rounded-full object-cover"
+                                    className="w-full h-full object-cover"
                                 />
                             ) : (
                                 getInitials(user.nome)
                             )}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-text-primary truncate leading-tight">
+                            <p className="text-[11px] font-bold text-text-primary truncate leading-tight uppercase tracking-wider">
                                 {user.nome}
                             </p>
-                            <p className="text-xs text-text-muted truncate leading-tight">{user.plan}</p>
+                            <div className="flex items-center gap-1.5 mt-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-glow animate-pulse" />
+                                <span className="text-[8px] uppercase tracking-widest text-primary font-black opacity-60 font-sans">{user.plan}</span>
+                            </div>
                         </div>
                     </div>
                 )}
                 <div className="flex items-center gap-2">
                     <button
                         onClick={handleLogout}
-                        className="sidebar-item flex-1 text-left"
+                        className="group flex-1 h-12 rounded-2xl border border-primary/5 bg-white flex items-center justify-center gap-3 text-text-muted hover:text-primary hover:border-primary/20 hover:shadow-soft transition-all duration-300"
                     >
-                        <LogOut className="w-4 h-4 flex-shrink-0" />
-                        <span>Sair</span>
+                        <LogOut className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+                        <span className="text-[9px] uppercase tracking-widest font-black">Sair</span>
                     </button>
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-surface-100 transition-colors"
+                        className="w-12 h-12 rounded-2xl bg-white border border-primary/5 flex items-center justify-center text-text-muted hover:text-primary hover:border-primary/20 hover:shadow-soft transition-all duration-300"
                         title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
-                        aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
                     >
                         {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                     </button>

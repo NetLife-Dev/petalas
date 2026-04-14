@@ -3,52 +3,75 @@ import { Sparkles, CheckCircle2 } from 'lucide-react'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
     return (
-        <div className="min-h-screen flex bg-white font-outfit">
-            {/* Left Panel */}
-            <div className="hidden lg:flex lg:w-[52%] bg-surface-50 border-r border-surface-100 p-12 flex-col justify-between">
-                <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                        <Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-lg font-bold text-text-primary tracking-tight">Pétalas</span>
+        <div className="min-h-screen flex bg-bg-main" style={{ fontFamily: 'var(--font-sans), sans-serif' }}>
+            {/* Left Panel - Editorial Style */}
+            <div className="hidden lg:flex lg:w-[48%] bg-white border-r border-primary/5 p-20 flex-col justify-between relative overflow-hidden">
+                {/* Background Pattern/Texture (Subtle) */}
+                <div className="absolute top-0 right-0 w-full h-full opacity-[0.03] pointer-events-none p-20 flex items-center justify-center">
+                    <span className="text-[400px] font-display italic text-primary select-none rotate-12">L</span>
                 </div>
 
-                <div className="space-y-8">
-                    <div>
-                        <h1 className="text-4xl font-bold text-text-primary leading-tight">
-                            O futuro da criação de conteúdo está florescendo.
+                <div className="relative z-10 flex flex-col items-start gap-1">
+                    <span
+                        className="leading-none text-3xl italic"
+                        style={{
+                            fontFamily: 'var(--font-display), Cormorant Garamond, serif',
+                            fontWeight: 600,
+                            color: 'var(--color-primary)',
+                        }}
+                    >
+                        Doce Lilium
+                    </span>
+                    <span className="uppercase tracking-[0.4em] text-[10px] text-text-muted font-black opacity-60">Studio</span>
+                </div>
+
+                <div className="relative z-10 space-y-12">
+                    <div className="space-y-6">
+                        <h1 className="text-6xl font-semibold text-text-primary leading-[1.1] font-display italic">
+                            Onde a moda encontra a precisão.
                         </h1>
-                        <p className="text-text-muted mt-4 text-base leading-relaxed">
-                            Automatize a criação de vídeos, gerencie seu CRM e acompanhe seu pipeline — tudo em um só lugar.
+                        <p className="text-text-muted text-lg leading-relaxed max-w-md font-medium">
+                            Potencializamos sua curadoria com inteligência, design e performance de alta costura.
                         </p>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {[
-                            'Geração de vídeos com IA em segundos',
-                            'CRM integrado com pipeline de vendas',
-                            'Insights estratégicos em tempo real',
+                            'Produção Audiovisual de Luxo',
+                            'Gestão de Coleções e Audiência',
+                            'Insights de Alta Performance',
                         ].map((item) => (
-                            <div key={item} className="flex items-center gap-3">
-                                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                                <span className="text-sm text-text-secondary">{item}</span>
+                            <div key={item} className="flex items-center gap-4">
+                                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center border border-primary/5 shadow-inner">
+                                    <Sparkles className="w-2.5 h-2.5 text-primary" />
+                                </div>
+                                <span className="text-xs uppercase tracking-widest font-black text-text-secondary opacity-80">{item}</span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <p className="text-xs text-text-muted">© 2024 Pétalas AI. Todos os direitos reservados.</p>
+                <p className="relative z-10 text-[10px] uppercase tracking-widest font-black text-text-muted flex items-center gap-2">
+                   <span className="w-8 h-px bg-primary/20" />
+                   © 2024 Pétalas Studio · Doce Lilium
+                </p>
             </div>
 
             {/* Right Panel — Auth Form */}
-            <div className="flex-1 flex items-center justify-center p-8 lg:p-12">
-                <div className="w-full max-w-sm animate-fade-in">
+            <div className="flex-1 flex items-center justify-center p-8 lg:p-20 bg-bg-main relative overflow-hidden">
+                {/* Decorative Elements */}
+                <div className="absolute top-[-100px] right-[-100px] w-80 h-80 rounded-full bg-primary/5 blur-3xl" />
+                <div className="absolute bottom-[-50px] left-[-50px] w-60 h-60 rounded-full bg-primary/5 blur-3xl" />
+
+                <div className="w-full max-w-md relative z-10 bg-white p-12 lg:p-16 rounded-[48px] shadow-soft border border-primary/5 animate-scale-up">
                     {/* Mobile Logo */}
-                    <div className="lg:hidden flex items-center justify-center gap-2 mb-10">
-                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                            <Sparkles className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="text-lg font-bold text-text-primary">Pétalas</span>
+                    <div className="lg:hidden flex flex-col items-center justify-center gap-1 mb-12">
+                        <span
+                            className="leading-none text-2xl italic text-primary font-display font-semibold"
+                        >
+                            Doce Lilium
+                        </span>
+                        <span className="uppercase tracking-[0.4em] text-[9px] text-text-muted font-black opacity-60">Studio</span>
                     </div>
 
                     {children}

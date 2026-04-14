@@ -89,42 +89,44 @@ export default function CriarPage() {
     const activeStep = !productName ? 0 : !productPhoto ? 1 : 2
 
     return (
-        <div className="min-h-screen" style={{ background: 'var(--color-bg-main)' }}>
-            <div className="flex flex-col lg:flex-row min-h-[calc(100vh-57px)]">
-                {/* Left — Form */}
-                <div className="flex-1 p-6 lg:p-8 space-y-8 overflow-y-auto">
-                    {/* Header */}
-                    <div>
-                        <p className="label mb-1">Gerador de Conteúdo</p>
-                        <h1 className="text-2xl font-bold text-text-primary">Criar Novo Vídeo</h1>
-                    </div>
+        <div className="p-8 lg:p-12 max-w-[1400px] mx-auto animate-fade-in">
+            {/* Header */}
+            <div className="mb-12">
+                <h1 className="text-4xl font-semibold text-text-primary italic font-display">Criar Novo Vídeo</h1>
+                <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
+                    Geração de Conteúdo Inteligente · Studio Doce Lilium
+                </p>
+            </div>
 
+            <div className="flex flex-col xl:flex-row gap-12">
+                {/* Left — Form */}
+                <div className="flex-1 space-y-12">
                     {/* Progress steps */}
-                    <div className="flex items-center gap-0">
+                    <div className="flex items-center">
                         {steps.map((step, i) => (
                             <div key={step.num} className="flex items-center">
-                                <div className="flex items-center gap-2">
+                                <div className="flex flex-col items-center gap-2 group">
                                     <div
                                         className={cn(
-                                            'w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors',
+                                            'w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 border-2',
                                             i < activeStep
-                                                ? 'bg-emerald-500 text-white'
+                                                ? 'bg-primary border-primary text-white scale-90 opacity-50'
                                                 : i === activeStep
-                                                ? 'bg-primary text-white'
-                                                : 'bg-surface-200 text-text-muted'
+                                                ? 'bg-primary border-primary text-white shadow-glow translate-y-[-2px]'
+                                                : 'bg-white border-primary/20 text-text-muted'
                                         )}
                                     >
                                         {i < activeStep ? (
-                                            <CheckCircle2 className="w-4 h-4" />
+                                            <CheckCircle2 className="w-5 h-5" />
                                         ) : (
                                             step.num
                                         )}
                                     </div>
                                     <span
                                         className={cn(
-                                            'text-xs font-medium hidden sm:block',
+                                            'text-[10px] uppercase tracking-widest font-bold whitespace-nowrap',
                                             i === activeStep
-                                                ? 'text-text-primary'
+                                                ? 'text-primary'
                                                 : 'text-text-muted'
                                         )}
                                     >
@@ -134,8 +136,8 @@ export default function CriarPage() {
                                 {i < steps.length - 1 && (
                                     <div
                                         className={cn(
-                                            'h-px w-8 mx-3 transition-colors',
-                                            i < activeStep ? 'bg-emerald-300' : 'bg-surface-200'
+                                            'h-[2px] w-12 sm:w-20 mx-4 transition-colors mb-6',
+                                            i < activeStep ? 'bg-primary' : 'bg-primary/10'
                                         )}
                                     />
                                 )}
@@ -143,75 +145,102 @@ export default function CriarPage() {
                         ))}
                     </div>
 
-                    <div className="space-y-8 max-w-lg">
-                        {/* Step 01 */}
-                        <section className="card space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">
-                                    1
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-8">
+                            {/* Step 01 */}
+                            <section className="card p-8 border-primary/10 hover:border-primary/20 transition-all">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <h3 className="text-2xl font-semibold font-display italic text-text-secondary">Nome do Projeto</h3>
                                 </div>
-                                <h3 className="section-title">Nome e Identidade</h3>
-                            </div>
-                            <div>
-                                <label className="label">Título do Projeto</label>
-                                <input
-                                    type="text"
-                                    placeholder="Ex: Tênis Ultra Flow"
-                                    className="input-field"
-                                    value={productName}
-                                    onChange={(e) => setProductName(e.target.value)}
-                                />
-                            </div>
-                        </section>
+                                <div>
+                                    <label className="label">Título da Peça</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Ex: Coleção Outono 2024"
+                                        className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
+                                        value={productName}
+                                        onChange={(e) => setProductName(e.target.value)}
+                                    />
+                                </div>
+                            </section>
+
+                            {/* Step 03 */}
+                            <section className="card p-8 border-primary/10 hover:border-primary/20 transition-all">
+                                <div className="flex items-center gap-4 mb-6">
+                                    <h3 className="text-2xl font-semibold font-display italic text-text-secondary">Duração</h3>
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    {[
+                                        { val: '15s', label: 'Curto', desc: 'Stories' },
+                                        { val: '20s', label: 'Padrão', desc: 'Feed/Reels' },
+                                    ].map((d) => (
+                                        <button
+                                            key={d.val}
+                                            onClick={() => setDuration(d.val)}
+                                            className={cn(
+                                                'p-4 rounded-2xl border-2 flex flex-col items-center gap-1 transition-all group',
+                                                duration === d.val
+                                                    ? 'border-primary bg-primary/5 scale-[1.02]'
+                                                    : 'border-primary/10 bg-white hover:border-primary/30'
+                                            )}
+                                        >
+                                            <span
+                                                className={cn(
+                                                    'text-xl font-bold tracking-tight',
+                                                    duration === d.val
+                                                        ? 'text-primary'
+                                                        : 'text-text-primary'
+                                                )}
+                                            >
+                                                {d.val}
+                                            </span>
+                                            <span className="text-[10px] uppercase font-bold tracking-widest text-text-muted">{d.desc}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            </section>
+                        </div>
 
                         {/* Step 02 */}
-                        <section className="card space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={cn(
-                                        'w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold',
-                                        productName
-                                            ? 'bg-primary/10 text-primary'
-                                            : 'bg-surface-100 text-text-muted'
-                                    )}
-                                >
-                                    2
-                                </div>
-                                <h3 className="section-title">Foto do Produto</h3>
+                        <section className="card p-8 border-primary/10 hover:border-primary/20 transition-all flex flex-col">
+                            <div className="flex items-center gap-4 mb-6">
+                                <h3 className="text-2xl font-semibold font-display italic text-text-secondary">Referência Visual</h3>
                             </div>
                             <div
                                 onClick={() => fileInputRef.current?.click()}
-                                className="w-full rounded-xl border-2 border-dashed border-surface-200 bg-surface-50 hover:border-primary/30 hover:bg-white transition-all flex flex-col items-center justify-center gap-3 cursor-pointer p-8"
+                                className="flex-1 w-full rounded-2xl border-2 border-dashed border-primary/20 bg-bg-subtle/30 hover:border-primary/40 hover:bg-white transition-all flex flex-col items-center justify-center gap-4 cursor-pointer p-8 relative overflow-hidden group"
                             >
                                 {photoPreview ? (
-                                    <div className="relative w-full">
+                                    <div className="absolute inset-0">
                                         <img
                                             src={photoPreview}
-                                            className="w-full max-h-48 object-contain rounded-lg"
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                             alt="Preview"
                                         />
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                setPhotoPreview(null)
-                                                setProductPhoto(null)
-                                            }}
-                                            className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm text-text-muted hover:text-red-500 transition-colors"
-                                        >
-                                            <X className="w-4 h-4" />
-                                        </button>
+                                        <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    setPhotoPreview(null)
+                                                    setProductPhoto(null)
+                                                }}
+                                                className="p-3 bg-white rounded-full text-red-500 shadow-xl"
+                                            >
+                                                <X className="w-5 h-5" />
+                                            </button>
+                                        </div>
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="w-10 h-10 rounded-lg bg-surface-100 flex items-center justify-center">
-                                            <Upload className="w-5 h-5 text-text-muted" />
+                                        <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-soft border border-primary/5">
+                                            <Upload className="w-6 h-6 text-primary" />
                                         </div>
                                         <div className="text-center">
-                                            <p className="text-sm font-medium text-text-secondary">
-                                                Clique para fazer upload
+                                            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-primary">
+                                                ADICIONAR PEÇA
                                             </p>
-                                            <p className="text-xs text-text-muted mt-1">
-                                                PNG, JPG ou WEBP até 10MB
+                                            <p className="text-[10px] text-text-muted mt-2 font-semibold">
+                                                PNG, JPG OU WEBP ATÉ 10MB
                                             </p>
                                         </div>
                                     </>
@@ -225,126 +254,79 @@ export default function CriarPage() {
                                 />
                             </div>
                         </section>
-
-                        {/* Step 03 */}
-                        <section className="card space-y-4">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={cn(
-                                        'w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold',
-                                        productName && productPhoto
-                                            ? 'bg-primary/10 text-primary'
-                                            : 'bg-surface-100 text-text-muted'
-                                    )}
-                                >
-                                    3
-                                </div>
-                                <h3 className="section-title">Duração</h3>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3">
-                                {[
-                                    { val: '15s', label: 'Curto', desc: 'Ideal para Stories' },
-                                    { val: '20s', label: 'Padrão', desc: 'Maior alcance' },
-                                ].map((d) => (
-                                    <button
-                                        key={d.val}
-                                        onClick={() => setDuration(d.val)}
-                                        className={cn(
-                                            'p-4 rounded-xl border-2 flex flex-col items-start gap-1 transition-all',
-                                            duration === d.val
-                                                ? 'border-primary bg-primary/5'
-                                                : 'border-surface-200 bg-white hover:border-surface-300'
-                                        )}
-                                    >
-                                        <span
-                                            className={cn(
-                                                'text-lg font-bold leading-none',
-                                                duration === d.val
-                                                    ? 'text-primary'
-                                                    : 'text-text-primary'
-                                            )}
-                                        >
-                                            {d.val}
-                                        </span>
-                                        <span className="text-xs text-text-muted">{d.desc}</span>
-                                    </button>
-                                ))}
-                            </div>
-                        </section>
                     </div>
                 </div>
 
-                {/* Right — Preview */}
-                <div className="w-full lg:w-[480px] bg-white border-l border-surface-100 p-6 lg:p-8 flex flex-col items-center justify-center">
-                    {/* Generating overlay */}
-                    {isGenerating && (
-                        <div className="absolute inset-0 bg-white/90 z-40 flex flex-col items-center justify-center p-8 text-center">
-                            <div className="w-16 h-16 rounded-full border-4 border-primary/20 border-t-primary animate-spin mb-6" />
-                            <h2 className="text-lg font-bold text-text-primary mb-1">
-                                Enviando para geração...
-                            </h2>
-                            <p className="text-sm text-text-muted">
-                                Você será redirecionado para a Biblioteca
-                            </p>
-                        </div>
-                    )}
+                {/* Right — Preview & Action */}
+                <div className="w-full xl:w-[480px] space-y-6">
+                    <div className="card p-8 border-primary/10 bg-white relative overflow-hidden">
+                        {isGenerating && (
+                            <div className="absolute inset-0 bg-white/95 z-40 flex flex-col items-center justify-center p-8 text-center backdrop-blur-sm animate-fade-in">
+                                <div className="w-16 h-16 rounded-full border-[3px] border-primary/10 border-t-primary animate-spin mb-8" />
+                                <h2 className="text-2xl font-semibold text-text-primary italic font-display mb-2">
+                                    Tecendo seu vídeo...
+                                </h2>
+                                <p className="text-xs font-bold uppercase tracking-[0.2em] text-text-muted">
+                                    Finalizando a curadoria da IA
+                                </p>
+                            </div>
+                        ) || (
+                           <>
+                             <div className="mb-8 flex items-baseline justify-between border-b border-primary/5 pb-4">
+                                <p className="text-[10px] uppercase tracking-[0.3em] font-bold text-text-muted italic">Preview do Studio</p>
+                                <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                             </div>
 
-                    {/* Preview card */}
-                    <div className="w-full max-w-sm">
-                        <p className="label mb-3 text-center">Pré-visualização</p>
-
-                        <div className="bg-surface-50 border border-surface-200 rounded-xl overflow-hidden">
-                            {/* Thumbnail area */}
-                            <div className="aspect-video bg-surface-100 relative flex items-center justify-center">
+                             <div className="aspect-[9/16] bg-bg-subtle rounded-3xl relative overflow-hidden shadow-2xl group border border-primary/5 mb-10 mx-auto max-w-[300px]">
                                 {photoPreview ? (
                                     <>
                                         <img
                                             src={photoPreview}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover transition-all duration-700"
                                             alt="Preview"
                                         />
-                                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                            <div className="w-12 h-12 rounded-full bg-white/30 backdrop-blur-sm border border-white/40 flex items-center justify-center">
-                                                <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-center justify-center">
+                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 transition-transform cursor-pointer shadow-2xl">
+                                                <Play className="w-6 h-6 text-white fill-white ml-1" />
+                                            </div>
+                                        </div>
+                                        <div className="absolute bottom-6 left-6 right-6 text-white">
+                                            <p className="text-lg font-bold font-display italic leading-tight mb-1 truncate">
+                                                {productName || 'Nome do Produto'}
+                                            </p>
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">{duration} studio edit</span>
+                                                <div className="h-1 w-12 bg-white/30 rounded-full" />
                                             </div>
                                         </div>
                                     </>
                                 ) : (
-                                    <div className="flex flex-col items-center gap-2 text-text-muted">
-                                        <Play className="w-8 h-8 opacity-30" />
-                                        <p className="text-xs">
-                                            Faça upload de uma imagem
-                                        </p>
+                                    <div className="h-full flex flex-col items-center justify-center gap-4 text-text-muted opacity-30">
+                                        <div className="w-20 h-28 border-2 border-dashed border-primary/40 rounded-2xl flex items-center justify-center">
+                                            <Video className="w-8 h-8" />
+                                        </div>
+                                        <p className="text-[10px] uppercase tracking-widest font-bold">Aguardando curadoria</p>
                                     </div>
                                 )}
-                            </div>
+                             </div>
 
-                            {/* Metadata */}
-                            <div className="p-4 space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <p className="text-sm font-medium text-text-primary truncate">
-                                        {productName || 'Nome do Produto'}
-                                    </p>
-                                    <span className="badge badge-gray">{duration}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                    <p className="text-xs text-text-muted">
-                                        Roteiro gerado por IA
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                             <button
+                                onClick={handleGenerate}
+                                disabled={isGenerating || !productName}
+                                className="w-full btn-primary py-5 justify-center tracking-[0.3em] shadow-glow"
+                             >
+                                <Sparkles className="w-4 h-4 mr-2" />
+                                GERAR VÍDEO
+                             </button>
+                           </>
+                        )}
+                    </div>
 
-                        <button
-                            onClick={handleGenerate}
-                            disabled={isGenerating || !productName}
-                            className="w-full btn-primary mt-4 py-3 justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            <Sparkles className="w-4 h-4" />
-                            Gerar Vídeo
-                            <ArrowRight className="w-4 h-4 ml-1" />
-                        </button>
+                    <div className="card bg-bg-subtle/50 p-6 border-none">
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-3 italic">Dica do Studio</p>
+                        <p className="text-xs text-text-secondary leading-relaxed font-medium italic">
+                            "Imagens com fundos neutros e iluminação suave resultam em criações com estética superior para marcas de luxo."
+                        </p>
                     </div>
                 </div>
             </div>

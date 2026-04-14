@@ -155,57 +155,60 @@ export default function AgendaPage() {
 
     if (connectState !== 'connected') {
         return (
-            <main className="p-6 lg:p-8">
-                <div className="max-w-xl mx-auto space-y-8">
-                    <div>
-                        <h1 className="text-2xl font-bold text-text-primary">Calendário de Conteúdo</h1>
-                        <p className="text-text-muted text-sm mt-1">Sincronize sua estratégia com o Notion.</p>
+            <main className="p-8 lg:p-12 max-w-4xl mx-auto space-y-12 animate-fade-in">
+                <div className="text-center">
+                    <h1 className="text-4xl font-semibold text-text-primary italic font-display">Calendário de Conteúdo</h1>
+                    <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-4">
+                        Studio Pétalas · Sincronização Estratégica
+                    </p>
+                </div>
+
+                <div className="bg-white rounded-[48px] p-12 lg:p-16 shadow-soft border border-primary/5 flex flex-col items-center text-center">
+                    <div className="w-20 h-20 rounded-3xl bg-bg-subtle flex items-center justify-center mb-8 shadow-inner border border-primary/5">
+                        <Calendar className="w-10 h-10 text-primary" />
+                    </div>
+                    <div className="mb-12">
+                        <h2 className="text-2xl font-semibold text-text-primary font-display italic">Conectar Workspace</h2>
+                        <p className="text-text-muted text-sm mt-3 max-w-sm mx-auto leading-relaxed">
+                            Integre com o Notion para gerenciar conteúdo, aprovações e agendamentos diretamente do seu estúdio.
+                        </p>
                     </div>
 
-                    <div className="card p-8 flex flex-col items-center gap-6 text-center">
-                        <div className="w-14 h-14 rounded-xl bg-surface-100 flex items-center justify-center">
-                            <Calendar className="w-7 h-7 text-text-muted" />
-                        </div>
-                        <div>
-                            <h2 className="text-lg font-semibold text-text-primary">Conectar Workspace do Notion</h2>
-                            <p className="text-text-muted text-sm mt-1 max-w-sm">
-                                Integre com o Notion para gerenciar conteúdo, aprovações e agendamentos diretamente do seu painel.
-                            </p>
-                        </div>
-
-                        <div className="w-full max-w-sm space-y-4 text-left">
-                            <div>
-                                <label className="label">Notion Secret Key</label>
+                    <div className="w-full max-w-md space-y-6 text-left">
+                        <div className="space-y-2">
+                            <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-4">Notion Secret Key</label>
+                            <div className="relative group">
                                 <input
                                     type="text"
                                     placeholder="secret_..."
                                     value={notionToken}
                                     onChange={(e) => setNotionToken(e.target.value)}
-                                    className="input-field"
+                                    className="input-field rounded-full px-8 py-5 bg-bg-subtle/30 group-focus-within:bg-white transition-all border-transparent focus:border-primary/20"
                                     onKeyDown={(e) => e.key === 'Enter' && handleConnectNotion()}
                                 />
-                                <p className="text-xs text-text-muted mt-1.5">
-                                    Obtenha a sua em notion.so → Configurações → Integrações
-                                </p>
+                                <div className="absolute inset-0 rounded-full border border-primary/5 pointer-events-none group-focus-within:border-primary/20" />
                             </div>
-                            <button
-                                onClick={handleConnectNotion}
-                                disabled={connectState === 'connecting'}
-                                className="btn-primary w-full disabled:opacity-50"
-                            >
-                                {connectState === 'connecting' ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 animate-spin" />
-                                        Sincronizando...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Link2 className="w-4 h-4" />
-                                        Conectar Workspace
-                                    </>
-                                )}
-                            </button>
+                            <p className="text-[9px] uppercase tracking-widest text-text-muted mt-3 text-center">
+                                Obtenha em notion.so → Configurações → Integrações
+                            </p>
                         </div>
+                        <button
+                            onClick={handleConnectNotion}
+                            disabled={connectState === 'connecting'}
+                            className="btn-primary w-full py-5 rounded-full shadow-glow disabled:opacity-50"
+                        >
+                            {connectState === 'connecting' ? (
+                                <>
+                                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                                    SINCRONIZANDO...
+                                </>
+                            ) : (
+                                <>
+                                    <Link2 className="w-5 h-5 mr-2" />
+                                    CONECTAR WORKSPACE
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
             </main>
@@ -213,68 +216,76 @@ export default function AgendaPage() {
     }
 
     return (
-        <main className="p-6 lg:p-8">
-            <div className="max-w-6xl mx-auto space-y-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <main className="p-8 lg:p-12 max-w-[1600px] mx-auto animate-fade-in">
+            <div className="space-y-12">
+                <div className="flex flex-col sm:flex-row items-baseline justify-between gap-6">
                     <div>
-                        <h1 className="text-2xl font-bold text-text-primary">Calendário Estratégico</h1>
-                        <p className="text-text-muted text-sm mt-0.5">Hub de conteúdo integrado com Notion.</p>
+                        <h1 className="text-4xl font-semibold text-text-primary italic font-display">Calendário Estratégico</h1>
+                        <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
+                            Studio Pétalas · Hub Integrado
+                        </p>
                     </div>
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-xs font-medium">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                        Workspace Sincronizado
+                    <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-emerald-50/50 border border-emerald-100/50 text-emerald-600 text-[10px] font-bold uppercase tracking-widest">
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-glow" />
+                        Workspace Ativo
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
                     {/* Content Flow */}
-                    <div className="card">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
-                                <Share2 className="w-4.5 h-4.5 text-blue-600" />
+                    <div className="bg-white rounded-[40px] p-10 shadow-soft border border-primary/5 flex flex-col">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="w-12 h-12 rounded-2xl bg-bg-subtle flex items-center justify-center border border-primary/5">
+                                <Share2 className="w-6 h-6 text-primary" />
                             </div>
-                            <h2 className="section-title">Fluxo de Conteúdo</h2>
+                            <div>
+                                <h2 className="text-xl font-semibold font-display italic text-text-primary">Fluxo de Conteúdo</h2>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Cronograma Studio</p>
+                            </div>
                         </div>
 
                         {isLoadingPosts ? (
-                            <div className="space-y-3">
+                            <div className="space-y-4">
                                 {Array.from({ length: 4 }).map((_, i) => (
-                                    <div key={i} className="flex items-center gap-3 p-3">
-                                        <div className="shimmer w-9 h-9 rounded-lg flex-shrink-0" />
-                                        <div className="flex-1 space-y-1.5">
-                                            <div className="shimmer h-3.5 w-full rounded" />
-                                            <div className="shimmer h-3 w-1/3 rounded" />
+                                    <div key={i} className="flex items-center gap-4 p-4 rounded-3xl border border-primary/5">
+                                        <div className="shimmer w-12 h-12 rounded-2xl flex-shrink-0" />
+                                        <div className="flex-1 space-y-2">
+                                            <div className="shimmer h-4 w-full rounded-full" />
+                                            <div className="shimmer h-3 w-1/3 rounded-full" />
                                         </div>
-                                        <div className="shimmer h-5 w-16 rounded-md" />
+                                        <div className="shimmer h-6 w-20 rounded-full" />
                                     </div>
                                 ))}
                             </div>
                         ) : posts.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center py-12 gap-3">
-                                <div className="w-12 h-12 rounded-xl bg-surface-100 flex items-center justify-center">
-                                    <Video className="w-6 h-6 text-text-tertiary" />
+                            <div className="flex-1 flex flex-col items-center justify-center py-20 gap-6 opacity-40">
+                                <div className="w-20 h-20 rounded-full border-2 border-dashed border-primary/20 flex items-center justify-center">
+                                    <Video className="w-10 h-10 text-primary" />
                                 </div>
-                                <p className="text-sm text-text-muted text-center">Nenhum vídeo criado ainda.</p>
-                                <Link href="/criar" className="btn-primary text-xs px-4 py-2">
-                                    <Plus className="w-3.5 h-3.5" />
-                                    Criar vídeo
+                                <div className="text-center">
+                                    <p className="text-sm font-semibold text-text-primary italic font-display">Vazio Artístico</p>
+                                    <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mt-1">Crie sua primeira peça</p>
+                                </div>
+                                <Link href="/criar" className="btn-primary text-[10px] px-8 py-3 rounded-full">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    CRIAR VÍDEO
                                 </Link>
                             </div>
                         ) : (
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                                 {posts.map((post) => {
                                     const cfg = statusConfig[post.status] || statusConfig['rascunho']
                                     const Icon = cfg.icon
                                     return (
-                                        <div key={post.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-surface-50 transition-colors cursor-pointer">
-                                            <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0', cfg.bg)}>
-                                                <Icon className={cn('w-4 h-4', cfg.color, post.status === 'processando' && 'animate-spin')} />
+                                        <div key={post.id} className="group flex items-center gap-4 p-4 rounded-3xl border border-transparent hover:border-primary/10 hover:bg-bg-subtle/20 transition-all duration-300 cursor-pointer">
+                                            <div className={cn('w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 shadow-soft', cfg.bg)}>
+                                                <Icon className={cn('w-5 h-5', cfg.color, post.status === 'processando' && 'animate-spin')} />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="text-sm font-medium text-text-primary truncate">{post.titulo}</p>
-                                                <p className="text-xs text-text-muted mt-0.5">{formatDate(post.data)}</p>
+                                                <p className="text-sm font-bold text-text-primary truncate group-hover:text-primary transition-colors">{post.titulo}</p>
+                                                <p className="text-[10px] font-bold uppercase tracking-widest text-text-muted mt-1">{formatDate(post.data)}</p>
                                             </div>
-                                            <span className={cn('badge text-[11px]', cfg.bg, cfg.color)}>
+                                            <span className={cn('px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest border border-primary/5', cfg.bg, cfg.color)}>
                                                 {cfg.label}
                                             </span>
                                         </div>
@@ -285,49 +296,51 @@ export default function AgendaPage() {
                     </div>
 
                     {/* Idea Generator */}
-                    <div className="card">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center">
-                                <Brain className="w-4.5 h-4.5 text-purple-600" />
+                    <div className="bg-white rounded-[40px] p-10 shadow-soft border border-primary/5">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="w-12 h-12 rounded-2xl bg-bg-subtle flex items-center justify-center border border-primary/5">
+                                <Brain className="w-6 h-6 text-primary" />
                             </div>
-                            <h2 className="section-title">Gerador de Ideias</h2>
+                            <div>
+                                <h2 className="text-xl font-semibold font-display italic text-text-primary">Gerador de Ideias</h2>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Brainstorm IA</p>
+                            </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <div>
-                                <label className="label">Produto ou tema</label>
-                                <div className="flex gap-2">
+                        <div className="space-y-8">
+                            <div className="space-y-3">
+                                <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-4">Produto ou Coleção</label>
+                                <div className="relative group">
                                     <input
                                         type="text"
-                                        placeholder="Ex: Crédito imobiliário para jovens"
+                                        placeholder="Ex: Peças em seda para o verão"
                                         value={ideaInput}
                                         onChange={(e) => setIdeaInput(e.target.value)}
-                                        className="input-field"
+                                        className="input-field rounded-full px-8 py-5 bg-bg-subtle/30 group-focus-within:bg-white transition-all pr-20"
                                         onKeyDown={(e) => e.key === 'Enter' && handleGenerateIdeas()}
                                     />
                                     <button
                                         onClick={handleGenerateIdeas}
                                         disabled={isGeneratingIdeas}
-                                        className="btn-primary flex-shrink-0 disabled:opacity-50"
-                                        aria-label="Gerar ideias"
+                                        className="absolute right-2 top-2 bottom-2 aspect-square rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-glow disabled:opacity-50"
                                     >
                                         {isGeneratingIdeas ? (
-                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                            <Loader2 className="w-5 h-5 animate-spin" />
                                         ) : (
-                                            <Send className="w-4 h-4" />
+                                            <Send className="w-5 h-5" />
                                         )}
                                     </button>
                                 </div>
                             </div>
 
                             {ideas.length > 0 && (
-                                <div className="space-y-2 animate-fade-in">
+                                <div className="space-y-4 animate-fade-in">
                                     {ideas.map((idea, i) => (
-                                        <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-surface-50 hover:bg-surface-100 transition-colors cursor-pointer">
-                                            <span className="w-5 h-5 rounded-full bg-white border border-surface-200 flex items-center justify-center text-xs font-medium text-text-muted flex-shrink-0 mt-0.5">
+                                        <div key={i} className="flex items-start gap-5 p-5 rounded-3xl bg-bg-subtle/30 hover:bg-white hover:shadow-soft border border-transparent hover:border-primary/10 transition-all duration-300 cursor-pointer group">
+                                            <span className="w-6 h-6 rounded-full bg-white border border-primary/10 flex items-center justify-center text-[10px] font-bold text-primary flex-shrink-0 mt-0.5 shadow-soft group-hover:bg-primary group-hover:text-white transition-colors">
                                                 {i + 1}
                                             </span>
-                                            <p className="text-sm text-text-secondary leading-relaxed">{idea}</p>
+                                            <p className="text-sm font-medium text-text-primary leading-relaxed">{idea}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -336,62 +349,72 @@ export default function AgendaPage() {
                     </div>
 
                     {/* Competitor Analysis */}
-                    <div className="card">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center">
-                                <Target className="w-4.5 h-4.5 text-amber-600" />
+                    <div className="bg-white rounded-[40px] p-10 shadow-soft border border-primary/5">
+                        <div className="flex items-center gap-4 mb-10">
+                            <div className="w-12 h-12 rounded-2xl bg-bg-subtle flex items-center justify-center border border-primary/5">
+                                <Target className="w-6 h-6 text-primary" />
                             </div>
-                            <h2 className="section-title">Análise de Concorrente</h2>
+                            <div>
+                                <h2 className="text-xl font-semibold font-display italic text-text-primary">Análise Curatorial</h2>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Benchmark Studio</p>
+                            </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <div>
-                                <label className="label">@Usuario do concorrente</label>
-                                <div className="flex gap-2">
+                        <div className="space-y-8">
+                            <div className="space-y-3">
+                                <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-4">@Perfil do Referência</label>
+                                <div className="relative group">
                                     <input
                                         type="text"
-                                        placeholder="@perfil ou link do perfil"
+                                        placeholder="@perfil ou link"
                                         value={concorrenteInput}
                                         onChange={(e) => setConcorrenteInput(e.target.value)}
-                                        className="input-field"
+                                        className="input-field rounded-full px-8 py-5 bg-bg-subtle/30 group-focus-within:bg-white transition-all pr-20"
                                     />
                                     <button
                                         onClick={handleAnalyzeCompetitor}
                                         disabled={isAnalyzing}
-                                        className="btn-secondary flex-shrink-0 disabled:opacity-50"
-                                        aria-label="Analisar concorrente"
+                                        className="absolute right-2 top-2 bottom-2 aspect-square rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-glow disabled:opacity-50"
                                     >
-                                        {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <BarChart2 className="w-4 h-4" />}
+                                        {isAnalyzing ? <Loader2 className="w-5 h-5 animate-spin" /> : <BarChart2 className="w-5 h-5" />}
                                     </button>
                                 </div>
                             </div>
 
                             {analysisResult && (
-                                <div className="p-4 rounded-lg bg-surface-50 border border-surface-200 text-sm text-text-secondary leading-relaxed whitespace-pre-line animate-fade-in">
+                                <div className="p-8 rounded-[32px] bg-bg-subtle/30 border border-primary/5 text-sm font-medium text-text-primary leading-relaxed whitespace-pre-line animate-fade-in relative overflow-hidden">
+                                     <div className="absolute top-0 right-0 p-4 opacity-10">
+                                         <Zap className="w-12 h-12 text-primary" />
+                                     </div>
                                     {analysisResult}
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    {/* Scheduling (coming soon) */}
-                    <div className="card">
-                        <div className="flex items-center gap-3 mb-5">
-                            <div className="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
-                                <Clock className="w-4.5 h-4.5 text-emerald-600" />
+                    {/* Scheduling */}
+                    <div className="bg-white rounded-[40px] p-10 shadow-soft border border-primary/5">
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="w-12 h-12 rounded-2xl bg-bg-subtle flex items-center justify-center border border-primary/5">
+                                <Clock className="w-6 h-6 text-primary" />
                             </div>
-                            <h2 className="section-title">Agendamento Automático</h2>
+                            <div>
+                                <h2 className="text-xl font-semibold font-display italic text-text-primary">Maestro de Agenda</h2>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">Automação v1.0</p>
+                            </div>
                         </div>
-                        <p className="text-sm text-text-muted leading-relaxed mb-4">
+                        <p className="text-sm font-medium text-text-muted leading-relaxed mb-10 ml-1">
                             Agende a publicação automática dos seus materiais nos canais sociais sincronizados.
                         </p>
 
-                        <div className="flex flex-col items-center gap-3 py-8 border border-dashed border-surface-200 rounded-lg bg-surface-50">
-                            <Zap className="w-8 h-8 text-text-tertiary opacity-50" />
-                            <p className="text-xs text-text-muted text-center max-w-[180px]">
-                                Configure seus canais em{' '}
-                                <Link href="/configuracoes" className="text-primary hover:underline">
-                                    Configurações → Integrações
+                        <div className="flex flex-col items-center gap-6 py-12 border-2 border-dashed border-primary/10 rounded-[40px] bg-bg-subtle/10">
+                            <div className="w-16 h-16 rounded-full bg-white border border-primary/5 flex items-center justify-center shadow-soft">
+                                <Zap className="w-8 h-8 text-primary shadow-glow" />
+                            </div>
+                            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-text-muted text-center max-w-[240px]">
+                                Configure seus canais maestros em{' '}
+                                <Link href="/configuracoes" className="text-primary hover:underline italic font-display lowercase tracking-normal text-sm ml-1">
+                                    Studio → Integrações
                                 </Link>
                             </p>
                         </div>
@@ -399,5 +422,7 @@ export default function AgendaPage() {
                 </div>
             </div>
         </main>
+    )
+}
     )
 }

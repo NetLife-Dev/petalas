@@ -145,145 +145,127 @@ export default function PipelinePage() {
     }, 0)
 
     return (
-        <div className="p-6 space-y-6 animate-fade-in">
+        <div className="p-8 lg:p-12 max-w-[1600px] mx-auto animate-fade-in h-[calc(100vh-64px)] flex flex-col">
             {/* Header */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row items-baseline justify-between gap-6 mb-12">
                 <div>
-                    <h1 className="text-2xl font-bold text-text-primary">Pipeline</h1>
-                    <p className="text-text-muted text-sm mt-0.5">Gestão de oportunidades</p>
+                    <h1 className="text-4xl font-semibold text-text-primary italic font-display">Pipeline</h1>
+                    <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
+                        Studio Pétalas · Curadoria de Oportunidades
+                    </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-4">
+                    <div className="hidden xl:flex items-center gap-8 mr-8 px-8 border-r border-primary/5">
+                        <div>
+                            <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-1">Valor do Funil</p>
+                            <p className="text-xl font-bold text-primary italic font-display">
+                                {totalValue.toLocaleString('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                })}
+                            </p>
+                        </div>
+                        <div>
+                            <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-1">Oportunidades</p>
+                            <p className="text-xl font-bold text-text-primary italic font-display">{cards.length} Peças</p>
+                        </div>
+                    </div>
                     <button
                         onClick={() => setIsNewColumnModalOpen(true)}
-                        className="btn-primary"
+                        className="btn-secondary px-6"
                     >
-                        <Plus className="w-4 h-4" />
-                        Nova Coluna
+                        <Plus className="w-4 h-4 mr-2" />
+                        NOVA COLUNA
                     </button>
                 </div>
             </div>
 
-            {/* Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="metric-card flex-row items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0">
-                        <Kanban className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div>
-                        <p className="label mb-0.5">Total de Cards</p>
-                        <p className="text-2xl font-bold text-text-primary">{cards.length}</p>
-                    </div>
-                </div>
-                <div className="metric-card flex-row items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                        <DollarSign className="w-5 h-5 text-emerald-600" />
-                    </div>
-                    <div>
-                        <p className="label mb-0.5">Valor do Funil</p>
-                        <p className="text-2xl font-bold text-text-primary">
-                            {totalValue.toLocaleString('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL',
-                            })}
-                        </p>
-                    </div>
-                </div>
-                <div className="metric-card flex-row items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center flex-shrink-0">
-                        <AlertCircle className="w-5 h-5 text-amber-600" />
-                    </div>
-                    <div>
-                        <p className="label mb-0.5">Oportunidades Vencidas</p>
-                        <p className="text-2xl font-bold text-text-primary">0</p>
-                    </div>
-                </div>
-            </div>
-
             {/* Kanban Board */}
-            <div className="flex gap-4 overflow-x-auto pb-6">
+            <div className="flex-1 flex gap-8 overflow-x-auto pb-8 no-scrollbar outline-none">
                 {columns.map((col) => (
-                    <div key={col.id} className="flex-shrink-0 w-72 flex flex-col gap-3">
+                    <div key={col.id} className="flex-shrink-0 w-[320px] flex flex-col group/col">
                         {/* Column Header */}
-                        <div className="bg-white border border-surface-200 rounded-xl px-4 py-3 flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <div className={cn('w-2 h-2 rounded-full', col.color)} />
-                                <span className="text-sm font-semibold text-text-primary">
+                        <div className="mb-6 flex items-center justify-between px-2">
+                            <div className="flex items-center gap-3">
+                                <div className={cn('w-2.5 h-2.5 rounded-full shadow-glow', col.color)} />
+                                <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-text-primary">
                                     {col.title}
                                 </span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-text-muted font-medium">
+                            <div className="flex items-center gap-3">
+                                <span className="text-[10px] font-bold text-primary/60 italic font-display">
                                     {col.totalValue}
                                 </span>
-                                <span className="bg-surface-100 text-text-muted text-xs font-medium px-1.5 py-0.5 rounded-md">
+                                <span className="w-5 h-5 flex items-center justify-center rounded-full bg-primary/5 text-primary text-[10px] font-bold">
                                     {col.count}
                                 </span>
                             </div>
                         </div>
 
-                        {/* Cards */}
-                        <div className="flex flex-col gap-2.5 min-h-[400px]">
+                        {/* Cards Container */}
+                        <div className="flex-1 flex flex-col gap-4 min-h-[500px] p-2 rounded-[32px] bg-bg-subtle/20 border border-primary/5 group-hover/col:bg-bg-subtle/40 transition-colors">
+                            <button
+                                onClick={() => {
+                                    setNewCardData({ ...newCardData, stageId: col.id })
+                                    setIsNewCardModalOpen(true)
+                                }}
+                                className="w-full py-4 border-2 border-dashed border-primary/10 rounded-2xl flex items-center justify-center gap-2 text-[10px] font-bold uppercase tracking-widest text-primary/40 hover:border-primary/30 hover:text-primary hover:bg-white transition-all mb-2"
+                            >
+                                <Plus className="w-3.5 h-3.5" />
+                                NOVO CARD
+                            </button>
+
                             {cards
                                 .filter((c) => c.columnId === col.id)
                                 .map((card) => {
-                                    const pCfg =
-                                        priorityConfig[card.priority] || priorityConfig.media
+                                    const pCfg = priorityConfig[card.priority] || priorityConfig.media
                                     return (
                                         <div
                                             key={card.id}
-                                            className="bg-white border border-surface-200 rounded-xl p-4 hover:border-surface-300 hover:shadow-soft transition-all cursor-pointer"
+                                            className="bg-white rounded-3xl p-6 shadow-soft border border-primary/5 hover:border-primary/20 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group/card"
                                         >
-                                            <div className="flex items-start justify-between gap-2 mb-3">
-                                                <h3 className="text-sm font-semibold text-text-primary leading-snug">
+                                            <div className="flex items-start justify-between gap-3 mb-4">
+                                                <h3 className="text-sm font-bold text-text-primary leading-snug group-hover/card:text-primary transition-colors">
                                                     {card.title}
                                                 </h3>
                                                 {card.isNew && (
-                                                    <span className="badge badge-primary whitespace-nowrap">
-                                                        Novo
-                                                    </span>
+                                                    <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[8px] font-bold uppercase tracking-widest border border-emerald-100">Novo</span>
                                                 )}
                                             </div>
 
-                                            <div className="flex items-center gap-2 mb-3">
-                                                <span className={cn('badge', pCfg.className)}>
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className={cn('h-[1px] flex-1 opacity-10', pCfg.className.includes('red') ? 'bg-red-500' : 'bg-primary')} />
+                                                <span className={cn('text-[9px] font-bold uppercase tracking-widest', pCfg.className.includes('red') ? 'text-red-500' : 'text-primary')}>
                                                     {pCfg.label}
                                                 </span>
                                             </div>
 
-                                            <p className="text-sm font-semibold text-text-secondary mb-3">
+                                            <p className="text-lg font-bold text-text-primary italic font-display mb-6">
                                                 {card.value}
                                             </p>
 
-                                            <div className="flex items-center justify-between pt-3 border-t border-surface-100">
+                                            <div className="flex items-center justify-between pt-4 border-t border-primary/5">
                                                 <div className="flex items-center gap-2">
-                                                    <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-medium">
+                                                    <div className="w-8 h-8 rounded-full bg-bg-subtle border border-primary/10 flex items-center justify-center text-[10px] font-bold text-primary shadow-inner">
                                                         {card.avatar}
                                                     </div>
+                                                    <span className="text-[10px] font-bold uppercase tracking-widest text-text-muted">{card.responsible || 'Curadoria'}</span>
                                                 </div>
-                                                <div className="flex items-center gap-1 text-text-muted">
+                                                <div className="flex items-center gap-1.5 text-text-muted px-2 py-1 rounded-full bg-bg-subtle/50">
                                                     <Calendar className="w-3 h-3" />
-                                                    <span className="text-xs">{card.date}</span>
+                                                    <span className="text-[9px] font-bold uppercase tracking-[0.1em]">{card.date}</span>
                                                 </div>
                                             </div>
                                         </div>
                                     )
                                 })}
 
-                            <button
-                                onClick={() => {
-                                    setNewCardData({ ...newCardData, stageId: col.id })
-                                    setIsNewCardModalOpen(true)
-                                }}
-                                className="w-full py-2.5 border border-dashed border-surface-200 rounded-xl flex items-center justify-center gap-1.5 text-text-muted hover:border-primary/30 hover:text-primary transition-colors text-xs font-medium"
-                            >
-                                <Plus className="w-3.5 h-3.5" />
-                                Adicionar Card
-                            </button>
-
                             {col.count === 0 && (
-                                <div className="flex-1 flex flex-col items-center justify-center opacity-20 py-16">
-                                    <Kanban className="w-6 h-6 text-text-muted mb-1" />
-                                    <p className="text-xs text-text-muted">Nenhum card</p>
+                                <div className="flex-1 flex flex-col items-center justify-center py-20 opacity-20 group-hover/col:opacity-40 transition-opacity">
+                                    <div className="w-12 h-12 rounded-full border-2 border-dashed border-primary/40 flex items-center justify-center mb-4">
+                                        <Kanban className="w-6 h-6 text-primary" />
+                                    </div>
+                                    <p className="text-[10px] uppercase font-bold tracking-widest text-primary">Vazio</p>
                                 </div>
                             )}
                         </div>
@@ -291,159 +273,150 @@ export default function PipelinePage() {
                 ))}
 
                 {/* Add column button */}
-                <div className="flex-shrink-0 w-72">
+                <div className="flex-shrink-0 w-[320px]">
                     <button
                         onClick={() => setIsNewColumnModalOpen(true)}
-                        className="w-full h-full min-h-[300px] border border-dashed border-surface-200 rounded-xl flex flex-col items-center justify-center gap-3 text-text-muted hover:border-primary/30 hover:text-primary transition-colors group"
+                        className="w-full h-full border-2 border-dashed border-primary/10 rounded-[40px] flex flex-col items-center justify-center gap-4 text-primary/40 hover:border-primary/30 hover:text-primary hover:bg-bg-subtle/30 transition-all group"
                     >
-                        <div className="w-8 h-8 rounded-full border border-dashed border-surface-200 flex items-center justify-center group-hover:border-primary/30 transition-colors">
-                            <Plus className="w-4 h-4" />
+                        <div className="w-12 h-12 rounded-full bg-white border border-primary/10 flex items-center justify-center shadow-soft group-hover:scale-110 transition-transform">
+                            <Plus className="w-6 h-6" />
                         </div>
-                        <span className="text-sm font-medium">Nova Coluna</span>
+                        <span className="text-[11px] font-bold uppercase tracking-[0.2em]">DESENHAR COLUNA</span>
                     </button>
                 </div>
             </div>
 
             {/* Modal — New Card */}
             {isNewCardModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-panel max-w-lg">
-                        <div className="modal-header">
-                            <h2 className="section-title">Novo Card</h2>
-                            <button
-                                onClick={() => setIsNewCardModalOpen(false)}
-                                className="p-1 text-text-muted hover:text-text-primary rounded transition-colors"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-
-                        <div className="modal-body">
-                            <div>
-                                <label className="label">Título *</label>
-                                <input
-                                    type="text"
-                                    className="input-field"
-                                    placeholder="Nome da oportunidade"
-                                    value={newCardData.title}
-                                    onChange={(e) =>
-                                        setNewCardData({ ...newCardData, title: e.target.value })
-                                    }
-                                />
-                            </div>
-
-                            <div>
-                                <label className="label">Descrição</label>
-                                <textarea
-                                    className="input-field h-20 resize-none"
-                                    placeholder="Detalhes do card..."
-                                    value={newCardData.description}
-                                    onChange={(e) =>
-                                        setNewCardData({
-                                            ...newCardData,
-                                            description: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 outline-none">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-xl animate-fade-in" onClick={() => setIsNewCardModalOpen(false)} />
+                    <div className="relative w-full max-w-xl bg-white rounded-[40px] shadow-2xl overflow-hidden animate-scale-up">
+                        <div className="p-10 lg:p-12">
+                            <div className="flex items-center justify-between mb-10">
                                 <div>
-                                    <label className="label">Valor (R$)</label>
+                                    <h2 className="text-3xl font-semibold font-display italic text-text-primary leading-none">Novo Card</h2>
+                                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-text-muted mt-2">Registrar Oportunidade</p>
+                                </div>
+                                <button
+                                    onClick={() => setIsNewCardModalOpen(false)}
+                                    className="p-2.5 text-text-muted hover:text-text-primary border border-primary/10 rounded-full transition-colors"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Título do Studio</label>
                                     <input
-                                        type="number"
-                                        className="input-field"
-                                        placeholder="0,00"
-                                        value={newCardData.value}
+                                        type="text"
+                                        className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
+                                        placeholder="Nome da oportunidade"
+                                        value={newCardData.title}
+                                        onChange={(e) =>
+                                            setNewCardData({ ...newCardData, title: e.target.value })
+                                        }
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Descrição Curatorial</label>
+                                    <textarea
+                                        className="input-field rounded-[24px] px-6 py-4 bg-bg-subtle/30 h-24 resize-none"
+                                        placeholder="Detalhes do card..."
+                                        value={newCardData.description}
                                         onChange={(e) =>
                                             setNewCardData({
                                                 ...newCardData,
-                                                value: e.target.value,
+                                                description: e.target.value,
                                             })
                                         }
                                     />
                                 </div>
-                                <div>
-                                    <label className="label">Vencimento</label>
-                                    <input
-                                        type="date"
-                                        className="input-field"
-                                        value={newCardData.date}
-                                        onChange={(e) =>
-                                            setNewCardData({
-                                                ...newCardData,
-                                                date: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="label">Prioridade</label>
-                                    <select
-                                        className="input-field"
-                                        value={newCardData.priority}
-                                        onChange={(e) =>
-                                            setNewCardData({
-                                                ...newCardData,
-                                                priority: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        <option value="media">Média</option>
-                                        <option value="alta">Alta</option>
-                                        <option value="baixa">Baixa</option>
-                                    </select>
+                                <div className="grid grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Valor (R$)</label>
+                                        <input
+                                            type="number"
+                                            className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
+                                            placeholder="0,00"
+                                            value={newCardData.value}
+                                            onChange={(e) =>
+                                                setNewCardData({
+                                                    ...newCardData,
+                                                    value: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Vencimento</label>
+                                        <input
+                                            type="date"
+                                            className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
+                                            value={newCardData.date}
+                                            onChange={(e) =>
+                                                setNewCardData({
+                                                    ...newCardData,
+                                                    date: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="label">Coluna</label>
-                                    <select
-                                        className="input-field"
-                                        value={newCardData.stageId}
-                                        onChange={(e) =>
-                                            setNewCardData({
-                                                ...newCardData,
-                                                stageId: e.target.value,
-                                            })
-                                        }
-                                    >
-                                        {columns.map((c) => (
-                                            <option key={c.id} value={c.id}>
-                                                {c.title}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div>
-                                <label className="label">Responsável</label>
-                                <input
-                                    type="text"
-                                    className="input-field"
-                                    placeholder="Nome do responsável"
-                                    value={newCardData.responsible}
-                                    onChange={(e) =>
-                                        setNewCardData({
-                                            ...newCardData,
-                                            responsible: e.target.value,
-                                        })
-                                    }
-                                />
+                                <div className="grid grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Prioridade</label>
+                                        <select
+                                            className="input-field rounded-full px-6 py-4 bg-bg-subtle/30 appearance-none"
+                                            value={newCardData.priority}
+                                            onChange={(e) =>
+                                                setNewCardData({
+                                                    ...newCardData,
+                                                    priority: e.target.value,
+                                                })
+                                            }
+                                        >
+                                            <option value="media">MÉDIA</option>
+                                            <option value="alta">ALTA</option>
+                                            <option value="baixa">BAIXA</option>
+                                        </select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Coluna Maestro</label>
+                                        <select
+                                            className="input-field rounded-full px-6 py-4 bg-bg-subtle/30 appearance-none"
+                                            value={newCardData.stageId}
+                                            onChange={(e) =>
+                                                setNewCardData({
+                                                    ...newCardData,
+                                                    stageId: e.target.value,
+                                                })
+                                            }
+                                        >
+                                            <option value="">Selecione...</option>
+                                            {columns.map((c) => (
+                                                <option key={c.id} value={c.id}>
+                                                    {c.title.toUpperCase()}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="modal-footer">
+                        <div className="p-10 lg:p-12 bg-bg-subtle/30 flex items-center justify-end gap-4 border-t border-primary/5">
                             <button
                                 onClick={() => setIsNewCardModalOpen(false)}
-                                className="btn-secondary"
+                                className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-text-muted hover:text-text-primary transition-colors"
                             >
-                                Cancelar
+                                CANCELAR
                             </button>
-                            <button onClick={handleCreateCard} className="btn-primary">
-                                Criar Card
+                            <button onClick={handleCreateCard} className="btn-primary px-10 shadow-glow">
+                                CRIAR CARD
                             </button>
                         </div>
                     </div>
@@ -452,66 +425,66 @@ export default function PipelinePage() {
 
             {/* Modal — New Column */}
             {isNewColumnModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-panel max-w-sm">
-                        <div className="modal-header">
-                            <h2 className="section-title">Nova Coluna</h2>
-                            <button
-                                onClick={() => setIsNewColumnModalOpen(false)}
-                                className="p-1 text-text-muted hover:text-text-primary rounded transition-colors"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
-                        </div>
-
-                        <div className="modal-body">
-                            <div>
-                                <label className="label">Nome da Coluna</label>
-                                <input
-                                    type="text"
-                                    value={newColumnName}
-                                    onChange={(e) => setNewColumnName(e.target.value)}
-                                    placeholder="Ex: Qualificação"
-                                    className="input-field"
-                                />
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-6 outline-none">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-xl animate-fade-in" onClick={() => setIsNewColumnModalOpen(false)} />
+                    <div className="relative w-full max-w-sm bg-white rounded-[40px] shadow-2xl overflow-hidden animate-scale-up">
+                        <div className="p-10 lg:p-12">
+                             <div className="flex items-center justify-between mb-10">
+                                <div>
+                                    <h2 className="text-2xl font-semibold font-display italic text-text-primary leading-none">Nova Coluna</h2>
+                                    <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-text-muted mt-2">Estrutura Studio</p>
+                                </div>
+                                <button
+                                    onClick={() => setIsNewColumnModalOpen(false)}
+                                    className="p-2.5 text-text-muted hover:text-text-primary border border-primary/10 rounded-full transition-colors"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
                             </div>
-                            <div>
-                                <label className="label">Cor</label>
-                                <div className="flex flex-wrap gap-2">
-                                    {[
-                                        'bg-blue-500',
-                                        'bg-violet-500',
-                                        'bg-purple-500',
-                                        'bg-orange-500',
-                                        'bg-amber-500',
-                                        'bg-emerald-500',
-                                        'bg-rose-500',
-                                    ].map((color) => (
-                                        <button
-                                            key={color}
-                                            onClick={() => setSelectedColor(color)}
-                                            className={cn(
-                                                'w-7 h-7 rounded-full border-2 transition-all',
-                                                color,
-                                                selectedColor === color
-                                                    ? 'border-text-primary scale-110'
-                                                    : 'border-transparent'
-                                            )}
-                                        />
-                                    ))}
+
+                            <div className="space-y-8">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Nome da Coluna</label>
+                                    <input
+                                        type="text"
+                                        value={newColumnName}
+                                        onChange={(e) => setNewColumnName(e.target.value)}
+                                        placeholder="Ex: Qualificação"
+                                        className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
+                                    />
+                                </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Identidade Visual</label>
+                                    <div className="flex flex-wrap gap-4 px-2">
+                                        {[
+                                            'bg-blue-500',
+                                            'bg-violet-500',
+                                            'bg-purple-500',
+                                            'bg-orange-500',
+                                            'bg-amber-500',
+                                            'bg-emerald-500',
+                                            'bg-rose-500',
+                                        ].map((color) => (
+                                            <button
+                                                key={color}
+                                                onClick={() => setSelectedColor(color)}
+                                                className={cn(
+                                                    'w-8 h-8 rounded-full border-4 transition-all duration-300 shadow-soft',
+                                                    color,
+                                                    selectedColor === color
+                                                        ? 'border-white scale-125 shadow-glow ring-2 ring-primary/20'
+                                                        : 'border-transparent opacity-60 hover:opacity-100 hover:scale-110'
+                                                )}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="modal-footer">
-                            <button
-                                onClick={() => setIsNewColumnModalOpen(false)}
-                                className="btn-secondary"
-                            >
-                                Cancelar
-                            </button>
-                            <button onClick={handleCreateColumn} className="btn-primary">
-                                Criar Coluna
+                        <div className="p-10 lg:p-12 bg-bg-subtle/30 flex items-center justify-end gap-4 border-t border-primary/5">
+                            <button onClick={handleCreateColumn} className="btn-primary w-full shadow-glow">
+                                CRIAR COLUNA
                             </button>
                         </div>
                     </div>

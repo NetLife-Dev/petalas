@@ -257,16 +257,18 @@ export default function ConfiguracoesPage() {
     }
 
     return (
-        <div className="p-6 lg:p-8">
-            <div className="max-w-3xl mx-auto space-y-6">
+        <div className="p-8 lg:p-12 max-w-[1400px] mx-auto animate-fade-in">
+            <div className="max-w-4xl mx-auto space-y-12">
                 {/* Header */}
                 <div>
-                    <h1 className="text-2xl font-bold text-text-primary">Configurações</h1>
-                    <p className="text-text-muted text-sm mt-0.5">Gerencie seu perfil e preferências</p>
+                    <h1 className="text-4xl font-semibold text-text-primary italic font-display">Configurações</h1>
+                    <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
+                        Studio Pétalas · Ajustes e Automações
+                    </p>
                 </div>
 
                 {/* Tabs */}
-                <nav className="flex items-center border-b border-surface-200 gap-1">
+                <nav className="flex items-center border-b border-primary/5 gap-8 overflow-x-auto no-scrollbar">
                     {TABS.map((tab) => {
                         const Icon = tab.icon
                         const isActive = activeTab === tab.id
@@ -275,111 +277,100 @@ export default function ConfiguracoesPage() {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={cn(
-                                    'flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all relative',
-                                    isActive ? 'text-primary' : 'text-text-muted hover:text-text-secondary'
+                                    'flex items-center gap-3 px-2 py-4 text-[10px] font-bold uppercase tracking-[0.2em] transition-all relative whitespace-nowrap outline-none',
+                                    isActive ? 'text-primary' : 'text-text-muted hover:text-primary opacity-60 hover:opacity-100'
                                 )}
                             >
-                                <Icon className="w-4 h-4" />
+                                <Icon className={cn("w-4 h-4 transition-transform", isActive && "scale-110")} />
                                 {tab.label}
                                 {isActive && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                                    <div className="absolute bottom-[-1px] left-0 right-0 h-[2px] bg-primary rounded-full shadow-glow" />
                                 )}
                             </button>
                         )
                     })}
                 </nav>
 
-                <div className="animate-fade-in pb-12">
+                <div className="animate-fade-in pb-20">
                     {/* ── PERFIL ─────────────────────────────────────────────── */}
                     {activeTab === 'perfil' && (
-                        <div className="space-y-5">
-                            <div className="card">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
-                                        <User className="w-5 h-5 text-blue-600" />
-                                    </div>
-                                    <div>
-                                        <h3 className="section-title">Informações Pessoais</h3>
-                                        <p className="text-xs text-text-muted mt-0.5">
-                                            Gerencie como sua identidade aparece no sistema
-                                        </p>
-                                    </div>
+                        <div className="space-y-8">
+                            <div className="card border-primary/10 p-8">
+                                <div className="mb-10">
+                                    <h3 className="text-2xl font-semibold font-display italic text-text-secondary leading-none">Dados Maestro</h3>
+                                    <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Identidade e Acesso</p>
                                 </div>
 
-                                <div className="flex flex-col md:flex-row items-start gap-6 mb-6">
-                                    <div className="relative flex-shrink-0">
-                                        <div className="w-20 h-20 rounded-xl bg-surface-100 flex items-center justify-center text-text-muted text-xl font-semibold overflow-hidden">
+                                <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-10 pb-10 border-b border-primary/5">
+                                    <div className="relative group">
+                                        <div className="w-24 h-24 rounded-[32px] bg-bg-subtle flex items-center justify-center text-primary text-2xl font-bold overflow-hidden border-2 border-primary/10 shadow-soft group-hover:border-primary/30 transition-all duration-500 transform group-hover:rotate-3">
                                             {profile.avatar_url ? (
                                                 <img src={profile.avatar_url} className="w-full h-full object-cover" alt="Avatar" />
                                             ) : (
                                                 getInitials(profile.nome)
                                             )}
                                         </div>
-                                        <button className="absolute -bottom-1.5 -right-1.5 p-1.5 bg-primary text-white rounded-lg border-2 border-white hover:bg-primary-700 transition-colors">
-                                            <Camera className="w-3 h-3" />
+                                        <button className="absolute -bottom-2 -right-2 p-2.5 bg-primary text-white rounded-2xl border-4 border-white shadow-xl hover:scale-110 transition-transform">
+                                            <Camera className="w-4 h-4" />
                                         </button>
                                     </div>
-                                    <div className="flex-1 text-sm text-text-muted">
-                                        <p className="font-medium text-text-primary">Foto de perfil</p>
-                                        <p className="mt-0.5">PNG ou JPG. Máximo 2MB.</p>
+                                    <div className="flex-1 text-center md:text-left space-y-1">
+                                        <p className="text-sm font-bold text-text-primary uppercase tracking-widest">Retrato Studio</p>
+                                        <p className="text-xs text-text-muted font-medium italic">Sua imagem será exibida em todas as criações do acervo.</p>
+                                        <p className="text-[10px] text-primary/60 font-bold uppercase tracking-widest mt-2">PNG ou JPG · Máximo 2MB</p>
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label className="label">Nome Completo</label>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Nome de Exibição</label>
                                         <input
                                             value={profile.nome}
                                             onChange={(e) => setProfile({ ...profile, nome: e.target.value })}
-                                            className="input-field"
+                                            className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
                                         />
                                     </div>
-                                    <div>
-                                        <label className="label">Endereço de E-mail</label>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Email Maestro</label>
                                         <input
                                             value={profile.email}
                                             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                                            className="input-field"
+                                            className="input-field rounded-full px-6 py-4 bg-bg-subtle/30"
                                         />
                                     </div>
                                 </div>
 
-                                <div className="flex justify-end mt-5">
-                                    <button onClick={handleSaveProfile} disabled={isSaving} className="btn-primary">
-                                        {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-                                        Salvar Alterações
+                                <div className="flex justify-end mt-10">
+                                    <button onClick={handleSaveProfile} disabled={isSaving} className="btn-primary px-10 py-4 shadow-glow">
+                                        {isSaving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
+                                        SALVAR ALTERAÇÕES
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="card">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <div className="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center">
-                                        <ShieldCheck className="w-5 h-5 text-amber-600" />
+                            <div className="card border-primary/10 p-8">
+                                <div className="mb-10">
+                                    <h3 className="text-2xl font-semibold font-display italic text-text-secondary leading-none">Criptografia</h3>
+                                    <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Segurança da Conta</p>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Senha Atual</label>
+                                        <input type="password" placeholder="••••••••" className="input-field rounded-full px-6 py-4 bg-bg-subtle/30" />
                                     </div>
-                                    <div>
-                                        <h3 className="section-title">Segurança</h3>
-                                        <p className="text-xs text-text-muted mt-0.5">Altere sua senha periodicamente</p>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Nova Senha</label>
+                                        <input type="password" placeholder="••••••••" className="input-field rounded-full px-6 py-4 bg-bg-subtle/30" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Confirmar</label>
+                                        <input type="password" placeholder="••••••••" className="input-field rounded-full px-6 py-4 bg-bg-subtle/30" />
                                     </div>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div>
-                                        <label className="label">Senha Atual</label>
-                                        <input type="password" placeholder="••••••••" className="input-field" />
-                                    </div>
-                                    <div>
-                                        <label className="label">Nova Senha</label>
-                                        <input type="password" placeholder="••••••••" className="input-field" />
-                                    </div>
-                                    <div>
-                                        <label className="label">Confirmar Senha</label>
-                                        <input type="password" placeholder="••••••••" className="input-field" />
-                                    </div>
-                                </div>
-                                <div className="flex justify-end mt-5">
-                                    <button className="btn-secondary">
-                                        <Lock className="w-4 h-4" />
-                                        Alterar Senha
+                                <div className="flex justify-end mt-8">
+                                    <button className="btn-secondary px-8">
+                                        <Lock className="w-4 h-4 mr-2" />
+                                        RENOVAR ACESSO
                                     </button>
                                 </div>
                             </div>
@@ -388,51 +379,49 @@ export default function ConfiguracoesPage() {
 
                     {/* ── PIPELINES ──────────────────────────────────────────── */}
                     {activeTab === 'pipelines' && (
-                        <div className="space-y-5 animate-fade-in">
-                            <div className="flex items-center justify-between">
+                        <div className="space-y-8 animate-fade-in">
+                            <div className="flex flex-col md:flex-row items-baseline justify-between gap-6 mb-4">
                                 <div>
-                                    <h3 className="section-title">Estágios do Pipeline</h3>
-                                    <p className="text-xs text-text-muted mt-0.5">
-                                        Configure as etapas do seu funil de vendas
-                                    </p>
+                                    <h3 className="text-3xl font-semibold font-display italic text-text-secondary leading-none">Fluxos de Venda</h3>
+                                    <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Curadoria de Estágios do Pipeline</p>
                                 </div>
-                                <button onClick={handleAddStage} className="btn-primary">
-                                    <Plus className="w-4 h-4" />
-                                    Novo Estágio
+                                <button onClick={handleAddStage} className="btn-primary px-8">
+                                    <Plus className="w-4 h-4 mr-2" />
+                                    NOVO ESTÁGIO
                                 </button>
                             </div>
 
-                            <div className="card p-0 overflow-hidden">
+                            <div className="card p-0 overflow-hidden border-primary/10 bg-white">
                                 {stages.length === 0 ? (
-                                    <div className="py-16 text-center">
-                                        <Kanban className="w-8 h-8 text-text-tertiary mx-auto mb-3" />
-                                        <p className="text-sm text-text-muted">Nenhum estágio configurado</p>
+                                    <div className="py-24 text-center">
+                                        <Kanban className="w-12 h-12 text-primary/10 mx-auto mb-4" />
+                                        <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted">Nenhum pipeline desenhado</p>
                                     </div>
                                 ) : (
-                                    <div className="divide-y divide-surface-100">
+                                    <div className="divide-y divide-primary/5">
                                         {stages.map((stage, index) => (
                                             <div
                                                 key={stage.id}
-                                                className="flex items-center gap-4 px-5 py-4 group hover:bg-surface-50 transition-colors"
+                                                className="flex items-center gap-6 px-8 py-5 group hover:bg-bg-subtle/30 transition-colors"
                                             >
-                                                <span className="text-xs font-medium text-text-muted w-5 text-center">
-                                                    {index + 1}
+                                                <span className="text-[10px] font-bold text-primary/40 w-6">
+                                                    {String(index + 1).padStart(2, '0')}
                                                 </span>
-                                                <div className="w-2 h-2 rounded-full bg-primary/40 flex-shrink-0" />
+                                                <div className="w-2 h-2 rounded-full bg-primary" />
                                                 <input
                                                     defaultValue={stage.title}
                                                     onBlur={(e) => handleUpdateStage(stage.id, e.target.value)}
-                                                    className="flex-1 bg-transparent text-sm font-medium text-text-primary outline-none placeholder:text-text-muted focus:text-primary"
+                                                    className="flex-1 bg-transparent text-sm font-bold uppercase tracking-wider text-text-primary outline-none placeholder:text-text-muted focus:text-primary transition-colors"
                                                     placeholder="Nome do estágio..."
                                                 />
-                                                <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0">
                                                     <button
                                                         onClick={() => handleDeleteStage(stage.id)}
-                                                        className="p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                        className="p-2.5 text-text-muted hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
                                                     >
                                                         <Trash2 className="w-4 h-4" />
                                                     </button>
-                                                    <button className="p-1.5 text-text-muted hover:text-text-primary hover:bg-surface-100 rounded-lg transition-colors cursor-grab">
+                                                    <button className="p-2.5 text-text-muted hover:text-primary hover:bg-primary/5 rounded-full transition-colors cursor-grab">
                                                         <Settings2 className="w-4 h-4" />
                                                     </button>
                                                 </div>
@@ -446,45 +435,42 @@ export default function ConfiguracoesPage() {
 
                     {/* ── INTEGRAÇÕES ────────────────────────────────────────── */}
                     {activeTab === 'integracoes' && (
-                        <div className="space-y-5 animate-fade-in">
+                        <div className="space-y-8 animate-fade-in">
                             <div>
-                                <h3 className="section-title">Webhooks N8N</h3>
-                                <p className="text-xs text-text-muted mt-0.5">
-                                    Configure as URLs dos fluxos de automação. O sistema usará sua URL ao invés da padrão.
-                                </p>
+                                <h3 className="text-3xl font-semibold font-display italic text-text-secondary leading-none">Studio APIs</h3>
+                                <p className="text-[10px] uppercase tracking-[0.15em] font-bold text-text-muted mt-2">Conexões de Automação Maestro</p>
                             </div>
 
                             {/* Info banner */}
-                            <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-100 rounded-xl">
-                                <AlertCircle className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
-                                <p className="text-xs text-blue-700 leading-relaxed">
-                                    Após salvar, o Pétalas vai chamar <strong>sua URL</strong> nos fluxos configurados.
-                                    Use o botão <strong>Testar</strong> para verificar se o endpoint está acessível antes de ativar.
+                            <div className="flex items-center gap-4 p-5 bg-primary/5 border border-primary/10 rounded-3xl animate-pulse-subtle">
+                                <AlertCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                                <p className="text-[10px] uppercase tracking-[0.1em] font-bold text-primary/80 leading-relaxed">
+                                    O Pétalas Studio se integra perfeitamente com fluxos N8N para automação de vídeos e inteligência de dados.
                                 </p>
                             </div>
 
                             {/* Webhook cards */}
-                            <div className="space-y-4">
+                            <div className="grid grid-cols-1 gap-6">
                                 {WEBHOOK_PRESETS.map((preset) => {
                                     const wh = webhooks[preset.tipo]
                                     return (
-                                        <div key={preset.tipo} className="card space-y-4">
+                                        <div key={preset.tipo} className="card p-8 border-primary/10 relative group">
                                             {/* Header */}
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div className="flex items-start gap-3">
-                                                    <div className="w-9 h-9 rounded-lg bg-surface-100 flex items-center justify-center flex-shrink-0">
-                                                        <Puzzle className="w-4 h-4 text-text-muted" />
+                                            <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
+                                                <div className="flex items-start gap-5">
+                                                    <div className="w-12 h-12 rounded-2xl bg-bg-subtle flex items-center justify-center flex-shrink-0 shadow-soft group-hover:bg-primary group-hover:text-white transition-colors duration-500">
+                                                        <Puzzle className="w-6 h-6" />
                                                     </div>
-                                                    <div>
-                                                        <div className="flex items-center gap-2">
-                                                            <p className="text-sm font-semibold text-text-primary">
+                                                    <div className="space-y-1">
+                                                        <div className="flex items-center gap-3">
+                                                            <p className="text-lg font-bold text-text-primary">
                                                                 {preset.label}
                                                             </p>
                                                             {preset.required && (
-                                                                <span className="badge badge-primary">Principal</span>
+                                                                <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[8px] font-bold uppercase tracking-widest border border-primary/20">Studio Core</span>
                                                             )}
                                                         </div>
-                                                        <p className="text-xs text-text-muted mt-0.5 leading-relaxed">
+                                                        <p className="text-xs text-text-muted font-medium italic max-w-lg">
                                                             {preset.description}
                                                         </p>
                                                     </div>
@@ -494,52 +480,49 @@ export default function ConfiguracoesPage() {
                                                 <button
                                                     onClick={() => setWebhookField(preset.tipo, { ativo: !wh.ativo })}
                                                     className={cn(
-                                                        'w-10 h-5 rounded-full relative flex-shrink-0 transition-colors mt-1',
-                                                        wh.ativo ? 'bg-emerald-500' : 'bg-surface-200'
+                                                        'w-12 h-6 rounded-full relative flex-shrink-0 transition-all duration-300 border-[1.5px]',
+                                                        wh.ativo ? 'bg-primary border-primary shadow-glow' : 'bg-white border-primary/20'
                                                     )}
-                                                    title={wh.ativo ? 'Desativar' : 'Ativar'}
                                                 >
                                                     <div
                                                         className={cn(
-                                                            'absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all',
-                                                            wh.ativo ? 'right-0.5' : 'left-0.5'
+                                                            'absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full transition-all duration-300',
+                                                            wh.ativo ? 'right-1 bg-white scale-110' : 'left-1 bg-primary/20'
                                                         )}
                                                     />
                                                 </button>
                                             </div>
 
                                             {/* URL input */}
-                                            <div>
-                                                <label className="label">URL do Webhook</label>
-                                                <div className="flex gap-2">
-                                                    <div className="relative flex-1">
-                                                        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
-                                                        <input
-                                                            type={wh.showUrl ? 'text' : 'password'}
-                                                            value={wh.url}
-                                                            onChange={(e) =>
-                                                                setWebhookField(preset.tipo, {
-                                                                    url: e.target.value,
-                                                                    testResult: 'idle',
-                                                                })
-                                                            }
-                                                            placeholder={preset.placeholder}
-                                                            className="input-field pl-9 pr-10 font-mono text-xs"
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            onClick={() =>
-                                                                setWebhookField(preset.tipo, { showUrl: !wh.showUrl })
-                                                            }
-                                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
-                                                        >
-                                                            {wh.showUrl ? (
-                                                                <EyeOff className="w-4 h-4" />
-                                                            ) : (
-                                                                <Eye className="w-4 h-4" />
-                                                            )}
-                                                        </button>
-                                                    </div>
+                                            <div className="space-y-2 mb-8">
+                                                <label className="text-[10px] uppercase font-bold tracking-widest text-text-muted ml-1">Endpoint do Maestro</label>
+                                                <div className="relative group/input">
+                                                    <Link2 className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted transition-colors group-focus-within/input:text-primary" />
+                                                    <input
+                                                        type={wh.showUrl ? 'text' : 'password'}
+                                                        value={wh.url}
+                                                        onChange={(e) =>
+                                                            setWebhookField(preset.tipo, {
+                                                                url: e.target.value,
+                                                                testResult: 'idle',
+                                                            })
+                                                        }
+                                                        placeholder={preset.placeholder}
+                                                        className="input-field pl-14 pr-14 py-4 rounded-2xl bg-bg-subtle/30 font-mono text-xs border-primary/5 focus:border-primary/30"
+                                                    />
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            setWebhookField(preset.tipo, { showUrl: !wh.showUrl })
+                                                        }
+                                                        className="absolute right-5 top-1/2 -translate-y-1/2 text-text-muted hover:text-primary transition-colors"
+                                                    >
+                                                        {wh.showUrl ? (
+                                                            <EyeOff className="w-4 h-4" />
+                                                        ) : (
+                                                            <Eye className="w-4 h-4" />
+                                                        )}
+                                                    </button>
                                                 </div>
                                             </div>
 
@@ -547,58 +530,58 @@ export default function ConfiguracoesPage() {
                                             {wh.testResult !== 'idle' && (
                                                 <div
                                                     className={cn(
-                                                        'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium',
+                                                        'flex items-center gap-3 px-6 py-4 rounded-2xl text-[10px] uppercase tracking-widest font-bold mb-8 animate-fade-in',
                                                         wh.testResult === 'ok'
-                                                            ? 'bg-emerald-50 text-emerald-700'
-                                                            : 'bg-red-50 text-red-700'
+                                                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                                                            : 'bg-red-50 text-red-700 border border-red-100'
                                                     )}
                                                 >
                                                     {wh.testResult === 'ok' ? (
-                                                        <CheckCircle2 className="w-3.5 h-3.5" />
+                                                        <CheckCircle2 className="w-4 h-4" />
                                                     ) : (
-                                                        <XCircle className="w-3.5 h-3.5" />
+                                                        <XCircle className="w-4 h-4" />
                                                     )}
                                                     {wh.testResult === 'ok'
-                                                        ? 'Webhook acessível e respondendo corretamente.'
-                                                        : 'Não foi possível alcançar o endpoint. Verifique a URL e tente novamente.'}
+                                                        ? 'Endpoint validado com sucesso'
+                                                        : 'Conexão falhou · Verifique a URL'}
                                                 </div>
                                             )}
 
                                             {/* Actions */}
-                                            <div className="flex items-center justify-between pt-1">
+                                            <div className="flex items-center justify-between border-t border-primary/5 pt-8">
                                                 <button
                                                     onClick={() => handleDeleteWebhook(preset.tipo)}
-                                                    className="text-xs text-text-muted hover:text-red-600 transition-colors flex items-center gap-1.5"
+                                                    className="text-[10px] uppercase tracking-widest font-bold text-text-muted hover:text-red-500 transition-colors flex items-center gap-2"
                                                     disabled={!wh.url}
                                                 >
-                                                    <Trash2 className="w-3.5 h-3.5" />
-                                                    Remover
+                                                    <Trash2 className="w-4 h-4" />
+                                                    DELETAR CONEXÃO
                                                 </button>
 
-                                                <div className="flex items-center gap-2">
+                                                <div className="flex items-center gap-4">
                                                     <button
                                                         onClick={() => handleTestWebhook(preset.tipo)}
                                                         disabled={wh.testing || !wh.url}
-                                                        className="btn-secondary text-xs px-3 py-1.5 disabled:opacity-40"
+                                                        className="btn-secondary px-6"
                                                     >
                                                         {wh.testing ? (
-                                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                                            <Loader2 className="w-4 h-4 animate-spin" />
                                                         ) : (
-                                                            <Link2 className="w-3.5 h-3.5" />
+                                                            <Link2 className="w-4 h-4 mr-2" />
                                                         )}
-                                                        {wh.testing ? 'Testando...' : 'Testar'}
+                                                        {wh.testing ? 'TESTANDO...' : 'TESTAR'}
                                                     </button>
                                                     <button
                                                         onClick={() => handleSaveWebhook(preset.tipo)}
                                                         disabled={wh.saving || !wh.url}
-                                                        className="btn-primary text-xs px-3 py-1.5 disabled:opacity-40"
+                                                        className="btn-primary px-10 shadow-glow"
                                                     >
                                                         {wh.saving ? (
-                                                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                                            <Loader2 className="w-4 h-4 animate-spin" />
                                                         ) : (
-                                                            <Save className="w-3.5 h-3.5" />
+                                                            <Save className="w-4 h-4 mr-2" />
                                                         )}
-                                                        {wh.saving ? 'Salvando...' : 'Salvar'}
+                                                        {wh.saving ? 'SALVANDO...' : 'SALVAR'}
                                                     </button>
                                                 </div>
                                             </div>
@@ -608,27 +591,26 @@ export default function ConfiguracoesPage() {
                             </div>
 
                             {/* Payload reference */}
-                            <div className="card bg-surface-50">
-                                <h4 className="section-title mb-3">Referência de Payload</h4>
-                                <div className="space-y-3">
-                                    <div>
-                                        <p className="text-xs font-medium text-text-secondary mb-1.5">
-                                            N8N — Gerador de Vídeo
-                                        </p>
-                                        <pre className="bg-white border border-surface-200 rounded-lg p-3 text-xs text-text-secondary font-mono overflow-x-auto">{`FormData {
-  video_id:          string   // UUID do vídeo no banco
-  service_name:      string   // Nome do produto
-  service_description: string // Descrição do produto
-  image?:            File     // Imagem do produto (se enviada)
+                            <div className="card bg-bg-subtle/50 border-none p-10">
+                                <h4 className="text-xl font-semibold font-display italic text-text-secondary mb-6">Especificação Studio</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                    <div className="space-y-4">
+                                        <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary italic">Saída Maestro (POST)</p>
+                                        <pre className="bg-white border border-primary/10 rounded-3xl p-6 text-[11px] text-text-primary font-mono leading-relaxed shadow-soft overflow-x-auto">{`{
+  "service_id":   "uuid-video",
+  "project":      "studio-edit",
+  "payload": {
+     "name":      "str",
+     "image":     "blob"
+  }
 }`}</pre>
                                     </div>
-                                    <div>
-                                        <p className="text-xs font-medium text-text-secondary mb-1.5">
-                                            Callback esperado (POST /api/videos/callback)
-                                        </p>
-                                        <pre className="bg-white border border-surface-200 rounded-lg p-3 text-xs text-text-secondary font-mono overflow-x-auto">{`{
-  "video_id": "uuid-do-video",
-  "video_url": "https://url-do-video-gerado.mp4"
+                                    <div className="space-y-4">
+                                        <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary italic">Retorno Esperado (JSON)</p>
+                                        <pre className="bg-white border border-primary/10 rounded-3xl p-6 text-[11px] text-text-primary font-mono leading-relaxed shadow-soft overflow-x-auto">{`{
+  "video_id": "uuid-video",
+  "url": "https://cdn. studio.mp4",
+  "status": "ready"
 }`}</pre>
                                     </div>
                                 </div>

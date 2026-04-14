@@ -145,211 +145,205 @@ export default function CRMPage() {
     }
 
     return (
-        <div className="p-6 space-y-6 animate-fade-in">
+        <div className="p-8 space-y-10 max-w-[1400px] mx-auto animate-fade-in">
             {/* Header */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row items-baseline md:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-text-primary">CRM</h1>
-                    <p className="text-text-muted text-sm mt-0.5">
-                        {contacts.length} contatos
+                    <h1 className="text-4xl font-semibold text-text-primary italic font-display">CRM</h1>
+                    <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
+                        Gestão de Relacionamento · {contacts.length} Registros
                     </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                     <button
-                        className="btn-secondary"
+                        className="btn-secondary px-8"
                         title="Em breve"
                     >
-                        <Upload className="w-4 h-4" />
+                        <Upload className="w-4 h-4 mr-1" />
                         Importar CSV
                     </button>
                     <button
                         onClick={() => setIsNewContactModalOpen(true)}
-                        className="btn-primary"
+                        className="btn-primary px-8"
                     >
-                        <Plus className="w-4 h-4" />
-                        Novo Contato
+                        <Plus className="w-4 h-4 mr-1" />
+                        NOVO CONTATO
                     </button>
                 </div>
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[
                     {
                         icon: Users,
-                        bg: 'bg-blue-50',
-                        color: 'text-blue-600',
                         label: 'Total de Contatos',
                         value: contacts.length,
-                        sub: '0 clientes ativos',
+                        sub: 'Cadastros gerais',
                     },
                     {
                         icon: TrendingUp,
-                        bg: 'bg-purple-50',
-                        color: 'text-purple-600',
                         label: 'Novos este Mês',
                         value: contacts.filter(
                             (c) =>
                                 new Date(c.created_at).getMonth() === new Date().getMonth()
                         ).length,
-                        sub: 'contatos adicionados',
+                        sub: 'Crescimento studio',
                     },
                     {
                         icon: Target,
-                        bg: 'bg-emerald-50',
-                        color: 'text-emerald-600',
                         label: 'Taxa de Conversão',
                         value: '0%',
-                        sub: 'lead → cliente',
+                        sub: 'Lead para Cliente',
                     },
                     {
                         icon: Clock,
-                        bg: 'bg-amber-50',
-                        color: 'text-amber-600',
-                        label: 'Próximas Atividades',
+                        label: 'Atividades',
                         value: '0',
-                        sub: 'pendentes',
+                        sub: 'Pendências hoje',
                     },
-                ].map(({ icon: Icon, bg, color, label, value, sub }) => (
-                    <div key={label} className="metric-card">
-                        <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', bg)}>
-                            <Icon className={cn('w-5 h-5', color)} />
+                ].map(({ icon: Icon, label, value, sub }) => (
+                    <div key={label} className="metric-card group">
+                        <div className="flex items-center justify-between mb-2">
+                             <Icon className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                            <p className="label mb-0.5">{label}</p>
-                            <p className="text-2xl font-bold text-text-primary leading-none">
+                            <p className="text-xs font-bold uppercase tracking-[0.15em] text-text-muted mb-2">{label}</p>
+                            <p className="text-4xl font-bold tracking-tight text-text-primary">
                                 {value}
                             </p>
-                            <p className="text-xs text-text-muted mt-1">{sub}</p>
+                            <p className="text-[10px] uppercase tracking-widest text-text-muted mt-2 font-bold">{sub}</p>
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Table section */}
-            <div className="card p-0 overflow-hidden">
+            <div className="card p-0 overflow-hidden border-none shadow-none bg-transparent">
                 {/* Filters */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 px-5 py-4 border-b border-surface-100">
-                    <div className="relative w-full md:max-w-xs">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-tertiary" />
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+                    <div className="relative w-full md:max-w-md">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted transition-colors group-focus-within:text-primary" />
                         <input
                             type="text"
-                            placeholder="Buscar contatos..."
-                            className="input-field pl-9"
+                            placeholder="Pesquisar por nome, empresa ou email..."
+                            className="input-field pl-12 rounded-full border-primary/10 hover:border-primary/20 bg-white"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
 
-                    <div className="flex items-center gap-1 bg-surface-50 p-1 rounded-lg border border-surface-200">
+                    <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-primary/10">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.key}
                                 onClick={() => setActiveTab(tab.key)}
                                 className={cn(
-                                    'px-3 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap',
+                                    'px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-200',
                                     activeTab === tab.key
-                                        ? 'bg-white text-text-primary shadow-sm border border-surface-200'
-                                        : 'text-text-muted hover:text-text-secondary'
+                                        ? 'bg-primary text-white shadow-md'
+                                        : 'text-text-muted hover:text-primary'
                                 )}
                             >
                                 {tab.label}{' '}
-                                <span className="opacity-50">{tab.count}</span>
+                                <span className={cn('ml-1 opacity-50', activeTab === tab.key && 'opacity-80')}>
+                                    {tab.count}
+                                </span>
                             </button>
                         ))}
                     </div>
                 </div>
 
                 {/* Table */}
-                <div className="overflow-x-auto">
-                    <table className="w-full">
-                        <thead>
-                            <tr className="bg-surface-50 border-b border-surface-100">
-                                <th className="table-header">Contato</th>
-                                <th className="table-header">Email</th>
-                                <th className="table-header">Status</th>
-                                <th className="table-header">Origem</th>
-                                <th className="table-header">Última Atividade</th>
-                                <th className="table-header text-right">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredContacts.length === 0 ? (
-                                <tr>
-                                    <td colSpan={6} className="py-16 text-center">
-                                        <Users className="w-8 h-8 text-text-tertiary mx-auto mb-3" />
-                                        <p className="text-sm text-text-muted">
-                                            Nenhum contato encontrado
-                                        </p>
-                                    </td>
+                <div className="bg-white rounded-2xl border border-primary/10 overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="bg-bg-subtle/50 border-b border-primary/10">
+                                    <th className="table-header">Contato</th>
+                                    <th className="table-header">Email</th>
+                                    <th className="table-header">Status</th>
+                                    <th className="table-header">Origem</th>
+                                    <th className="table-header">Última Atividade</th>
+                                    <th className="table-header text-right"></th>
                                 </tr>
-                            ) : (
-                                filteredContacts.map((contact) => (
-                                    <tr key={contact.id} className="table-row group">
-                                        <td className="table-cell">
-                                            <div className="flex items-center gap-3">
-                                                <div
-                                                    className={cn(
-                                                        'w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0',
-                                                        getAvatarColor(contact.nome || '')
-                                                    )}
-                                                >
-                                                    {contact.avatar ||
-                                                        getInitials(contact.nome || '')}
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-medium text-text-primary">
-                                                        {contact.nome}
-                                                    </p>
-                                                    <p className="text-xs text-text-muted">
-                                                        {contact.empresa}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="table-cell text-text-muted">
-                                            {contact.email}
-                                        </td>
-                                        <td className="table-cell">
-                                            <span className="badge badge-gray">
-                                                {contact.status}
-                                            </span>
-                                        </td>
-                                        <td className="table-cell text-text-muted">
-                                            {contact.canal}
-                                        </td>
-                                        <td className="table-cell text-text-muted">
-                                            {contact.ultimaAtividade}
-                                        </td>
-                                        <td className="table-cell text-right">
-                                            <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button
-                                                    className="p-1.5 text-text-muted hover:text-text-primary transition-colors rounded-lg hover:bg-surface-100"
-                                                    title="Visualizar"
-                                                >
-                                                    <Eye className="w-4 h-4" />
-                                                </button>
-                                                <button
-                                                    className="p-1.5 text-text-muted hover:text-text-primary transition-colors rounded-lg hover:bg-surface-100"
-                                                    title="Editar"
-                                                >
-                                                    <Edit2 className="w-4 h-4" />
-                                                </button>
-                                                <button
-                                                    onClick={() => setDeleteTarget(contact.id)}
-                                                    className="p-1.5 text-text-muted hover:text-red-600 transition-colors rounded-lg hover:bg-red-50"
-                                                    title="Excluir contato"
-                                                    aria-label="Excluir contato"
-                                                >
-                                                    <Trash2 className="w-4 h-4" />
-                                                </button>
-                                            </div>
+                            </thead>
+                            <tbody>
+                                {filteredContacts.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={6} className="py-24 text-center">
+                                            <Users className="w-12 h-12 text-primary/20 mx-auto mb-4" />
+                                            <p className="text-xs uppercase tracking-[0.2em] font-bold text-text-muted">
+                                                Nenhum registro encontrado no studio
+                                            </p>
                                         </td>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+                                ) : (
+                                    filteredContacts.map((contact) => (
+                                        <tr key={contact.id} className="table-row group">
+                                            <td className="table-cell">
+                                                <div className="flex items-center gap-4">
+                                                    <div
+                                                        className={cn(
+                                                            'w-9 h-9 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 bg-primary/10 text-primary border border-primary/20'
+                                                        )}
+                                                    >
+                                                        {contact.avatar ||
+                                                            getInitials(contact.nome || '')}
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-sm font-bold text-text-primary">
+                                                            {contact.nome}
+                                                        </p>
+                                                        <p className="text-[10px] uppercase tracking-widest text-text-muted font-semibold">
+                                                            {contact.empresa}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="table-cell font-medium">
+                                                {contact.email}
+                                            </td>
+                                            <td className="table-cell">
+                                                <span className="badge-lead">
+                                                    lead
+                                                </span>
+                                            </td>
+                                            <td className="table-cell text-xs font-semibold text-text-muted uppercase tracking-wider">
+                                                {contact.canal}
+                                            </td>
+                                            <td className="table-cell text-xs font-semibold text-text-muted uppercase tracking-wider">
+                                                {contact.ultimaAtividade}
+                                            </td>
+                                            <td className="table-cell text-right">
+                                                <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <button
+                                                        className="p-2 text-text-muted hover:text-primary transition-colors rounded-full hover:bg-primary-light"
+                                                        title="Visualizar"
+                                                    >
+                                                        <Eye className="w-4 h-4" />
+                                                    </button>
+                                                    <button
+                                                        className="p-2 text-text-muted hover:text-primary transition-colors rounded-full hover:bg-primary-light"
+                                                        title="Editar"
+                                                    >
+                                                        <Edit2 className="w-4 h-4" />
+                                                    </button>
+                                                    <button
+                                                        onClick={() => setDeleteTarget(contact.id)}
+                                                        className="p-2 text-text-muted hover:text-red-500 transition-colors rounded-full hover:bg-red-50"
+                                                        title="Excluir"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 

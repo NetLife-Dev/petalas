@@ -184,117 +184,72 @@ export default function BibliotecaPage() {
     if (isLoading) return <LoadingSkeleton />
 
     return (
-        <div
-            className="min-h-screen animate-fade-bloom"
-            style={{ background: 'var(--color-bg-main)' }}
-        >
+        <div className="p-8 lg:p-12 max-w-[1400px] mx-auto animate-fade-in">
             {/* ── Header ── */}
-            <div className="px-6 lg:px-10 pt-8 pb-6 space-y-6">
+            <div className="space-y-10 mb-12">
                 {/* Title row */}
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col md:flex-row items-baseline justify-between gap-6">
                     <div>
-                        <h1
-                            className="text-4xl font-bold uppercase tracking-wider leading-none"
-                            style={{
-                                fontFamily: 'var(--font-display), serif',
-                                fontStyle: 'italic',
-                                color: 'var(--color-text-main)',
-                            }}
-                        >
-                            Acervo
-                        </h1>
-                        <p
-                            className="mt-1.5 text-xs uppercase tracking-widest"
-                            style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-sans)' }}
-                        >
-                            {videos.length} {videos.length === 1 ? 'criação' : 'criações'}
+                        <h1 className="text-4xl font-semibold text-text-primary italic font-display">Acervo</h1>
+                        <p className="text-text-muted text-[10px] uppercase tracking-[0.2em] font-bold mt-2">
+                           Galeria de Criações · {videos.length} Peças Digitais
                         </p>
                     </div>
 
-                    <Link href="/criar" className="btn-primary whitespace-nowrap flex-shrink-0">
-                        <Plus className="w-4 h-4" />
-                        Novo Vídeo
+                    <Link href="/criar" className="btn-primary px-8">
+                        <Plus className="w-4 h-4 mr-1" />
+                        NOVO VÍDEO
                     </Link>
                 </div>
 
-                {/* Search */}
-                <div className="relative max-w-lg">
-                    <Search
-                        className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4"
-                        style={{ color: 'var(--color-text-tertiary)' }}
-                    />
-                    <input
-                        type="text"
-                        placeholder="BUSCAR NO ACERVO..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="w-full pl-11 pr-5 py-3 rounded-full text-xs font-semibold uppercase tracking-widest focus:outline-none transition-all"
-                        style={{
-                            background: 'rgba(255,255,255,0.7)',
-                            border: '1px solid var(--color-border-solid)',
-                            color: 'var(--color-text-main)',
-                            fontFamily: 'var(--font-sans)',
-                        }}
-                    />
-                </div>
+                {/* Filters & Search */}
+                <div className="flex flex-col xl:flex-row items-center justify-between gap-8">
+                    <div className="relative w-full md:max-w-md">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted transition-colors group-focus-within:text-primary" />
+                        <input
+                            type="text"
+                            placeholder="PESQUISAR NO STUDIO..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="input-field pl-12 rounded-full border-primary/10 hover:border-primary/20 bg-white"
+                        />
+                    </div>
 
-                {/* Filter pills */}
-                <div className="flex items-center gap-2 flex-wrap">
-                    {FILTERS.map((f) => (
-                        <button
-                            key={f.id}
-                            onClick={() => setActiveFilter(f.id)}
-                            className="px-4 py-1.5 rounded-full text-[11px] font-semibold uppercase tracking-widest transition-all duration-150"
-                            style={
-                                activeFilter === f.id
-                                    ? {
-                                          background: 'var(--color-primary)',
-                                          color: '#fff',
-                                          border: '1px solid var(--color-primary)',
-                                      }
-                                    : {
-                                          background: 'rgba(255,255,255,0.6)',
-                                          color: 'var(--color-text-secondary)',
-                                          border: '1px solid var(--color-border-solid)',
-                                      }
-                            }
-                        >
-                            #{f.label}
-                        </button>
-                    ))}
+                    <div className="flex items-center gap-2 flex-wrap">
+                        {FILTERS.map((f) => (
+                            <button
+                                key={f.id}
+                                onClick={() => setActiveFilter(f.id)}
+                                className={cn(
+                                    'px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-200 border',
+                                    activeFilter === f.id
+                                        ? 'bg-primary text-white border-primary shadow-md'
+                                        : 'bg-white text-text-muted border-primary/10 hover:border-primary/30 hover:text-primary'
+                                )}
+                            >
+                                {f.label}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
             {/* ── Grid ── */}
-            <div className="px-6 lg:px-10 pb-10">
+            <div>
                 {filteredVideos.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-32 text-center">
-                        <div
-                            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
-                            style={{ background: 'rgba(176,80,112,0.10)' }}
-                        >
-                            <Video className="w-7 h-7" style={{ color: 'var(--color-primary)' }} />
+                    <div className="flex flex-col items-center justify-center py-32 text-center card bg-bg-subtle/50 border-none">
+                        <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-6 shadow-soft">
+                            <Video className="w-8 h-8 text-primary/30" />
                         </div>
-                        <h3
-                            className="text-lg font-bold uppercase tracking-wide"
-                            style={{ color: 'var(--color-text-main)' }}
-                        >
-                            {search ? 'Sem resultados' : 'Acervo vazio'}
+                        <h3 className="text-xl font-semibold font-display italic text-text-primary mb-2">
+                            {search ? 'Nenhuma peça encontrada' : 'O studio está pronto'}
                         </h3>
-                        <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>
-                            {search
-                                ? `Nenhum vídeo encontrado para "${search}"`
-                                : 'Crie seu primeiro vídeo UGC com IA.'}
+                        <p className="text-xs uppercase tracking-[0.2em] font-bold text-text-muted">
+                           Comece a tecer sua primeira criação
                         </p>
-                        {!search && (
-                            <Link href="/criar" className="btn-primary mt-5">
-                                <Plus className="w-4 h-4" />
-                                Criar Vídeo
-                            </Link>
-                        )}
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
                         {filteredVideos.map((video, idx) => {
                             const st = STATUS_MAP[video.status] ?? {
                                 label: video.status?.toUpperCase() ?? '—',
@@ -304,90 +259,69 @@ export default function BibliotecaPage() {
                             return (
                                 <div
                                     key={video.id}
-                                    className="relative rounded-2xl overflow-hidden group cursor-pointer"
+                                    className="relative rounded-3xl overflow-hidden group cursor-pointer shadow-soft hover:shadow-2xl transition-all duration-500 border border-primary/5 bg-white"
                                     style={{
                                         aspectRatio: '9/16',
-                                        background: '#1a0a0f',
-                                        animation: `slideUp 0.4s ease-out ${idx * 0.04}s both`,
+                                        animation: `slideUp 0.6s ease-out ${idx * 0.05}s both`,
                                     }}
                                     onClick={() => setSelectedVideo(video)}
                                 >
-                                    {/* Thumbnail — product image > video frame > placeholder */}
+                                    {/* Thumbnail */}
                                     {video.thumbnail ? (
                                         <img
                                             src={video.thumbnail}
                                             alt={video.title}
-                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
                                     ) : video.video_url ? (
                                         <VideoFrameThumb src={video.video_url} />
                                     ) : (
-                                        <div className="absolute inset-0 bg-[#2c1a1a] flex items-center justify-center">
-                                            <Video className="w-10 h-10 opacity-20 text-white" />
+                                        <div className="absolute inset-0 bg-bg-subtle flex items-center justify-center">
+                                            <div className="w-16 h-24 border-2 border-dashed border-primary/10 rounded-2xl flex items-center justify-center">
+                                                <Video className="w-6 h-6 text-primary/20" />
+                                            </div>
                                         </div>
                                     )}
 
-                                    {/* Bottom gradient */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                                    {/* Overlays */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                                    
+                                    {/* Status Badge */}
+                                    <div className="absolute top-4 left-4 flex items-center gap-2">
+                                        <div className={cn(
+                                            "w-2 h-2 rounded-full",
+                                            video.status === 'concluido' ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'
+                                        )} />
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">
+                                            {st.label}
+                                        </span>
+                                    </div>
 
-                                    {/* Hover brighten overlay — bg-transparent avoids dark-mode bg-white/* rules */}
-                                    <div className="absolute inset-0 bg-transparent group-hover:bg-white/10 transition-colors duration-300" />
-
-                                    {/* Play icon on hover */}
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <div
-                                            className="w-12 h-12 rounded-full flex items-center justify-center"
-                                            style={{
-                                                background: 'rgba(255,255,255,0.18)',
-                                                backdropFilter: 'blur(8px)',
-                                                border: '1.5px solid rgba(255,255,255,0.35)',
-                                            }}
-                                        >
-                                            <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                                    {/* Play icon */}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-90 group-hover:scale-100">
+                                        <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-2xl">
+                                            <Play className="w-6 h-6 text-white fill-white ml-1" />
                                         </div>
                                     </div>
 
-                                    {/* Delete button — top right, hover only */}
+                                    {/* Delete button */}
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation()
                                             setDeleteTarget(video.id)
                                         }}
-                                        className="absolute top-2.5 right-2.5 p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                                        style={{
-                                            background: 'rgba(0,0,0,0.45)',
-                                            backdropFilter: 'blur(4px)',
-                                        }}
-                                        aria-label="Excluir"
+                                        className="absolute top-4 right-4 p-2 rounded-full bg-white/10 backdrop-blur-md text-white/60 hover:text-red-400 hover:bg-white/20 transition-all opacity-0 group-hover:opacity-100"
                                     >
-                                        <Trash2 className="w-3.5 h-3.5 text-white/80" />
+                                        <Trash2 className="w-4 h-4" />
                                     </button>
 
                                     {/* Bottom info */}
-                                    <div className="absolute bottom-0 left-0 right-0 p-3.5">
-                                        <div className="flex items-center gap-1.5 mb-2">
-                                            {/* Status badge */}
-                                            <span
-                                                className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-                                                style={{ background: st.bg, color: st.color }}
-                                            >
-                                                {st.label}
-                                            </span>
-                                            {/* Duration badge */}
-                                            {video.duration && video.duration !== '—' && (
-                                                <span
-                                                    className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-                                                    style={{
-                                                        background: 'rgba(255,255,255,0.15)',
-                                                        color: '#fff',
-                                                        backdropFilter: 'blur(4px)',
-                                                    }}
-                                                >
-                                                    {video.duration}
-                                                </span>
-                                            )}
+                                    <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-[9px] font-bold text-white/60 tracking-widest uppercase">{video.duration || '15s'} edit</span>
+                                            <div className="h-[1px] flex-1 bg-white/20" />
                                         </div>
-                                        <h3 className="text-white font-bold uppercase text-[11px] tracking-wide leading-snug line-clamp-2">
+                                        <h3 className="text-white font-semibold font-display italic text-lg leading-tight truncate">
                                             {video.title}
                                         </h3>
                                     </div>
@@ -401,36 +335,29 @@ export default function BibliotecaPage() {
             {/* ── Modal ── */}
             {selectedVideo && (
                 <div
-                    className="fixed inset-0 z-50 flex animate-fade-bloom"
-                    style={{ background: 'rgba(20, 8, 14, 0.92)', backdropFilter: 'blur(12px)' }}
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
                     onClick={() => setSelectedVideo(null)}
                 >
+                    {/* Backdrop */}
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-xl animate-fade-in" />
+
                     <div
-                        className="relative flex flex-col md:flex-row w-full max-w-4xl m-auto rounded-3xl overflow-hidden"
-                        style={{ maxHeight: '92vh' }}
+                        className="relative flex flex-col lg:flex-row w-full max-w-5xl rounded-[40px] overflow-hidden bg-white shadow-2xl animate-scale-up"
+                        style={{ maxHeight: '90vh' }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* ── Left: Phone mockup + player ── */}
-                        <div
-                            className="flex-1 flex flex-col items-center justify-center gap-6 p-8 md:p-10"
-                            style={{ background: '#0f0608' }}
-                        >
-                            {/* Video label */}
-                            <div className="flex items-center gap-2 self-start">
-                                <div
-                                    className="w-2 h-2 rounded-full"
-                                    style={{ background: selectedVideo.status === 'concluido' ? '#B05070' : '#F5D5D5' }}
-                                />
-                                <span
-                                    className="text-xs uppercase tracking-widest font-semibold"
-                                    style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-sans)' }}
-                                >
-                                    {selectedVideo.title}
+                        {/* ── Left: Video Player ── */}
+                        <div className="flex-1 bg-black flex items-center justify-center p-8 lg:p-12 relative group/video">
+                             <div className="absolute top-8 left-8 z-10">
+                                <span className={cn(
+                                    "px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white border border-white/20 backdrop-blur-md",
+                                    selectedVideo.status === 'concluido' ? 'bg-emerald-500/20' : 'bg-amber-500/20'
+                                )}>
+                                    {selectedVideo.status === 'concluido' ? 'Pronto para Exportar' : 'Processando Studio'}
                                 </span>
-                            </div>
+                             </div>
 
-                            {/* Phone frame */}
-                            <PhoneMockup>
+                             <div className="h-full aspect-[9/16] bg-zinc-900 rounded-[30px] shadow-2xl overflow-hidden border border-white/5 relative">
                                 {selectedVideo.video_url ? (
                                     <video
                                         ref={videoRef}
@@ -441,136 +368,87 @@ export default function BibliotecaPage() {
                                         playsInline
                                         muted
                                         loop
-                                        style={{ display: 'block' }}
                                     />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                                        <Video className="w-8 h-8 text-white/20" />
+                                    <div className="w-full h-full flex flex-col items-center justify-center gap-4 text-white/20">
+                                        <Video className="w-12 h-12" />
+                                        <p className="text-[10px] uppercase font-bold tracking-[0.2em]">O vídeo está sendo tecido...</p>
                                     </div>
                                 )}
-                            </PhoneMockup>
+                             </div>
                         </div>
 
-                        {/* ── Right: Details panel ── */}
-                        <div
-                            className="w-full md:w-80 flex flex-col p-8 md:p-10 relative"
-                            style={{ background: '#1a0a0f' }}
-                        >
-                            {/* Close */}
+                        {/* ── Right: Details ── */}
+                        <div className="w-full lg:w-[400px] bg-white flex flex-col p-10 lg:p-12">
                             <button
                                 onClick={() => setSelectedVideo(null)}
-                                className="absolute top-5 right-5 p-1.5 rounded-full transition-colors"
-                                style={{
-                                    background: 'rgba(255,255,255,0.08)',
-                                    color: 'rgba(255,255,255,0.6)',
-                                }}
-                                aria-label="Fechar"
+                                className="self-end p-2 text-text-muted hover:text-text-primary transition-colors border border-primary/10 rounded-full mb-4"
                             >
-                                <X className="w-4 h-4" />
+                                <X className="w-5 h-5" />
                             </button>
 
-                            {/* Title */}
-                            <div className="mt-2 mb-5">
-                                <h2
-                                    className="text-2xl font-bold uppercase leading-tight mb-3"
-                                    style={{
-                                        fontFamily: 'var(--font-display), serif',
-                                        fontStyle: 'italic',
-                                        color: '#fff',
-                                        letterSpacing: '0.03em',
-                                    }}
-                                >
+                            <div className="mb-10">
+                                <h2 className="text-3xl font-semibold font-display italic text-text-primary mb-3">
                                     {selectedVideo.title}
                                 </h2>
-
-                                {/* Category badge */}
-                                <span
-                                    className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-                                    style={{ background: 'rgba(176,80,112,0.25)', color: '#D490A8' }}
-                                >
-                                    #{FORMAT_LABEL[selectedVideo.formato] ?? 'UGC'}
-                                </span>
+                                <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary">
+                                    Curadoria Digital Doce Lilium
+                                </p>
                             </div>
 
-                            {/* Metadata list */}
-                            <div
-                                className="flex-1 space-y-0"
-                                style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
-                            >
+                            <div className="flex-1 space-y-6">
                                 {[
-                                    {
-                                        label: 'DURAÇÃO',
-                                        value: selectedVideo.duracao_s
-                                            ? `${selectedVideo.duracao_s} SEGUNDOS`
-                                            : '—',
-                                    },
-                                    {
-                                        label: 'FORMATO',
-                                        value: FORMAT_LABEL[selectedVideo.formato] ?? selectedVideo.formato?.toUpperCase() ?? '—',
-                                    },
-                                    { label: 'STATUS',  value: STATUS_MAP[selectedVideo.status]?.label ?? selectedVideo.status },
-                                    { label: 'DATA',    value: selectedVideo.date },
+                                    { label: 'Duração', value: selectedVideo.duracao_s ? `${selectedVideo.duracao_s}s Studio Edit` : '—' },
+                                    { label: 'Formato',  value: FORMAT_LABEL[selectedVideo.formato] ?? 'Reels / TikTok' },
+                                    { label: 'Status',   value: STATUS_MAP[selectedVideo.status]?.label ?? 'Processando' },
+                                    { label: 'Studio Data', value: selectedVideo.date || 'Hoje' },
                                 ].map((row) => (
-                                    <div
-                                        key={row.label}
-                                        className="flex items-center justify-between py-3.5"
-                                        style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
-                                    >
-                                        <span
-                                            className="text-[10px] uppercase tracking-widest font-semibold"
-                                            style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-sans)' }}
-                                        >
-                                            {row.label}
-                                        </span>
-                                        <span
-                                            className="text-xs font-bold uppercase tracking-wide"
-                                            style={{ color: 'rgba(255,255,255,0.80)' }}
-                                        >
-                                            {row.value}
-                                        </span>
+                                    <div key={row.label}>
+                                        <p className="text-[10px] uppercase font-bold tracking-widest text-text-muted mb-1">{row.label}</p>
+                                        <p className="text-sm font-semibold text-text-primary">{row.value}</p>
                                     </div>
                                 ))}
                             </div>
 
-                            {/* Actions */}
-                            <div className="mt-6 space-y-3">
+                            <div className="mt-12 space-y-4">
                                 {selectedVideo.video_url ? (
                                     <a
                                         href={selectedVideo.video_url}
                                         download
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full font-bold uppercase text-sm tracking-widest transition-all duration-200 hover:scale-[1.02]"
-                                        style={{
-                                            background: 'var(--color-primary)',
-                                            color: '#fff',
-                                            fontFamily: 'var(--font-sans)',
-                                        }}
+                                        className="w-full btn-primary py-4 justify-center shadow-glow"
                                     >
-                                        <Download className="w-4 h-4" />
-                                        Exportar HD
+                                        <Download className="w-4 h-4 mr-2" />
+                                        EXPORTAR HD
                                     </a>
                                 ) : (
-                                    <div
-                                        className="w-full text-center py-3 rounded-full text-sm uppercase tracking-widest font-bold opacity-40"
-                                        style={{ background: 'rgba(255,255,255,0.08)', color: '#fff' }}
-                                    >
-                                        Aguardando geração
+                                    <div className="w-full text-center py-4 rounded-full text-[10px] font-bold uppercase tracking-widest text-text-muted bg-bg-subtle border border-primary/10">
+                                        AGUARDANDO FINALIZAÇÃO
                                     </div>
                                 )}
-
+                                
                                 <button
                                     onClick={() => setSelectedVideo(null)}
-                                    className="w-full text-center text-xs uppercase tracking-widest font-semibold py-2 transition-colors"
-                                    style={{ color: 'rgba(255,255,255,0.30)', fontFamily: 'var(--font-sans)' }}
+                                    className="w-full py-4 text-[10px] font-bold uppercase tracking-widest text-text-muted hover:text-text-primary transition-colors"
                                 >
-                                    Fechar
+                                    VOLTAR PARA ACERVO
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             )}
+
+            <ConfirmModal
+                isOpen={!!deleteTarget}
+                title="Excluir criação"
+                description="Esta peça será removida permanentemente do studio. Esta ação não pode ser desfeita."
+                confirmLabel="Excluir"
+                onConfirm={handleDeleteConfirm}
+                onCancel={() => setDeleteTarget(null)}
+            />
+        </div>
 
             {/* ── Confirm Delete ── */}
             <ConfirmModal

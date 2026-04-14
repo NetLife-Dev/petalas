@@ -110,61 +110,45 @@ export default function DashboardPage() {
     ]
 
     return (
-        <div className="p-6 space-y-6 max-w-[1400px] mx-auto animate-fade-in">
+        <div className="p-8 space-y-10 max-w-[1400px] mx-auto animate-fade-in">
             {/* Header */}
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex flex-col md:flex-row items-baseline md:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-text-primary">Dashboard</h1>
-                    <p className="text-text-muted text-sm mt-0.5">
-                        Bem-vindo ao seu painel Pétalas.
+                    <h1 className="text-4xl font-semibold text-text-primary italic font-display">Dashboard</h1>
+                    <p className="text-text-muted text-xs uppercase tracking-[0.2em] font-bold mt-2">
+                        Visão Geral · Studio Doce Lilium
                     </p>
                 </div>
                 <Link
                     href="/criar"
-                    className="btn-primary"
+                    className="btn-primary px-8"
                 >
-                    <Plus className="w-4 h-4" />
-                    Criar Vídeo
+                    <Plus className="w-4 h-4 mr-1" />
+                    Novo Vídeo
                 </Link>
             </div>
 
             {/* Metrics */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {metrics.map((metric: any, i: number) => {
                     const cfg = iconConfigs[i] || iconConfigs[0]
                     const Icon = cfg.icon
                     return (
-                        <div key={metric.label} className="metric-card">
+                        <div key={metric.label} className="metric-card group">
                             <div className="flex items-center justify-between">
-                                <div
-                                    className={cn(
-                                        'w-10 h-10 rounded-lg flex items-center justify-center',
-                                        cfg.bg
-                                    )}
-                                >
-                                    <Icon className={cn('w-5 h-5', cfg.color)} />
-                                </div>
+                                <Icon className="w-5 h-5 text-text-muted group-hover:text-primary transition-colors" />
+                                {metric.status === 'up' && (
+                                    <div className="flex items-center gap-1 text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                                        <ArrowUpRight className="w-3 h-3" />
+                                        <span className="text-[10px] font-bold">{metric.change}</span>
+                                    </div>
+                                )}
                             </div>
                             <div>
-                                <p className="label mb-1">{metric.label}</p>
-                                <p className="text-2xl font-bold text-text-primary leading-none">
+                                <p className="text-xs font-bold uppercase tracking-[0.15em] text-text-muted mb-2">{metric.label}</p>
+                                <p className="text-4xl font-bold tracking-tight text-text-primary">
                                     {metric.value}
                                 </p>
-                            </div>
-                            <div className="flex items-center gap-1">
-                                {metric.status === 'up' && (
-                                    <ArrowUpRight className="w-3.5 h-3.5 text-emerald-500" />
-                                )}
-                                <span
-                                    className={cn(
-                                        'text-xs font-medium',
-                                        metric.status === 'up'
-                                            ? 'text-emerald-600'
-                                            : 'text-text-muted'
-                                    )}
-                                >
-                                    {metric.change}
-                                </span>
                             </div>
                         </div>
                     )
@@ -172,45 +156,45 @@ export default function DashboardPage() {
             </div>
 
             {/* Main section */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Chart */}
-                <div className="lg:col-span-8 space-y-4">
-                    <div className="card h-full flex flex-col">
-                        <div className="flex items-center justify-between mb-6">
+                <div className="lg:col-span-8">
+                    <div className="card h-full flex flex-col p-8">
+                        <div className="flex items-center justify-between mb-10">
                             <div>
-                                <h2 className="section-title">Geração de Conteúdo</h2>
-                                <p className="text-text-muted text-xs mt-0.5">
-                                    Vídeos gerados por mês
+                                <h2 className="text-xl font-semibold font-display italic">Geração de Conteúdo</h2>
+                                <p className="text-text-muted text-xs uppercase tracking-widest font-bold mt-1">
+                                    Performance Mensal
                                 </p>
                             </div>
                         </div>
 
                         {chartData.length === 0 || chartData.every((d: any) => d.count === 0) ? (
-                            <div className="flex-1 flex flex-col items-center justify-center min-h-[220px] gap-3">
-                                <div className="w-12 h-12 rounded-xl bg-surface-100 flex items-center justify-center">
-                                    <FileVideo className="w-6 h-6 text-text-tertiary" />
-                                </div>
-                                <p className="text-sm text-text-muted text-center">Nenhum vídeo gerado ainda.</p>
-                                <Link href="/criar" className="btn-primary text-xs px-4 py-2">
-                                    <Plus className="w-3.5 h-3.5" />
-                                    Criar primeiro vídeo
+                            <div className="flex-1 flex flex-col items-center justify-center min-h-[300px] gap-4 bg-bg-subtle/50 rounded-2xl border border-dashed border-primary/20">
+                                <Sparkles className="w-8 h-8 text-primary/30" />
+                                <p className="text-sm font-medium text-text-secondary">Pronto para começar sua coleção?</p>
+                                <Link href="/criar" className="btn-secondary text-[10px] px-6">
+                                    CRIAR PRIMEIRA PEÇA
                                 </Link>
                             </div>
                         ) : (
-                            <div className="flex-1 flex items-end gap-2 pb-4 min-h-[220px]">
+                            <div className="flex-1 flex items-end gap-3 pb-4 min-h-[300px]">
                                 {chartData.map((d: any) => (
                                     <div
                                         key={d.month}
-                                        className="flex-1 flex flex-col items-center gap-2 group"
-                                        title={`${d.count} vídeo${d.count !== 1 ? 's' : ''}`}
+                                        className="flex-1 flex flex-col items-center gap-4 group"
                                     >
-                                        <div className="w-full relative h-48">
+                                        <div className="w-full relative h-[240px] flex items-end">
                                             <div
-                                                className="absolute bottom-0 left-0 right-0 bg-primary/20 rounded-t-md group-hover:bg-primary/40 transition-colors duration-200"
-                                                style={{ height: `${Math.max(d.val, d.count > 0 ? 4 : 0)}%` }}
+                                                className="w-full bg-primary/80 group-hover:bg-primary transition-all duration-300 rounded-t-sm"
+                                                style={{ height: `${Math.max(d.val, d.count > 0 ? 5 : 0)}%` }}
                                             />
+                                            {/* Hover value tooltip */}
+                                            <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-text-primary text-white text-[10px] px-2 py-1 rounded font-bold">
+                                                {d.count}
+                                            </div>
                                         </div>
-                                        <span className="text-[10px] font-medium text-text-tertiary">
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-text-muted">
                                             {d.month}
                                         </span>
                                     </div>
@@ -221,54 +205,55 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Right column */}
-                <div className="lg:col-span-4 space-y-4">
-                    {/* AI insight — neutral card with left accent */}
-                    <div className="card border-l-4 border-l-primary">
-                        <div className="flex items-center gap-2 mb-3">
+                <div className="lg:col-span-4 space-y-6">
+                    {/* AI insight */}
+                    <div className="card border-l-[3px] border-l-primary bg-bg-subtle p-8">
+                        <div className="flex items-center gap-2 mb-4">
                             <Sparkles className="w-4 h-4 text-primary" />
-                            <span className="label mb-0">Sugestão da IA</span>
+                            <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Insight do Studio</span>
                         </div>
-                        <p className="text-sm text-text-secondary leading-relaxed">
+                        <p className="text-sm text-text-secondary leading-relaxed font-medium italic">
                             {data?.metrics?.[1]?.value === '0'
-                                ? 'Adicione seus primeiros contatos no CRM para análise.'
-                                : `Você possui ${data?.metrics?.[1]?.value} leads com alta probabilidade de conversão.`}
+                                ? '"O sucesso do acervo começa com a curadoria dos contatos."'
+                                : `Seu estudo aponta ${data?.metrics?.[1]?.value} leads com alto potencial de engajamento para a nova coleção.`}
                         </p>
                         <Link
                             href="/crm"
-                            className="inline-flex items-center gap-1 text-primary text-sm font-medium mt-3 hover:underline"
+                            className="inline-flex items-center gap-2 text-primary font-bold text-[10px] uppercase tracking-widest mt-6 group"
                         >
-                            Ver CRM
-                            <ArrowRight className="w-3.5 h-3.5" />
+                            Acessar Dashboard CRM
+                            <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
 
                     {/* Recent activity */}
-                    <div className="card">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="section-title">Atividade Recente</h2>
-                            <button className="p-1 text-text-muted hover:text-text-primary rounded transition-colors">
-                                <MoreHorizontal className="w-4 h-4" />
-                            </button>
+                    <div className="card p-8">
+                        <div className="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 className="text-lg font-semibold font-display italic">Atividade Recente</h2>
+                                <p className="text-text-muted text-[10px] uppercase tracking-widest font-bold">Journal do Studio</p>
+                            </div>
                         </div>
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             {(data?.recentActivity || []).length === 0 ? (
-                                <p className="text-sm text-text-muted text-center py-8">
-                                    Nenhuma atividade recente
-                                </p>
+                                <div className="text-center py-10 opacity-30">
+                                    <Video className="w-8 h-8 mx-auto mb-2" />
+                                    <p className="text-[10px] uppercase tracking-widest font-bold">Sem registros hoje</p>
+                                </div>
                             ) : (
                                 data?.recentActivity.map((act: any) => (
-                                    <div key={act.id} className="flex gap-3">
-                                        <div className="w-7 h-7 rounded-full bg-surface-100 flex items-center justify-center text-xs font-medium text-text-muted flex-shrink-0">
+                                    <div key={act.id} className="flex gap-4 items-start">
+                                        <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-[10px] font-bold text-primary border border-primary/10 flex-shrink-0">
                                             {act.avatar}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-sm text-text-secondary">
-                                                <span className="font-medium text-text-primary">
+                                            <p className="text-sm text-text-secondary leading-tight">
+                                                <span className="font-bold text-text-primary">
                                                     {act.user}
                                                 </span>{' '}
                                                 {act.action}
                                             </p>
-                                            <p className="text-xs text-text-muted mt-0.5 truncate">
+                                            <p className="text-[10px] text-text-muted mt-1 uppercase tracking-wider font-semibold">
                                                 {act.target}
                                             </p>
                                         </div>
