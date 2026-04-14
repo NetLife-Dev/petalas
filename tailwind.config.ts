@@ -10,7 +10,9 @@ const config: Config = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "#B05070",
+                    DEFAULT: "var(--color-primary)",
+                    hover: "var(--color-primary-hover)",
+                    light: "var(--color-primary-light)",
                     50: "#fdf2f5",
                     100: "#fbe6ec",
                     200: "#f5c8d6",
@@ -24,9 +26,12 @@ const config: Config = {
                     950: "#2d0f1e",
                 },
                 secondary: {
-                    DEFAULT: "#6B7C45",
-                    light: "#8a9e5a",
-                    dark: "#4e5c32",
+                    DEFAULT: "var(--color-secondary)",
+                },
+                bg: {
+                    main: "var(--color-bg-main)",
+                    surface: "var(--color-bg-surface)",
+                    subtle: "var(--color-bg-subtle)",
                 },
                 surface: {
                     DEFAULT: "var(--color-bg-surface)",
